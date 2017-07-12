@@ -1,4 +1,4 @@
-package com.xiaomai.supershopowner.controller;
+package com.xiaomai.supershopowner.api;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-public class BaseController {
+public class BaseRS {
 	
 	public final String TIME_START_DEFAULT = " 00:00:00";
 	public final String TIME_END_DEFAULT = " 23:59:59";

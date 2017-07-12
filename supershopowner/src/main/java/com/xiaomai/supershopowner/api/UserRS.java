@@ -1,4 +1,4 @@
-package com.xiaomai.supershopowner.controller;
+package com.xiaomai.supershopowner.api;
 
 import net.sf.json.JSONObject;
 
@@ -15,7 +15,7 @@ import com.xiaomai.supershopowner.service.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController{
+public class UserRS extends BaseRS{
     @Autowired
     private UserService userService;
     
