@@ -4,14 +4,37 @@
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.SaleAnalyse">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
-    <result column="sales_date" jdbcType="INTEGER" property="salesDate" />
+    <result column="sales_date" jdbcType="TIMESTAMP" property="salesDate" />
     <result column="sales_period" jdbcType="VARCHAR" property="salesPeriod" />
     <result column="sales_amount" jdbcType="DECIMAL" property="salesAmount" />
     <result column="proportion" jdbcType="DECIMAL" property="proportion" />
   </resultMap>
+  
   <sql id="Base_Column_List">
     id, store_code, sales_date, sales_period, sales_amount, proportion
   </sql>
+  
+  <sql id="queryMap">
+		<if test="salesDate !=null and salesDate != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  
+  <!-- 查询今日流水 -->
+  <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
+  		select * from sale_analyse where 1=1 <include refid="queryMap"/> order by id
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

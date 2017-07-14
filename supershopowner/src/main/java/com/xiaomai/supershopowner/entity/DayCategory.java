@@ -17,7 +17,7 @@ public class DayCategory {
 
     private Integer selesNumber;
 
-    private Long proportion;
+    private Double proportion;
 
     public Integer getId() {
         return id;
@@ -75,11 +75,12 @@ public class DayCategory {
         this.selesNumber = selesNumber;
     }
 
-    public Long getProportion() {
-        return proportion;
-    }
+	public Double getProportion() {
+		return proportion;
+	}
 
-    public void setProportion(Long proportion) {
-        this.proportion = proportion;
-    }
+	public void setProportion(Double proportion) {
+		this.proportion = proportion;
+	}
+
 }

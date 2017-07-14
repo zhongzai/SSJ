@@ -5,7 +5,7 @@ public class Account {
 
     private String userAccount;
 
-    private Integer balance;
+    private Double balance;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,13 @@ public class Account {
         this.userAccount = userAccount == null ? null : userAccount.trim();
     }
 
-    public Integer getBalance() {
-        return balance;
-    }
+	public Double getBalance() {
+		return balance;
+	}
 
-    public void setBalance(Integer balance) {
-        this.balance = balance;
-    }
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+    
 }

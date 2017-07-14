@@ -1,23 +1,29 @@
 package com.xiaomai.supershopowner.entity;
 
+import java.util.Date;
+
 public class SaleAnalyse {
     private Integer id;
 
     private String storeCode;
 
-    private Integer salesDate;
+    private Date salesDate;
 
     private String salesPeriod;
 
-    private Long salesAmount;
+    private Double salesAmount;
 
-    private Long proportion;
+    private Double proportion;
+    
+    private String salesTime;
+    
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+
+	public void setId(Integer id) {
         this.id = id;
     }
 
@@ -25,19 +31,31 @@ public class SaleAnalyse {
         return storeCode;
     }
 
-    public void setStoreCode(String storeCode) {
+    public String getSalesTime() {
+		return salesTime;
+	}
+
+
+	public void setSalesTime(String salesTime) {
+		this.salesTime = salesTime;
+	}
+
+
+	public void setStoreCode(String storeCode) {
         this.storeCode = storeCode == null ? null : storeCode.trim();
     }
 
-    public Integer getSalesDate() {
-        return salesDate;
-    }
+    public Date getSalesDate() {
+		return salesDate;
+	}
 
-    public void setSalesDate(Integer salesDate) {
-        this.salesDate = salesDate;
-    }
 
-    public String getSalesPeriod() {
+	public void setSalesDate(Date salesDate) {
+		this.salesDate = salesDate;
+	}
+
+
+	public String getSalesPeriod() {
         return salesPeriod;
     }
 
@@ -45,19 +63,24 @@ public class SaleAnalyse {
         this.salesPeriod = salesPeriod == null ? null : salesPeriod.trim();
     }
 
-    public Long getSalesAmount() {
-        return salesAmount;
-    }
 
-    public void setSalesAmount(Long salesAmount) {
-        this.salesAmount = salesAmount;
-    }
+	public Double getSalesAmount() {
+		return salesAmount;
+	}
 
-    public Long getProportion() {
-        return proportion;
-    }
 
-    public void setProportion(Long proportion) {
-        this.proportion = proportion;
-    }
+	public void setSalesAmount(Double salesAmount) {
+		this.salesAmount = salesAmount;
+	}
+
+
+	public Double getProportion() {
+		return proportion;
+	}
+
+
+	public void setProportion(Double proportion) {
+		this.proportion = proportion;
+	}
+
 }

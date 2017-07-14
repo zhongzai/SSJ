@@ -23,7 +23,7 @@ public class Cust {
 
     private String headUrl;
 
-    private Long consumptionAmount;
+    private Double consumptionAmount;
 
     private String categoryCode;
 
@@ -107,15 +107,15 @@ public class Cust {
         this.headUrl = headUrl == null ? null : headUrl.trim();
     }
 
-    public Long getConsumptionAmount() {
-        return consumptionAmount;
-    }
+    public Double getConsumptionAmount() {
+		return consumptionAmount;
+	}
 
-    public void setConsumptionAmount(Long consumptionAmount) {
-        this.consumptionAmount = consumptionAmount;
-    }
+	public void setConsumptionAmount(Double consumptionAmount) {
+		this.consumptionAmount = consumptionAmount;
+	}
 
-    public String getCategoryCode() {
+	public String getCategoryCode() {
         return categoryCode;
     }
 
