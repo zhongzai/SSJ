@@ -15,11 +15,59 @@
 
 		<typeAlias alias="user"
 			type="com.xiaomai.supershopowner.entity.User" />
+		<typeAlias alias="account"
+			type="com.xiaomai.supershopowner.entity.Account" />
+		<typeAlias alias="article"
+			type="com.xiaomai.supershopowner.entity.Article" />
+		<typeAlias alias="cust"
+			type="com.xiaomai.supershopowner.entity.Cust" />
+		<typeAlias alias="daycategory"
+			type="com.xiaomai.supershopowner.entity.DayCategory" />
+		<typeAlias alias="goods"
+			type="com.xiaomai.supershopowner.entity.Goods" />
+		<typeAlias alias="loss"
+			type="com.xiaomai.supershopowner.entity.Loss" />
+		<typeAlias alias="loss2good"
+			type="com.xiaomai.supershopowner.entity.Loss2good" />
+		<typeAlias alias="onecategoryanalyse"
+			type="com.xiaomai.supershopowner.entity.OneCategoryAnalyse" />
+		<typeAlias alias="order"
+			type="com.xiaomai.supershopowner.entity.Order" />
+		<typeAlias alias="order2good"
+			type="com.xiaomai.supershopowner.entity.Order2good" />
+		<typeAlias alias="picture"
+			type="com.xiaomai.supershopowner.entity.Picture" />
+		<typeAlias alias="sale"
+			type="com.xiaomai.supershopowner.entity.Sale" />
+		<typeAlias alias="saleanalyse"
+			type="com.xiaomai.supershopowner.entity.SaleAnalyse" />
+		<typeAlias alias="supplementgood"
+			type="com.xiaomai.supershopowner.entity.SupplementGood" />
+		<typeAlias alias="userlogin"
+			type="com.xiaomai.supershopowner.entity.UserLogin" />
+			
 
 	</typeAliases>
 
 
 	<mappers>
 		<mapper resource="mappers/User.xml" />
+		<mapper resource="mappers/Account.xml" />
+		<mapper resource="mappers/Article.xml" />
+		<mapper resource="mappers/Cust.xml" />
+		<mapper resource="mappers/DayCategory.xml" />
+		<mapper resource="mappers/Flow.xml" />
+		<mapper resource="mappers/Goods.xml" />
+		<mapper resource="mappers/Loss2good.xml" />
+		<mapper resource="mappers/Loss.xml" />
+		<mapper resource="mappers/OneCategoryAnalyse.xml" />
+		<mapper resource="mappers/Order.xml" />
+		<mapper resource="mappers/Order2good.xml" />
+		<mapper resource="mappers/Picture.xml" />
+		<mapper resource="mappers/Sale.xml" />
+		<mapper resource="mappers/SaleAnalyse.xml" />
+		<mapper resource="mappers/Storage.xml" />
+		<mapper resource="mappers/SupplementGood.xml" />
+		<mapper resource="mappers/UserLogin.xml" />
 	</mappers>
 </configuration>

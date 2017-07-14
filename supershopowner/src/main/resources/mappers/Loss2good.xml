@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.Loss2goodMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Loss2good">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
+    <result column="loss_code" jdbcType="VARCHAR" property="lossCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_code, loss_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from loss2good
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from loss2good
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into loss2good (id, goods_code, loss_code
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR}, #{lossCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into loss2good
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="goodsCode != null">
+        goods_code,
+      </if>
+      <if test="lossCode != null">
+        loss_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=INTEGER},
+      <if test="goodsCode != null">
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lossCode != null">
+        #{lossCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
+    update loss2good
+    <set>
+      <if test="goodsCode != null">
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lossCode != null">
+        loss_code = #{lossCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
+    update loss2good
+    set goods_code = #{goodsCode,jdbcType=VARCHAR},
+      loss_code = #{lossCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

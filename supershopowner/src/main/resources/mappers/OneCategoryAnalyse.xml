@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.OneCategoryAnalyseMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.OneCategoryAnalyse">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="sales_date" jdbcType="DATE" property="salesDate" />
+    <result column="category_code" jdbcType="VARCHAR" property="categoryCode" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="ranking" jdbcType="INTEGER" property="ranking" />
+    <result column="seles_number" jdbcType="INTEGER" property="selesNumber" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="total_sales" jdbcType="DECIMAL" property="totalSales" />
+    <result column="net_profit" jdbcType="DECIMAL" property="netProfit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, store_code, sales_date, category_code, category_name, ranking, seles_number, 
+    price, total_sales, net_profit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from one_category_analyse
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from one_category_analyse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.OneCategoryAnalyse">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into one_category_analyse (id, store_code, sales_date, 
+      category_code, category_name, ranking, 
+      seles_number, price, total_sales, 
+      net_profit)
+    values (#{id,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{salesDate,jdbcType=DATE}, 
+      #{categoryCode,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}, #{ranking,jdbcType=INTEGER}, 
+      #{selesNumber,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{totalSales,jdbcType=DECIMAL}, 
+      #{netProfit,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.OneCategoryAnalyse">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into one_category_analyse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="storeCode != null">
+        store_code,
+      </if>
+      <if test="salesDate != null">
+        sales_date,
+      </if>
+      <if test="categoryCode != null">
+        category_code,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="ranking != null">
+        ranking,
+      </if>
+      <if test="selesNumber != null">
+        seles_number,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="totalSales != null">
+        total_sales,
+      </if>
+      <if test="netProfit != null">
+        net_profit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=INTEGER},
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salesDate != null">
+        #{salesDate,jdbcType=DATE},
+      </if>
+      <if test="categoryCode != null">
+        #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="selesNumber != null">
+        #{selesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSales != null">
+        #{totalSales,jdbcType=DECIMAL},
+      </if>
+      <if test="netProfit != null">
+        #{netProfit,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.OneCategoryAnalyse">
+    update one_category_analyse
+    <set>
+      <if test="storeCode != null">
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salesDate != null">
+        sales_date = #{salesDate,jdbcType=DATE},
+      </if>
+      <if test="categoryCode != null">
+        category_code = #{categoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        ranking = #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="selesNumber != null">
+        seles_number = #{selesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSales != null">
+        total_sales = #{totalSales,jdbcType=DECIMAL},
+      </if>
+      <if test="netProfit != null">
+        net_profit = #{netProfit,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.OneCategoryAnalyse">
+    update one_category_analyse
+    set store_code = #{storeCode,jdbcType=VARCHAR},
+      sales_date = #{salesDate,jdbcType=DATE},
+      category_code = #{categoryCode,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      ranking = #{ranking,jdbcType=INTEGER},
+      seles_number = #{selesNumber,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      total_sales = #{totalSales,jdbcType=DECIMAL},
+      net_profit = #{netProfit,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

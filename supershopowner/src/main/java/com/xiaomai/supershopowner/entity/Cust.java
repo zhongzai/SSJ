@@ -1,0 +1,125 @@
+package com.xiaomai.supershopowner.entity;
+
+import java.util.Date;
+
+public class Cust {
+    private Integer id;
+
+    private String storeCode;
+
+    private String custId;
+
+    private String custAccount;
+
+    private Integer repeatBuy;
+
+    private Integer isNew;
+
+    private Date comingTime;
+
+    private Integer isBuy;
+
+    private Integer status;
+
+    private String headUrl;
+
+    private Long consumptionAmount;
+
+    private String categoryCode;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getStoreCode() {
+        return storeCode;
+    }
+
+    public void setStoreCode(String storeCode) {
+        this.storeCode = storeCode == null ? null : storeCode.trim();
+    }
+
+    public String getCustId() {
+        return custId;
+    }
+
+    public void setCustId(String custId) {
+        this.custId = custId == null ? null : custId.trim();
+    }
+
+    public String getCustAccount() {
+        return custAccount;
+    }
+
+    public void setCustAccount(String custAccount) {
+        this.custAccount = custAccount == null ? null : custAccount.trim();
+    }
+
+    public Integer getRepeatBuy() {
+        return repeatBuy;
+    }
+
+    public void setRepeatBuy(Integer repeatBuy) {
+        this.repeatBuy = repeatBuy;
+    }
+
+    public Integer getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(Integer isNew) {
+        this.isNew = isNew;
+    }
+
+    public Date getComingTime() {
+        return comingTime;
+    }
+
+    public void setComingTime(Date comingTime) {
+        this.comingTime = comingTime;
+    }
+
+    public Integer getIsBuy() {
+        return isBuy;
+    }
+
+    public void setIsBuy(Integer isBuy) {
+        this.isBuy = isBuy;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getHeadUrl() {
+        return headUrl;
+    }
+
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl == null ? null : headUrl.trim();
+    }
+
+    public Long getConsumptionAmount() {
+        return consumptionAmount;
+    }
+
+    public void setConsumptionAmount(Long consumptionAmount) {
+        this.consumptionAmount = consumptionAmount;
+    }
+
+    public String getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode == null ? null : categoryCode.trim();
+    }
+}
