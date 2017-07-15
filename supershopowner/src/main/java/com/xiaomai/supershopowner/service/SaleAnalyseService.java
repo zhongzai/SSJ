@@ -18,12 +18,12 @@ import com.xiaomai.supershopowner.entity.SaleAnalyse;
 @Service
 public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 	@Resource
-	public SaleAnalyseDao SaleAnalyseDao;
+	public SaleAnalyseDao saleAnalyseDao;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(SaleAnalyseService.class);
 	public List<SaleAnalyse> findByStoreCode(Map<String, Object> map){
 		List<SaleAnalyse> list =new ArrayList<>();
 		try {
-			 list= SaleAnalyseDao.findByStoreCode(map);
+			 list= saleAnalyseDao.findByStoreCode(map);
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

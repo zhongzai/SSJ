@@ -21,7 +21,7 @@ import net.sf.json.JSONObject;
 @RequestMapping(value="/user")
 public class SaleAnalyseRS extends BaseRS{
 	@Autowired
-	public SaleAnalyseService SaleAnalyseService;
+	public SaleAnalyseService saleAnalyseService;
 	
 	@RequestMapping(value="/findSaleAnalyse",method = RequestMethod.POST)
 	public @ResponseBody String getSaleAnalyseByStoreCode(@RequestBody SaleAnalyse saleAnalyse){
@@ -35,7 +35,7 @@ public class SaleAnalyseRS extends BaseRS{
 		
 		try{
 			
-			List<SaleAnalyse> saleAnalyseList = SaleAnalyseService.findByStoreCode(map);
+			List<SaleAnalyse> saleAnalyseList = saleAnalyseService.findByStoreCode(map);
 			for(SaleAnalyse saleAnalyses : saleAnalyseList){
 				
 				saleAnalyses.setSalesTime(formatter.format(saleAnalyses.getSalesDate()));
