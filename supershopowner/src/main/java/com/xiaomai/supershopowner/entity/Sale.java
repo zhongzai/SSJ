@@ -11,11 +11,11 @@ public class Sale {
 
     private Integer custNumber;
 
-    private Long profit;
+    private Double profit;
 
-    private Long loss;
+    private Double loss;
 
-    private Long averagePrice;
+    private Double averagePrice;
 
     private String bestCategoryCode;
 
@@ -29,11 +29,11 @@ public class Sale {
 
     private Integer newCust;
 
-    private Long afterBuyingRate;
+    private Double afterBuyingRate;
 
     private Date salesDate;
 
-    private Date salesTotal;
+    private Double salesTotal;
 
     public Integer getId() {
         return id;
@@ -67,29 +67,6 @@ public class Sale {
         this.custNumber = custNumber;
     }
 
-    public Long getProfit() {
-        return profit;
-    }
-
-    public void setProfit(Long profit) {
-        this.profit = profit;
-    }
-
-    public Long getLoss() {
-        return loss;
-    }
-
-    public void setLoss(Long loss) {
-        this.loss = loss;
-    }
-
-    public Long getAveragePrice() {
-        return averagePrice;
-    }
-
-    public void setAveragePrice(Long averagePrice) {
-        this.averagePrice = averagePrice;
-    }
 
     public String getBestCategoryCode() {
         return bestCategoryCode;
@@ -139,15 +116,48 @@ public class Sale {
         this.newCust = newCust;
     }
 
-    public Long getAfterBuyingRate() {
-        return afterBuyingRate;
-    }
 
-    public void setAfterBuyingRate(Long afterBuyingRate) {
-        this.afterBuyingRate = afterBuyingRate;
-    }
+    public Double getProfit() {
+		return profit;
+	}
 
-    public Date getSalesDate() {
+	public void setProfit(Double profit) {
+		this.profit = profit;
+	}
+
+	public Double getLoss() {
+		return loss;
+	}
+
+	public void setLoss(Double loss) {
+		this.loss = loss;
+	}
+
+	public Double getAveragePrice() {
+		return averagePrice;
+	}
+
+	public void setAveragePrice(Double averagePrice) {
+		this.averagePrice = averagePrice;
+	}
+
+	public Double getAfterBuyingRate() {
+		return afterBuyingRate;
+	}
+
+	public void setAfterBuyingRate(Double afterBuyingRate) {
+		this.afterBuyingRate = afterBuyingRate;
+	}
+
+	public Double getSalesTotal() {
+		return salesTotal;
+	}
+
+	public void setSalesTotal(Double salesTotal) {
+		this.salesTotal = salesTotal;
+	}
+
+	public Date getSalesDate() {
         return salesDate;
     }
 
@@ -155,11 +165,4 @@ public class Sale {
         this.salesDate = salesDate;
     }
 
-    public Date getSalesTotal() {
-        return salesTotal;
-    }
-
-    public void setSalesTotal(Date salesTotal) {
-        this.salesTotal = salesTotal;
-    }
 }
