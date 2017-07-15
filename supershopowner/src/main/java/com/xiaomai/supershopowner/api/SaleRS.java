@@ -39,7 +39,7 @@ public class SaleRS extends BaseRS{
 		map.put("storeCode", sale.getStoreCode());
 		map.put("startDate", yesterday);
 		map.put("endDate", new SimpleDateFormat( "yyyy-MM-dd ").format(new Date()));
-		try{
+		try{ 
 			SalesTranfer sales = saleService.findSales(map);
 			result.setCode("200");
 			result.setMsg("Success");
