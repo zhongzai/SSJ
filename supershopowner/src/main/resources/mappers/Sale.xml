@@ -16,211 +16,30 @@
     <result column="consumption_number" jdbcType="INTEGER" property="consumptionNumber" />
     <result column="new_cust" jdbcType="INTEGER" property="newCust" />
     <result column="after_buying_rate" jdbcType="DECIMAL" property="afterBuyingRate" />
-    <result column="sales_date" jdbcType="DATE" property="salesDate" />
-    <result column="sales_total" jdbcType="DATE" property="salesTotal" />
+    <result column="sales_date" jdbcType="TIMESTAMP" property="salesDate" />
+    <result column="sales_total" jdbcType="DECIMAL" property="salesTotal" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_account, store_code, cust_number, profit, loss, average_price, best_category_code, 
     best_category_name, best_goods_code, best_goods_name, consumption_number, new_cust, 
     after_buying_rate, sales_date, sales_total
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="queryMap">
+		<if test="startDate !=null and startDate != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') >=  DATE_FORMAT(#{startDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="endDate !=null and endDate != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') <=  DATE_FORMAT(#{endDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sale
-    where id = #{id,jdbcType=INTEGER}
+    where 1=1 <include refid="queryMap"/>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sale
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Sale">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into sale (id, user_account, store_code, 
-      cust_number, profit, loss, 
-      average_price, best_category_code, best_category_name, 
-      best_goods_code, best_goods_name, consumption_number, 
-      new_cust, after_buying_rate, sales_date, 
-      sales_total)
-    values (#{id,jdbcType=INTEGER}, #{userAccount,jdbcType=VARCHAR}, #{storeCode,jdbcType=VARCHAR}, 
-      #{custNumber,jdbcType=INTEGER}, #{profit,jdbcType=DECIMAL}, #{loss,jdbcType=DECIMAL}, 
-      #{averagePrice,jdbcType=DECIMAL}, #{bestCategoryCode,jdbcType=VARCHAR}, #{bestCategoryName,jdbcType=VARCHAR}, 
-      #{bestGoodsCode,jdbcType=VARCHAR}, #{bestGoodsName,jdbcType=VARCHAR}, #{consumptionNumber,jdbcType=INTEGER}, 
-      #{newCust,jdbcType=INTEGER}, #{afterBuyingRate,jdbcType=DECIMAL}, #{salesDate,jdbcType=DATE}, 
-      #{salesTotal,jdbcType=DATE})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Sale">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into sale
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="userAccount != null">
-        user_account,
-      </if>
-      <if test="storeCode != null">
-        store_code,
-      </if>
-      <if test="custNumber != null">
-        cust_number,
-      </if>
-      <if test="profit != null">
-        profit,
-      </if>
-      <if test="loss != null">
-        loss,
-      </if>
-      <if test="averagePrice != null">
-        average_price,
-      </if>
-      <if test="bestCategoryCode != null">
-        best_category_code,
-      </if>
-      <if test="bestCategoryName != null">
-        best_category_name,
-      </if>
-      <if test="bestGoodsCode != null">
-        best_goods_code,
-      </if>
-      <if test="bestGoodsName != null">
-        best_goods_name,
-      </if>
-      <if test="consumptionNumber != null">
-        consumption_number,
-      </if>
-      <if test="newCust != null">
-        new_cust,
-      </if>
-      <if test="afterBuyingRate != null">
-        after_buying_rate,
-      </if>
-      <if test="salesDate != null">
-        sales_date,
-      </if>
-      <if test="salesTotal != null">
-        sales_total,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="userAccount != null">
-        #{userAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="storeCode != null">
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="custNumber != null">
-        #{custNumber,jdbcType=INTEGER},
-      </if>
-      <if test="profit != null">
-        #{profit,jdbcType=DECIMAL},
-      </if>
-      <if test="loss != null">
-        #{loss,jdbcType=DECIMAL},
-      </if>
-      <if test="averagePrice != null">
-        #{averagePrice,jdbcType=DECIMAL},
-      </if>
-      <if test="bestCategoryCode != null">
-        #{bestCategoryCode,jdbcType=VARCHAR},
-      </if>
-      <if test="bestCategoryName != null">
-        #{bestCategoryName,jdbcType=VARCHAR},
-      </if>
-      <if test="bestGoodsCode != null">
-        #{bestGoodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="bestGoodsName != null">
-        #{bestGoodsName,jdbcType=VARCHAR},
-      </if>
-      <if test="consumptionNumber != null">
-        #{consumptionNumber,jdbcType=INTEGER},
-      </if>
-      <if test="newCust != null">
-        #{newCust,jdbcType=INTEGER},
-      </if>
-      <if test="afterBuyingRate != null">
-        #{afterBuyingRate,jdbcType=DECIMAL},
-      </if>
-      <if test="salesDate != null">
-        #{salesDate,jdbcType=DATE},
-      </if>
-      <if test="salesTotal != null">
-        #{salesTotal,jdbcType=DATE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Sale">
-    update sale
-    <set>
-      <if test="userAccount != null">
-        user_account = #{userAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="storeCode != null">
-        store_code = #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="custNumber != null">
-        cust_number = #{custNumber,jdbcType=INTEGER},
-      </if>
-      <if test="profit != null">
-        profit = #{profit,jdbcType=DECIMAL},
-      </if>
-      <if test="loss != null">
-        loss = #{loss,jdbcType=DECIMAL},
-      </if>
-      <if test="averagePrice != null">
-        average_price = #{averagePrice,jdbcType=DECIMAL},
-      </if>
-      <if test="bestCategoryCode != null">
-        best_category_code = #{bestCategoryCode,jdbcType=VARCHAR},
-      </if>
-      <if test="bestCategoryName != null">
-        best_category_name = #{bestCategoryName,jdbcType=VARCHAR},
-      </if>
-      <if test="bestGoodsCode != null">
-        best_goods_code = #{bestGoodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="bestGoodsName != null">
-        best_goods_name = #{bestGoodsName,jdbcType=VARCHAR},
-      </if>
-      <if test="consumptionNumber != null">
-        consumption_number = #{consumptionNumber,jdbcType=INTEGER},
-      </if>
-      <if test="newCust != null">
-        new_cust = #{newCust,jdbcType=INTEGER},
-      </if>
-      <if test="afterBuyingRate != null">
-        after_buying_rate = #{afterBuyingRate,jdbcType=DECIMAL},
-      </if>
-      <if test="salesDate != null">
-        sales_date = #{salesDate,jdbcType=DATE},
-      </if>
-      <if test="salesTotal != null">
-        sales_total = #{salesTotal,jdbcType=DATE},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Sale">
-    update sale
-    set user_account = #{userAccount,jdbcType=VARCHAR},
-      store_code = #{storeCode,jdbcType=VARCHAR},
-      cust_number = #{custNumber,jdbcType=INTEGER},
-      profit = #{profit,jdbcType=DECIMAL},
-      loss = #{loss,jdbcType=DECIMAL},
-      average_price = #{averagePrice,jdbcType=DECIMAL},
-      best_category_code = #{bestCategoryCode,jdbcType=VARCHAR},
-      best_category_name = #{bestCategoryName,jdbcType=VARCHAR},
-      best_goods_code = #{bestGoodsCode,jdbcType=VARCHAR},
-      best_goods_name = #{bestGoodsName,jdbcType=VARCHAR},
-      consumption_number = #{consumptionNumber,jdbcType=INTEGER},
-      new_cust = #{newCust,jdbcType=INTEGER},
-      after_buying_rate = #{afterBuyingRate,jdbcType=DECIMAL},
-      sales_date = #{salesDate,jdbcType=DATE},
-      sales_total = #{salesTotal,jdbcType=DATE}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>
