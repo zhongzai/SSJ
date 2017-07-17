@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,61 +12,68 @@ import org.springframework.stereotype.Service;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
-import com.xiaomai.supershopowner.dao.SaleAnalyseDao;
-import com.xiaomai.supershopowner.entity.SaleAnalyse;
+import com.xiaomai.supershopowner.dao.DayCategoryDao;
+import com.xiaomai.supershopowner.entity.Cust;
+import com.xiaomai.supershopowner.entity.DayCategory;
 
 @Service
-public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
+public class DayCategoryService implements BaseService<DayCategory, Integer>{
 	@Resource
-	public SaleAnalyseDao saleAnalyseDao;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(SaleAnalyseService.class);
-	public List<SaleAnalyse> findByStoreCode(Map<String, Object> map){
-		List<SaleAnalyse> list =new ArrayList<>();
-		SimpleDateFormat  fromat = new SimpleDateFormat("YYYY-MM-dd");
-		
+	public DayCategoryDao dayCategoryDao;
+	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
+	
+	public List<DayCategory> getDayCategory(Map<String , Object> map){
+		List<DayCategory> list = new ArrayList<>();
 		try {
-			 list= saleAnalyseDao.findByStoreCode(map);
+			list = dayCategoryDao.findListAllWithMap(map);
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
 		return list;
 	}
-	
+
 	@Override
-	public Integer insert(SaleAnalyse t) {
+	public Integer insert(DayCategory t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public Integer update(SaleAnalyse t) {
+	public Integer update(DayCategory t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public Integer delete(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public SaleAnalyse findById(Integer id) {
+	public DayCategory findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public List<SaleAnalyse> findListAll() {
+	public List<DayCategory> findListAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public WebPage<SaleAnalyse> findPage(Map<String, Object> map) {
+	public WebPage<DayCategory> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public List<SaleAnalyse> findListAllWithMap(Map<String, Object> paramsMap) {
+	public List<DayCategory> findListAllWithMap(Map<String, Object> paramsMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public boolean existsEntity(Map<String, Object> paramsMap) {
 		// TODO Auto-generated method stub

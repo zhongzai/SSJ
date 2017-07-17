@@ -1,0 +1,52 @@
+package com.xiaomai.supershopowner.api;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.xiaomai.supershopowner.common.BizErr;
+import com.xiaomai.supershopowner.common.RSResult;
+import com.xiaomai.supershopowner.entity.Article;
+import com.xiaomai.supershopowner.service.ArticleService;
+
+import net.sf.json.JSONObject;
+
+@Controller
+@RequestMapping(value="/Article")
+public class ArticleRS extends BaseRS{
+	@Autowired
+	public ArticleService articleService;
+	
+	@RequestMapping(value="/findArticle" , method = RequestMethod.POST)
+	public @ResponseBody String getArticle(@RequestBody Article article){
+		RSResult result = new RSResult();
+		HashMap<String , Object> map = super.getQueryMap();
+		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
+		map.put("createTime", format.format(article.getCreateTime()));
+		try {
+			List<Article> articleList = articleService.getArticle(map);
+			for(Article articles : articleList){
+				
+				articles.setCreateDate(format.format(articles.getCreateTime()));
+			}	
+			result.setCode("200");
+			result.setMsg("Success");
+			result.setResult(articleList);
+		} catch (Exception e) {
+			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
+				result.setCode("400");
+				result.setMsg("Fail");
+				result.setResult(null);	
+			}
+		}
+		return JSONObject.fromObject(result).toString();
+	}
+}
