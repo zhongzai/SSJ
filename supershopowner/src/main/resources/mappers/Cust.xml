@@ -8,7 +8,7 @@
     <result column="cust_account" jdbcType="VARCHAR" property="custAccount" />
     <result column="repeat_buy" jdbcType="INTEGER" property="repeatBuy" />
     <result column="is_new" jdbcType="INTEGER" property="isNew" />
-    <result column="coming_time" jdbcType="DATE" property="comingTime" />
+    <result column="coming_time" jdbcType="TIMESTAMP" property="comingTime" />
     <result column="is_buy" jdbcType="INTEGER" property="isBuy" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
@@ -19,161 +19,17 @@
     id, store_code, cust_id, cust_account, repeat_buy, is_new, coming_time, is_buy, status, 
     head_url, consumption_amount, category_code
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cust
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cust
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Cust">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into cust (id, store_code, cust_id, 
-      cust_account, repeat_buy, is_new, 
-      coming_time, is_buy, status, 
-      head_url, consumption_amount, category_code
-      )
-    values (#{id,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{custId,jdbcType=VARCHAR}, 
-      #{custAccount,jdbcType=VARCHAR}, #{repeatBuy,jdbcType=INTEGER}, #{isNew,jdbcType=INTEGER}, 
-      #{comingTime,jdbcType=DATE}, #{isBuy,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{headUrl,jdbcType=VARCHAR}, #{consumptionAmount,jdbcType=DECIMAL}, #{categoryCode,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Cust">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into cust
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="storeCode != null">
-        store_code,
-      </if>
-      <if test="custId != null">
-        cust_id,
-      </if>
-      <if test="custAccount != null">
-        cust_account,
-      </if>
-      <if test="repeatBuy != null">
-        repeat_buy,
-      </if>
-      <if test="isNew != null">
-        is_new,
-      </if>
-      <if test="comingTime != null">
-        coming_time,
-      </if>
-      <if test="isBuy != null">
-        is_buy,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="headUrl != null">
-        head_url,
-      </if>
-      <if test="consumptionAmount != null">
-        consumption_amount,
-      </if>
-      <if test="categoryCode != null">
-        category_code,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="storeCode != null">
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="custId != null">
-        #{custId,jdbcType=VARCHAR},
-      </if>
-      <if test="custAccount != null">
-        #{custAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="repeatBuy != null">
-        #{repeatBuy,jdbcType=INTEGER},
-      </if>
-      <if test="isNew != null">
-        #{isNew,jdbcType=INTEGER},
-      </if>
-      <if test="comingTime != null">
-        #{comingTime,jdbcType=DATE},
-      </if>
-      <if test="isBuy != null">
-        #{isBuy,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="headUrl != null">
-        #{headUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="consumptionAmount != null">
-        #{consumptionAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="categoryCode != null">
-        #{categoryCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Cust">
-    update cust
-    <set>
-      <if test="storeCode != null">
-        store_code = #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="custId != null">
-        cust_id = #{custId,jdbcType=VARCHAR},
-      </if>
-      <if test="custAccount != null">
-        cust_account = #{custAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="repeatBuy != null">
-        repeat_buy = #{repeatBuy,jdbcType=INTEGER},
-      </if>
-      <if test="isNew != null">
-        is_new = #{isNew,jdbcType=INTEGER},
-      </if>
-      <if test="comingTime != null">
-        coming_time = #{comingTime,jdbcType=DATE},
-      </if>
-      <if test="isBuy != null">
-        is_buy = #{isBuy,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="headUrl != null">
-        head_url = #{headUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="consumptionAmount != null">
-        consumption_amount = #{consumptionAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="categoryCode != null">
-        category_code = #{categoryCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Cust">
-    update cust
-    set store_code = #{storeCode,jdbcType=VARCHAR},
-      cust_id = #{custId,jdbcType=VARCHAR},
-      cust_account = #{custAccount,jdbcType=VARCHAR},
-      repeat_buy = #{repeatBuy,jdbcType=INTEGER},
-      is_new = #{isNew,jdbcType=INTEGER},
-      coming_time = #{comingTime,jdbcType=DATE},
-      is_buy = #{isBuy,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      head_url = #{headUrl,jdbcType=VARCHAR},
-      consumption_amount = #{consumptionAmount,jdbcType=DECIMAL},
-      category_code = #{categoryCode,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
+    <sql id="queryMap">
+		<if test="comingTime !=null and comingTime != ''">
+    		<![CDATA[and DATE_FORMAT(coming_time, '%Y-%m-%d') =  DATE_FORMAT(#{comingTime}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql> 
+    
+   <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
+	  	select <include refid="Base_Column_List" /> from article where 1=1 <include refid="queryMap"/> order by id
+   </select>
 </mapper>

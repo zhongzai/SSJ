@@ -26,8 +26,18 @@ public class Cust {
     private Double consumptionAmount;
 
     private String categoryCode;
+    
+    private String comingDate;
 
-    public Integer getId() {
+    public String getComingDate() {
+		return comingDate;
+	}
+
+	public void setComingDate(String comingDate) {
+		this.comingDate = comingDate;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -18,7 +18,7 @@ import com.xiaomai.supershopowner.service.SaleAnalyseService;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping(value="/user")
+@RequestMapping(value="/saleAnalyse")
 public class SaleAnalyseRS extends BaseRS{
 	@Autowired
 	public SaleAnalyseService saleAnalyseService;
@@ -28,13 +28,13 @@ public class SaleAnalyseRS extends BaseRS{
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		
-		map.put("storeCode", saleAnalyse.getStoreCode());
-		map.put("salesDate", saleAnalyse.getSalesTime());
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		
+		map.put("storeCode", saleAnalyse.getStoreCode());
+		
+		map.put("salesDate", formatter.format(saleAnalyse.getSalesDate()));
 		try{
-			
+
 			List<SaleAnalyse> saleAnalyseList = saleAnalyseService.findByStoreCode(map);
 			for(SaleAnalyse saleAnalyses : saleAnalyseList){
 				
