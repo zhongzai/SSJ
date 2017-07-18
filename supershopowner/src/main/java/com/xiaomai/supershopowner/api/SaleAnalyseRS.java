@@ -3,6 +3,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +35,7 @@ public class SaleAnalyseRS extends BaseRS{
 	public SaleAnalyseService saleAnalyseService;
 	
 	@RequestMapping(value="/findSaleAnalyse",method = RequestMethod.POST)
-	public @ResponseBody String getSaleAnalyseByStoreCode(@RequestBody SaleAnalyse saleAnalyse){
+	public @ResponseBody String getSaleAnalyseByStoreCode(@Context HttpHeaders headers,@RequestBody SaleAnalyse saleAnalyse){
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		

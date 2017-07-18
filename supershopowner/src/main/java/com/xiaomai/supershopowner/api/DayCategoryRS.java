@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +37,7 @@ public class DayCategoryRS extends BaseRS{
 	public DayCategoryService dayCategoryService;
 	
 	@RequestMapping(value="/findDayCategory" , method = RequestMethod.POST)
-	public @ResponseBody String getDayCategory(@RequestBody DayCategory dayCategory){
+	public @ResponseBody String getDayCategory(@Context HttpHeaders headers,@RequestBody DayCategory dayCategory){
 		RSResult result = new RSResult();
 		HashMap<String,Object> map = super.getQueryMap();
 		

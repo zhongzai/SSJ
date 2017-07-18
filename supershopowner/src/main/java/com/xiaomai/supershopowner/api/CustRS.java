@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +35,7 @@ public class CustRS extends BaseRS{
 	public CustService custService;
 	
 	@RequestMapping(value="/findCust" , method = RequestMethod.POST)	
-	public @ResponseBody String getfindCustComingTime(@RequestBody Cust cust){
+	public @ResponseBody String getfindCustComingTime(@Context HttpHeaders headers,@RequestBody Cust cust){
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		

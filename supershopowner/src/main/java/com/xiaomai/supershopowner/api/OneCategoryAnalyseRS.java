@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +36,7 @@ public class OneCategoryAnalyseRS extends BaseRS{
 	public OneCategoryAnalyseService oneCategoryAnalyseService;
 	
 	@RequestMapping(value="/getOneCategoryAnalyse" ,method = RequestMethod.POST)
-	public @ResponseBody String getOneCategoryAnalyse(@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
+	public @ResponseBody String getOneCategoryAnalyse(@Context HttpHeaders headers,@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
 		RSResult result = new RSResult();
 		HashMap<String,Object> map = super.getQueryMap();
 		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");

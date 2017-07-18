@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +36,7 @@ public class ArticleRS extends BaseRS{
 	public ArticleService articleService;
 	
 	@RequestMapping(value="/findArticle" , method = RequestMethod.POST)
-	public @ResponseBody String getArticle(@RequestBody Article article){
+	public @ResponseBody String getArticle(@Context HttpHeaders headers ,@RequestBody Article article){
 		RSResult result = new RSResult();
 		HashMap<String , Object> map = super.getQueryMap();
 		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
