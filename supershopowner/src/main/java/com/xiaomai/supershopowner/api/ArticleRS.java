@@ -19,8 +19,15 @@ import com.xiaomai.supershopowner.service.ArticleService;
 
 import net.sf.json.JSONObject;
 
+/**
+ * 
+ * @author 叩学聪
+ * @version 文章表数据
+ * @return 返回文章信息表数据
+ * 根据购创建文章时间查询(createTime)
+ */
 @Controller
-@RequestMapping(value="/Article")
+@RequestMapping(value="/article")
 public class ArticleRS extends BaseRS{
 	@Autowired
 	public ArticleService articleService;
@@ -33,10 +40,7 @@ public class ArticleRS extends BaseRS{
 		map.put("createTime", format.format(article.getCreateTime()));
 		try {
 			List<Article> articleList = articleService.getArticle(map);
-			for(Article articles : articleList){
-				
-				articles.setCreateDate(format.format(articles.getCreateTime()));
-			}	
+		
 			result.setCode("200");
 			result.setMsg("Success");
 			result.setResult(articleList);

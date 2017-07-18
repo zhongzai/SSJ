@@ -7,33 +7,31 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
-import com.xiaomai.supershopowner.dao.ArticleDao;
-import com.xiaomai.supershopowner.entity.Article;
+import com.xiaomai.supershopowner.dao.OneCategoryAnalyseDao;
 import com.xiaomai.supershopowner.entity.Cust;
+import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 @Service
-public class ArticleService implements BaseService<Article, Integer>{
+public class OneCategoryAnalyseService implements BaseService<OneCategoryAnalyse, Integer>{
 	@Resource
-	public ArticleDao articleDao;
+	public OneCategoryAnalyseDao OneCategoryAnalyseDao;
 	
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	
-	public List<Article> getArticle(Map<String , Object> map){
-		List<Article> list = new ArrayList<>();
+	public List<OneCategoryAnalyse> getOneCategoryAnalyse(Map<String,Object> map){
 		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
+		List<OneCategoryAnalyse> list = new ArrayList<>();
 		try {
-			list = articleDao.findListAllWithMap(map);
-			for(Article articles : list){
-				
-				articles.setCreateDate(formatt.format(articles.getCreateTime()));
-			}	
+			list = OneCategoryAnalyseDao.findListAllWithMap(map);
+			for(OneCategoryAnalyse oneCategoryAnalyses : list){
+				oneCategoryAnalyses.setSalesTime(formatt.format(oneCategoryAnalyses.getSalesDate()));
+			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
@@ -41,13 +39,13 @@ public class ArticleService implements BaseService<Article, Integer>{
 	}
 
 	@Override
-	public Integer insert(Article t) {
+	public Integer insert(OneCategoryAnalyse t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer update(Article t) {
+	public Integer update(OneCategoryAnalyse t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,25 +57,25 @@ public class ArticleService implements BaseService<Article, Integer>{
 	}
 
 	@Override
-	public Article findById(Integer id) {
+	public OneCategoryAnalyse findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Article> findListAll() {
+	public List<OneCategoryAnalyse> findListAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public WebPage<Article> findPage(Map<String, Object> map) {
+	public WebPage<OneCategoryAnalyse> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Article> findListAllWithMap(Map<String, Object> paramsMap) {
+	public List<OneCategoryAnalyse> findListAllWithMap(Map<String, Object> paramsMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}

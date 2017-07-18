@@ -13,43 +13,37 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.DayCategory;
-
-import com.xiaomai.supershopowner.service.DayCategoryService;
+import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
+import com.xiaomai.supershopowner.service.OneCategoryAnalyseService;
 
 import net.sf.json.JSONObject;
+
 /**
  * 
  * @author 叩学聪
- * @version 日品分析表
- * @return 返回日品分析信息表数据
- * 根据销售时间查询 (dayCategory.getSalesDate())
- * 和门店唯一标识查询(dayCategory.getStoreCode())
+ * @version 单品分析表
+ * @return 返回单品分析信息表数据
+ * 根据销售时间查询 (oneCategoryAnalyse.getSalesDate())
+ * 和门店唯一标识查询(oneCategoryAnalyse.getStoreCode())
  */
 @Controller
-@RequestMapping(value="/dayCategory")
-public class DayCategoryRS extends BaseRS{
-
+@RequestMapping(value="/oneCategoryAnalyse")
+public class OneCategoryAnalyseRS extends BaseRS{
 	@Autowired
-	public DayCategoryService dayCategoryService;
+	public OneCategoryAnalyseService oneCategoryAnalyseService;
 	
-	@RequestMapping(value="/findDayCategory" , method = RequestMethod.POST)
-	public @ResponseBody String getDayCategory(@RequestBody DayCategory dayCategory){
+	@RequestMapping(value="/getOneCategoryAnalyse" ,method = RequestMethod.POST)
+	public @ResponseBody String getOneCategoryAnalyse(@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
 		RSResult result = new RSResult();
 		HashMap<String,Object> map = super.getQueryMap();
-		
 		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
-		
-		map.put("storeCode", dayCategory.getStoreCode());
-		
-		map.put("salesDate", formatt.format(dayCategory.getSalesDate()));
-		
+		map.put("storeCode", oneCategoryAnalyse.getStoreCode());
+		map.put("salesDate", formatt.format(oneCategoryAnalyse.getSalesDate()));
 		try {
-			List<DayCategory> dayCategoryList = dayCategoryService.getDayCategory(map);
-	
+			List<OneCategoryAnalyse> list = oneCategoryAnalyseService.getOneCategoryAnalyse(map);
 			result.setCode("200");
-			result.setMsg("Success");
-			result.setResult(dayCategoryList);
+			result.setMsg("Suscces");
+			result.setResult(list);
 		} catch (Exception e) {
 			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
 				result.setCode("400");

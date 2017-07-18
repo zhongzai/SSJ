@@ -34,8 +34,18 @@ public class Sale {
     private Date salesDate;
 
     private Double salesTotal;
+    
+    private Integer bestSalesNumber;
 
-    public Integer getId() {
+    public Integer getBestSalesNumber() {
+		return bestSalesNumber;
+	}
+
+	public void setBestSalesNumber(Integer bestSalesNumber) {
+		this.bestSalesNumber = bestSalesNumber;
+	}
+
+	public Integer getId() {
         return id;
     }
 

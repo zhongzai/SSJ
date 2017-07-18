@@ -1,5 +1,7 @@
 package com.xiaomai.supershopowner.entity;
 
+import java.util.Date;
+
 public class Article {
     private Integer id;
 
@@ -9,7 +11,7 @@ public class Article {
 
     private String resource;
 
-    private String createTime;
+    private Date createTime;
 
     private Integer isRecommended;
 
@@ -57,15 +59,17 @@ public class Article {
         this.resource = resource == null ? null : resource.trim();
     }
 
-    public String getCreateTime() {
-        return createTime;
-    }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
-    }
 
-    public Integer getIsRecommended() {
+    public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getIsRecommended() {
         return isRecommended;
     }
 

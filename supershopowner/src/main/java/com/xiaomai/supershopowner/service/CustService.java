@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,15 @@ public class CustService implements BaseService<Cust, Integer>{
 	public CustDao custDao;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	public List<Cust> getfindComingTime(Map<String,Object> map){
+		
 		List<Cust> list = new ArrayList<>();
+		
+		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		try {
 			list = custDao.findListAllWithMap(map);
+			for(Cust custs : list){
+				custs.setComingDate(formatt.format(custs.getComingTime()));
+			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

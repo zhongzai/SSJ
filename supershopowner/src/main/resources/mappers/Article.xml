@@ -6,23 +6,20 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="resource" jdbcType="VARCHAR" property="resource" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
-    <result column="is_ recommended" jdbcType="INTEGER" property="isRecommended" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_recommended" jdbcType="INTEGER" property="isRecommended" />
     <result column="images_id" jdbcType="INTEGER" property="imagesId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, content, resource, create_time, "is_ recommended", images_id
+    id, title, content, resource, create_time, is_recommended, images_id
   </sql>
       <sql id="queryMap">
-		<if test="comingTime !=null and comingTime != ''">
-    		<![CDATA[and DATE_FORMAT(coming_time, '%Y-%m-%d') =  DATE_FORMAT(#{comingTime}, '%Y-%m-%d')]]>
+		<if test="createTime !=null and createTime != ''">
+    		<![CDATA[and DATE_FORMAT(create_time, '%Y-%m-%d') =  DATE_FORMAT(#{createTime}, '%Y-%m-%d')]]>
     	</if>
-    	<if test="storeCode != null">
-			and store_code = #{storeCode,jdbcType=VARCHAR}
-		</if>
    </sql> 
     
    <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> order by id
+	  	select <include refid="Base_Column_List" /> from article where 1=1 <include refid="queryMap"/> order by id
    </select>
 </mapper>

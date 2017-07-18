@@ -42,9 +42,7 @@ public class CustRS extends BaseRS{
 		map.put("comingTime", formatter.format(cust.getComingTime()));
 		try {
 			List<Cust> custList = custService.getfindComingTime(map);
-			for(Cust custs : custList){
-				custs.setComingDate(formatter.format(custs.getComingTime()));
-			}
+			
 			result.setCode("200");
 			result.setMsg("Suscces");
 			result.setResult(custList);

@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,17 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 	public DayCategoryDao dayCategoryDao;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	
+	SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
+	
 	public List<DayCategory> getDayCategory(Map<String , Object> map){
 		List<DayCategory> list = new ArrayList<>();
 		try {
 			list = dayCategoryDao.findListAllWithMap(map);
+			for(DayCategory dayCategory : list){
+				
+				dayCategory.setSalesTime(formatt.format(dayCategory.getSalesDate()));
+				
+			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
