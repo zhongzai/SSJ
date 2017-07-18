@@ -12,9 +12,6 @@
 	</settings>
 
 	<typeAliases>
-
-		<typeAlias alias="user"
-			type="com.xiaomai.supershopowner.entity.User" />
 		<typeAlias alias="account"
 			type="com.xiaomai.supershopowner.entity.Account" />
 		<typeAlias alias="article"
@@ -51,7 +48,6 @@
 
 
 	<mappers>
-		<mapper resource="mappers/User.xml" />
 		<mapper resource="mappers/Account.xml" />
 		<mapper resource="mappers/Article.xml" />
 		<mapper resource="mappers/Cust.xml" />

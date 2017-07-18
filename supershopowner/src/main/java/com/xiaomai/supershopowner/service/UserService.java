@@ -1,93 +1,54 @@
 package com.xiaomai.supershopowner.service;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
-import com.xiaomai.supershopowner.common.WebPage;
-import com.xiaomai.supershopowner.dao.UserDao;
-import com.xiaomai.supershopowner.entity.User;
+import com.xiaomai.supershopowner.common.TokenUtils;
+import com.xiaomai.supershopowner.dao.UserLoginDao;
+import com.xiaomai.supershopowner.entity.UserLogin;
+import com.xiaomai.supershopowner.entity.UserTransfer;
 
 @Service
-public class UserService implements BaseService<User, Integer>{
+public class UserService{
 	@Resource
-	private UserDao  userDao ; 
-	private org.slf4j.Logger log = LoggerFactory.getLogger(UserService.class);
+	private UserLoginDao  userLoginDao ; 
     
-    public User findUserByName(String userName){
-    	log.debug("get user starting...");
-		User user = null;
+    public UserTransfer login(UserTransfer user){
+    	
+    	UserTransfer resposeUser=null;
 		try {
-			user = userDao.findUserByName(userName);
-			if (user != null)
-				user.setPassword(null);
+			resposeUser=null;
+			
+			//根据用户名查询用户登录
+			UserLogin userLogin = userLoginDao.findByStoreCode(user.getStoreCode());
+			
+			String newToken = TokenUtils.createToken(user);
+			if (userLogin != null){
+				userLogin.setToken(newToken);
+				userLogin.setLastLogin(new Date());
+				//token保鲜
+				userLoginDao.update(userLogin);
+			}else{
+				userLogin = new UserLogin();
+				userLogin.setToken(newToken);
+				userLogin.setUserAccount(user.getStoreCode());
+				userLogin.setLastLogin(new Date());
+				
+				userLoginDao.insert(userLogin);
+			}
+			
+			resposeUser.setToken(newToken);
+			
 		} catch (SQLException ex) {
-			log.error("exception:", ex);
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
-		log.debug("get user end");
-		return user;
+		return resposeUser;
     }
 
-	@Override
-	public Integer insert(User t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Integer update(User t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Integer delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public User findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<User> findListAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public WebPage<User> findPage(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<User> findListAllWithMap(Map<String, Object> paramsMap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public boolean existsEntity(Map<String, Object> paramsMap) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
