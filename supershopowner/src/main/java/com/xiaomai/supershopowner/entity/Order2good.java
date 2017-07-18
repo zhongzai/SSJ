@@ -6,6 +6,8 @@ public class Order2good {
     private String orderCode;
 
     private String goodsCode;
+    
+    private Integer goodsTotal;
 
     public Integer getId() {
         return id;
@@ -30,4 +32,12 @@ public class Order2good {
     public void setGoodsCode(String goodsCode) {
         this.goodsCode = goodsCode == null ? null : goodsCode.trim();
     }
+
+	public Integer getGoodsTotal() {
+		return goodsTotal;
+	}
+
+	public void setGoodsTotal(Integer goodsTotal) {
+		this.goodsTotal = goodsTotal;
+	}
 }

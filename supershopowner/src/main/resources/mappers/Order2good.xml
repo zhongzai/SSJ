@@ -5,9 +5,10 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
+    <result column="goods_total" jdbcType="INTEGER" property="goodsTotal" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, goods_code
+    id, order_code, goods_code, goods_total
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,9 +24,9 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into order2good (id, order_code, goods_code
+    insert into order2good (id, order_code, goods_code, goods_total
       )
-    values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsTotal,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Order2good">
@@ -41,6 +42,9 @@
       <if test="goodsCode != null">
         goods_code,
       </if>
+      <if test="goodsTotal != null">
+        goods_total,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       #{id,jdbcType=INTEGER},
@@ -49,6 +53,9 @@
       </if>
       <if test="goodsCode != null">
         #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTotal != null">
+        #{goodsTotal,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -61,13 +68,17 @@
       <if test="goodsCode != null">
         goods_code = #{goodsCode,jdbcType=VARCHAR},
       </if>
+       <if test="goodsTotal != null">
+        goods_total = #{goodsTotal,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Order2good">
     update order2good
     set order_code = #{orderCode,jdbcType=VARCHAR},
-      goods_code = #{goodsCode,jdbcType=VARCHAR}
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_total = #{goodsTotal,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
