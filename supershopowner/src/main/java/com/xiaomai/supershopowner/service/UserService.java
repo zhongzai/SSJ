@@ -21,12 +21,10 @@ public class UserService{
     
     public UserTransfer login(UserTransfer user){
     	
-    	UserTransfer resposeUser=null;
-		try {
-			resposeUser=null;
-			
+    	UserTransfer resposeUser= new UserTransfer();
+		try {			
 			//根据用户名查询用户登录
-			UserLogin userLogin = userLoginDao.findByStoreCode(user.getStoreCode());
+			UserLogin userLogin = userLoginDao.findByStoreCode(user.getUserAccount());
 			
 			String newToken = TokenUtils.createToken(user);
 			if (userLogin != null){
@@ -37,7 +35,7 @@ public class UserService{
 			}else{
 				userLogin = new UserLogin();
 				userLogin.setToken(newToken);
-				userLogin.setUserAccount(user.getStoreCode());
+				userLogin.setUserAccount(user.getUserAccount());
 				userLogin.setLastLogin(new Date());
 				
 				userLoginDao.insert(userLogin);

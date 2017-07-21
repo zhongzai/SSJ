@@ -15,4 +15,8 @@ public class UserLoginDao extends BaseDaoImpl<UserLogin, Integer> {
 	public UserLogin findByStoreCode(String storeCode)throws SQLException{
 		return selectOne(getNameSpace()+".findByStoreCode",storeCode);
 	}
+	
+	public UserLogin getLatestLoginedUserByToken(String token)throws SQLException{
+		return selectOne(getNameSpace()+".findByToken",token);
+	}
 }

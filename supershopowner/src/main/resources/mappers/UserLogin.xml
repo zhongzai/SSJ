@@ -10,12 +10,34 @@
   <sql id="Base_Column_List">
     id, user_account, token, last_login
   </sql>
+  
+   <sql id="updateMap">
+    	
+		<if test="userAccount != null">
+			user_account = #{userAccount,jdbcType=VARCHAR},
+		</if>
+		<if test="lastLogin != null">
+			last_login = #{lastLogin,jdbcType=TIMESTAMP},
+		</if>
+		<if test="token != null">
+			token = #{token,jdbcType=VARCHAR},
+		</if>
+    </sql>
+  
   <select id="findByStoreCode" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_login
-    where id = #{id,jdbcType=INTEGER}
+    where user_account = #{userAccount,jdbcType=VARCHAR}
   </select>
+  
+  <select id="findByToken" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_login
+    where token = #{token,jdbcType=VARCHAR}
+  </select>
+  
   <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.UserLogin">
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
@@ -25,56 +47,15 @@
     values (#{id,jdbcType=INTEGER}, #{userAccount,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
       #{lastLogin,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.UserLogin">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into user_login
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="userAccount != null">
-        user_account,
-      </if>
-      <if test="token != null">
-        token,
-      </if>
-      <if test="lastLogin != null">
-        last_login,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="userAccount != null">
-        #{userAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="token != null">
-        #{token,jdbcType=VARCHAR},
-      </if>
-      <if test="lastLogin != null">
-        #{lastLogin,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.UserLogin">
-    update user_login
-    <set>
-      <if test="userAccount != null">
-        user_account = #{userAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="token != null">
-        token = #{token,jdbcType=VARCHAR},
-      </if>
-      <if test="lastLogin != null">
-        last_login = #{lastLogin,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.UserLogin">
-    update user_login
-    set user_account = #{userAccount,jdbcType=VARCHAR},
-      token = #{token,jdbcType=VARCHAR},
-      last_login = #{lastLogin,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.UserLogin">
+		update user_login
+	    <set>
+	      <include refid="updateMap"/>
+	    </set>
+	    where id = #{id,jdbcType=INTEGER}
+	</update>
+  
+ 
+  
 </mapper>
