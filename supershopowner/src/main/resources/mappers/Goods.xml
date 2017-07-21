@@ -22,240 +22,35 @@
     <result column="coefficien" jdbcType="INTEGER" property="coefficien" />
     <result column="month_provide" jdbcType="INTEGER" property="monthProvide" />
   </resultMap>
+  
   <sql id="Base_Column_List">
     id, goods_code, week_sales, month_sales, price, goods_name, images_url, shelf_life, 
     turnover_days, average_sales, max_order, min_order, specifications, unit, purchase_price, 
     inventory, store_code, coefficien, month_provide
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  
+  <sql id="queryMap">
+		<if test="days !=null and days != ''">
+    		and  turnover_days >= #{days}
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  
+  <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from goods
-    where id = #{id,jdbcType=INTEGER}
+    where 1=1 <include refid="queryMap"/>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from goods
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Goods">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into goods (id, goods_code, week_sales, 
-      month_sales, price, goods_name, 
-      images_url, shelf_life, turnover_days, 
-      average_sales, max_order, min_order, 
-      specifications, unit, purchase_price, 
-      inventory, store_code, coefficien, 
-      month_provide)
-    values (#{id,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR}, #{weekSales,jdbcType=INTEGER}, 
-      #{monthSales,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{goodsName,jdbcType=VARCHAR}, 
-      #{imagesUrl,jdbcType=VARCHAR}, #{shelfLife,jdbcType=VARCHAR}, #{turnoverDays,jdbcType=INTEGER}, 
-      #{averageSales,jdbcType=INTEGER}, #{maxOrder,jdbcType=INTEGER}, #{minOrder,jdbcType=INTEGER}, 
-      #{specifications,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=DECIMAL}, 
-      #{inventory,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{coefficien,jdbcType=INTEGER}, 
-      #{monthProvide,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Goods">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into goods
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="goodsCode != null">
-        goods_code,
-      </if>
-      <if test="weekSales != null">
-        week_sales,
-      </if>
-      <if test="monthSales != null">
-        month_sales,
-      </if>
-      <if test="price != null">
-        price,
-      </if>
-      <if test="goodsName != null">
-        goods_name,
-      </if>
-      <if test="imagesUrl != null">
-        images_url,
-      </if>
-      <if test="shelfLife != null">
-        shelf_life,
-      </if>
-      <if test="turnoverDays != null">
-        turnover_days,
-      </if>
-      <if test="averageSales != null">
-        average_sales,
-      </if>
-      <if test="maxOrder != null">
-        max_order,
-      </if>
-      <if test="minOrder != null">
-        min_order,
-      </if>
-      <if test="specifications != null">
-        specifications,
-      </if>
-      <if test="unit != null">
-        unit,
-      </if>
-      <if test="purchasePrice != null">
-        purchase_price,
-      </if>
-      <if test="inventory != null">
-        inventory,
-      </if>
-      <if test="storeCode != null">
-        store_code,
-      </if>
-      <if test="coefficien != null">
-        coefficien,
-      </if>
-      <if test="monthProvide != null">
-        month_provide,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="goodsCode != null">
-        #{goodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="weekSales != null">
-        #{weekSales,jdbcType=INTEGER},
-      </if>
-      <if test="monthSales != null">
-        #{monthSales,jdbcType=INTEGER},
-      </if>
-      <if test="price != null">
-        #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsName != null">
-        #{goodsName,jdbcType=VARCHAR},
-      </if>
-      <if test="imagesUrl != null">
-        #{imagesUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="shelfLife != null">
-        #{shelfLife,jdbcType=VARCHAR},
-      </if>
-      <if test="turnoverDays != null">
-        #{turnoverDays,jdbcType=INTEGER},
-      </if>
-      <if test="averageSales != null">
-        #{averageSales,jdbcType=INTEGER},
-      </if>
-      <if test="maxOrder != null">
-        #{maxOrder,jdbcType=INTEGER},
-      </if>
-      <if test="minOrder != null">
-        #{minOrder,jdbcType=INTEGER},
-      </if>
-      <if test="specifications != null">
-        #{specifications,jdbcType=VARCHAR},
-      </if>
-      <if test="unit != null">
-        #{unit,jdbcType=VARCHAR},
-      </if>
-      <if test="purchasePrice != null">
-        #{purchasePrice,jdbcType=DECIMAL},
-      </if>
-      <if test="inventory != null">
-        #{inventory,jdbcType=INTEGER},
-      </if>
-      <if test="storeCode != null">
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="coefficien != null">
-        #{coefficien,jdbcType=INTEGER},
-      </if>
-      <if test="monthProvide != null">
-        #{monthProvide,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Goods">
-    update goods
-    <set>
-      <if test="goodsCode != null">
-        goods_code = #{goodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="weekSales != null">
-        week_sales = #{weekSales,jdbcType=INTEGER},
-      </if>
-      <if test="monthSales != null">
-        month_sales = #{monthSales,jdbcType=INTEGER},
-      </if>
-      <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="goodsName != null">
-        goods_name = #{goodsName,jdbcType=VARCHAR},
-      </if>
-      <if test="imagesUrl != null">
-        images_url = #{imagesUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="shelfLife != null">
-        shelf_life = #{shelfLife,jdbcType=VARCHAR},
-      </if>
-      <if test="turnoverDays != null">
-        turnover_days = #{turnoverDays,jdbcType=INTEGER},
-      </if>
-      <if test="averageSales != null">
-        average_sales = #{averageSales,jdbcType=INTEGER},
-      </if>
-      <if test="maxOrder != null">
-        max_order = #{maxOrder,jdbcType=INTEGER},
-      </if>
-      <if test="minOrder != null">
-        min_order = #{minOrder,jdbcType=INTEGER},
-      </if>
-      <if test="specifications != null">
-        specifications = #{specifications,jdbcType=VARCHAR},
-      </if>
-      <if test="unit != null">
-        unit = #{unit,jdbcType=VARCHAR},
-      </if>
-      <if test="purchasePrice != null">
-        purchase_price = #{purchasePrice,jdbcType=DECIMAL},
-      </if>
-      <if test="inventory != null">
-        inventory = #{inventory,jdbcType=INTEGER},
-      </if>
-      <if test="storeCode != null">
-        store_code = #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="coefficien != null">
-        coefficien = #{coefficien,jdbcType=INTEGER},
-      </if>
-      <if test="monthProvide != null">
-        month_provide = #{monthProvide,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Goods">
-    update goods
-    set goods_code = #{goodsCode,jdbcType=VARCHAR},
-      week_sales = #{weekSales,jdbcType=INTEGER},
-      month_sales = #{monthSales,jdbcType=INTEGER},
-      price = #{price,jdbcType=DECIMAL},
-      goods_name = #{goodsName,jdbcType=VARCHAR},
-      images_url = #{imagesUrl,jdbcType=VARCHAR},
-      shelf_life = #{shelfLife,jdbcType=VARCHAR},
-      turnover_days = #{turnoverDays,jdbcType=INTEGER},
-      average_sales = #{averageSales,jdbcType=INTEGER},
-      max_order = #{maxOrder,jdbcType=INTEGER},
-      min_order = #{minOrder,jdbcType=INTEGER},
-      specifications = #{specifications,jdbcType=VARCHAR},
-      unit = #{unit,jdbcType=VARCHAR},
-      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
-      inventory = #{inventory,jdbcType=INTEGER},
-      store_code = #{storeCode,jdbcType=VARCHAR},
-      coefficien = #{coefficien,jdbcType=INTEGER},
-      month_provide = #{monthProvide,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
+  <select id="findSoldOutList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where  <![CDATA[inventory<=0 ]]> and store_code = #{storeCode,jdbcType=VARCHAR} 
+  </select>
+  
+  
 </mapper>
