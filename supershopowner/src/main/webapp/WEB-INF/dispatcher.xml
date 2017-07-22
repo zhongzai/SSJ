@@ -10,7 +10,11 @@
 		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.xiaomai.supershopowner" />
+	<context:component-scan base-package="com.xiaomai.supershopowner" >
+	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan> 
+	
+	
 	
 
 	<mvc:annotation-driven>

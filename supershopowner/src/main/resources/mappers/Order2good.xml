@@ -20,10 +20,7 @@
     delete from order2good
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order2good">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order2good" useGeneratedKeys="true" keyProperty="id">
     insert into order2good (id, order_code, goods_code, goods_total
       )
     values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsTotal,jdbcType=INTEGER}

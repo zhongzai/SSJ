@@ -12,8 +12,12 @@
 		 http://www.springframework.org/schema/task
          http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-	<context:component-scan base-package="com.xiaomai.supershopowner" />
-
+	
+	<context:component-scan base-package="com.xiaomai.supershopowner" >
+	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan> 
+	
+	
 	<!-- 属性文件读入 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -89,6 +93,6 @@
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config>
 
-
+	
 	
 </beans>

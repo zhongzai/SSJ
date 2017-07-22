@@ -12,32 +12,24 @@
   <sql id="Base_Column_List">
     id, order_code, order_time, status, order_number, total_value
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from tb_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from tb_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into order (id, order_code, order_time, 
-      status, order_number, total_value
-      )
-    values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE}, 
-      #{status,jdbcType=INTEGER}, #{orderNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL}
-      )
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order" useGeneratedKeys="true" keyProperty="id">
+    insert into tb_order (id, order_code, order_time,status, order_number, total_value) values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE},#{status,jdbcType=INTEGER}, #{orderNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Order">
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into order
+    insert into tb_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       id,
       <if test="orderCode != null">
@@ -75,8 +67,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Order">
-    update order
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Order">
+    update tb_order
     <set>
       <if test="orderCode != null">
         order_code = #{orderCode,jdbcType=VARCHAR},
@@ -97,7 +89,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Order">
-    update order
+    update tb_order
     set order_code = #{orderCode,jdbcType=VARCHAR},
       order_time = #{orderTime,jdbcType=DATE},
       status = #{status,jdbcType=INTEGER},

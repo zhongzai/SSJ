@@ -9,7 +9,7 @@ public class Goods {
 
     private Integer monthSales;
 
-    private Long price;
+    private Double price;
 
     private String goodsName;
 
@@ -38,8 +38,19 @@ public class Goods {
     private Integer coefficien;
 
     private Integer monthProvide;
+    
+    private Integer goodTotal;
+    
 
-    public Integer getId() {
+    public Integer getGoodTotal() {
+		return goodTotal;
+	}
+
+	public void setGoodTotal(Integer goodTotal) {
+		this.goodTotal = goodTotal;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -71,15 +82,15 @@ public class Goods {
         this.monthSales = monthSales;
     }
 
-    public Long getPrice() {
-        return price;
-    }
+    public Double getPrice() {
+		return price;
+	}
 
-    public void setPrice(Long price) {
-        this.price = price;
-    }
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
-    public String getGoodsName() {
+	public String getGoodsName() {
         return goodsName;
     }
 

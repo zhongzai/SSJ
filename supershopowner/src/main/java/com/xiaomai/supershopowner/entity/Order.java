@@ -13,7 +13,7 @@ public class Order {
 
     private Integer orderNumber;
 
-    private Long totalValue;
+    private Double totalValue;
 
     public Integer getId() {
         return id;
@@ -55,11 +55,12 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
-    public Long getTotalValue() {
-        return totalValue;
-    }
+	public Double getTotalValue() {
+		return totalValue;
+	}
 
-    public void setTotalValue(Long totalValue) {
-        this.totalValue = totalValue;
-    }
+	public void setTotalValue(Double totalValue) {
+		this.totalValue = totalValue;
+	}
+    
 }
