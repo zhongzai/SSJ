@@ -42,7 +42,7 @@ public class OrderService {
 		order.setTotalValue(totalValue);
 		
 		try{
-			int orderID = orderDao.insert(order);
+			orderDao.insert(order);
 			
 			
 			for(Goods good:gds){
@@ -57,7 +57,7 @@ public class OrderService {
 						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(good.getGoodTotal()))))).doubleValue();
 			}
 			Order o = new Order();
-			o.setId(orderID);
+			o.setId(order.getId());
 			o.setOrderNumber(orderNumber);
 			o.setTotalValue(totalValue);
 			
