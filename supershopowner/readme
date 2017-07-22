@@ -1,0 +1,2 @@
+1 /service/order/addorders 
+	参数传入json list，如：[{"goodsCode":"111111","price":"2.12","goodTotal":"10"},{"goodsCode":"222222","price":"3","goodTotal":"15"}]，每一项代表一个商品。
