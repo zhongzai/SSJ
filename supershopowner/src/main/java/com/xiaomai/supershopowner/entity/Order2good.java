@@ -1,6 +1,6 @@
 package com.xiaomai.supershopowner.entity;
 
-public class Order2good {
+public class Order2good extends Goods{
     private Integer id;
 
     private String orderCode;

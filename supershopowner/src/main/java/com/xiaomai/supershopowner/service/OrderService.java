@@ -3,6 +3,7 @@ package com.xiaomai.supershopowner.service;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class OrderService {
 	
 	@Autowired
 	Order2GoodDao order2GoodDao;
-
+	
+	//添加订单
 	public void addOrders(List<Goods> gds){
 		log.debug("save orders starting...");
 		
@@ -62,13 +64,39 @@ public class OrderService {
 			o.setTotalValue(totalValue);
 			
 			orderDao.update(o);
-			
 		}catch(SQLException ex){
 			log.error("exception:", ex);
 			throw new RuntimeException(ex); 
 		}
-		
-		
+		log.debug("save orders end...");
 	}
+	//查询所有的订单
+	public List<Order> findAllOrders(){
+		log.debug("find all orders");
+		List<Order> orders=new ArrayList<Order>();
+		try {
+			orders = orderDao.findListAll();
+		} catch (SQLException ex) {
+			log.error("exception:", ex);
+			throw new RuntimeException(ex); 
+		}
+		log.debug("find all orders end...");
+		return orders;
+	}
+	
+	//查询一个订单详情
+	public List<Order2good> findOrderGoods(String orderCode){
+		log.debug("find goods by order id starting...");
+		List<Order2good> og = null;
+		try {
+			og = order2GoodDao.findGoodsByOrderCode(orderCode);
+		} catch (SQLException ex) {
+			log.error("exception:", ex);
+			throw new RuntimeException(ex); 
+		}
+		log.debug("find goods by order id end...");
+		return og;
+	}
+	
 
 }

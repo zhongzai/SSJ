@@ -6,9 +6,28 @@
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
     <result column="goods_total" jdbcType="INTEGER" property="goodsTotal" />
+    
+    <result column="week_sales" jdbcType="INTEGER" property="weekSales" />
+    <result column="month_sales" jdbcType="INTEGER" property="monthSales" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="images_url" jdbcType="VARCHAR" property="imagesUrl" />
+    <result column="shelf_life" jdbcType="VARCHAR" property="shelfLife" />
+    <result column="turnover_days" jdbcType="INTEGER" property="turnoverDays" />
+    <result column="average_sales" jdbcType="INTEGER" property="averageSales" />
+    <result column="max_order" jdbcType="INTEGER" property="maxOrder" />
+    <result column="min_order" jdbcType="INTEGER" property="minOrder" />
+    <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="purchase_price" jdbcType="DECIMAL" property="purchasePrice" />
+    <result column="inventory" jdbcType="INTEGER" property="inventory" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="coefficien" jdbcType="INTEGER" property="coefficien" />
+    <result column="month_provide" jdbcType="INTEGER" property="monthProvide" />
+    
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, goods_code, goods_total
+    id, order_code, goods_code, goods_total,
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -16,6 +35,20 @@
     from order2good
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="findOrderGoods" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select og.id,og.order_code,og.goods_code,og.goods_total,g.week_sales,g.month_sales,g.price,g.goods_name,g.images_url,g.shelf_life,
+    g.turnover_days,g.average_sales,g.max_order,g.min_order,g.specifications,g.unit,g.purchase_price,g.inventory,g.store_code,
+    g.coefficien,g.month_provide
+    from order2good og left join goods g on og.goods_code = g.goods_code 
+    where 1=1
+    <if test="orderCode!=null">
+			   and og.order_code = #{orderCode}
+	</if> 
+  </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from order2good
     where id = #{id,jdbcType=INTEGER}
