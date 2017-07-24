@@ -98,5 +98,19 @@ public class OrderService {
 		return og;
 	}
 	
+	//更改订单
+	public int updateOrder(Order order){
+		log.debug("update order starting...");
+		int updateID=0;
+		try {
+			order.setUpdateTime(new Date());
+			updateID  =orderDao.update(order);
+		} catch (SQLException ex) {
+			log.error("exception:", ex);
+			throw new RuntimeException(ex); 
+		}
+		log.debug("update order ending...");
+		return updateID;
+	}
 
 }

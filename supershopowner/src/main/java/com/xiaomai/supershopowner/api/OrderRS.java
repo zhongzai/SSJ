@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
@@ -93,7 +94,7 @@ public class OrderRS extends BaseRS {
 
 	// 查询订单详情
 	@RequestMapping(value = "findOrderGoods", method = RequestMethod.POST)
-	public String findOrderGoods(String orderCode) {
+	public String findOrderGoods(@RequestParam(value="orderCode" ,required=false) String orderCode) {
 		RSResult rr = new RSResult();
 		List<Order2good> o2g = null;
 		Boolean res;
@@ -118,5 +119,36 @@ public class OrderRS extends BaseRS {
 		}
 		return JSONObject.fromObject(rr).toString();
 	}
+	
+	@RequestMapping(value="updateOrder", method = RequestMethod.POST)
+	public String updateOrder(@RequestBody Order order){
+		RSResult rr = new RSResult();
+		int updateId = 0;
+		Boolean res;
+		try{
+			res = checkToken.check(request.getHeader("token"));
+			if(res == true){
+				log.debug("call the update orderRs starting...");
+				updateId = orderService.updateOrder(order);
+				rr.setCode("200");
+				rr.setMsg("更新订单成功");
+				rr.setResult(updateId);
+			}else{
+				rr.setCode("201");
+				rr.setMsg("token失效！");
+				rr.setResult(null);
+			}
+		}catch(SQLException e){
+			log.error("call update OrderRS failure", e);
+			rr.setCode("400");
+			rr.setMsg("更新订单失败");
+			rr.setResult(null);
+		}
+		
+		return JSONObject.fromObject(rr).toString();
+		
+	}
+	
+	
 
 }

@@ -47,9 +47,7 @@
 	</if> 
   </select>
   
-  
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from order2good
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -59,37 +57,8 @@
     values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsTotal,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Order2good">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into order2good
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="orderCode != null">
-        order_code,
-      </if>
-      <if test="goodsCode != null">
-        goods_code,
-      </if>
-      <if test="goodsTotal != null">
-        goods_total,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="orderCode != null">
-        #{orderCode,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsCode != null">
-        #{goodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsTotal != null">
-        #{goodsTotal,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Order2good">
+  
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Order2good">
     update order2good
     <set>
       <if test="orderCode != null">
@@ -104,11 +73,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Order2good">
-    update order2good
-    set order_code = #{orderCode,jdbcType=VARCHAR},
-      goods_code = #{goodsCode,jdbcType=VARCHAR},
-      goods_total = #{goodsTotal,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

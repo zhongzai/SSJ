@@ -14,6 +14,8 @@ public class Order {
     private Integer orderNumber;
 
     private Double totalValue;
+    
+    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -61,6 +63,14 @@ public class Order {
 
 	public void setTotalValue(Double totalValue) {
 		this.totalValue = totalValue;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
     
 }
