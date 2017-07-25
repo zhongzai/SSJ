@@ -10,9 +10,10 @@
     <result column="order_number" jdbcType="INTEGER" property="orderNumber" />
     <result column="total_value" jdbcType="DECIMAL" property="totalValue" />
     <result column="actual_number" jdbcType="INTEGER" property="actualNumber" />
+    <result column="actual_value" jdbcType="DECIMAL" property="actualValue" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, order_time, status, order_number, total_value, update_time,actual_number
+    id, order_code, order_time, status, order_number, total_value, update_time,actual_number,actual_value
   </sql>
   <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -59,6 +60,9 @@
       </if>
        <if test="actualNumber != null">
         actual_number = #{actualNumber,jdbcType=INTEGER},
+      </if>
+      <if test="actualValue != null">
+        actual_value = #{actualValue,jdbcType=DECIMAL},
       </if>
     </set>
     where order_code = #{orderCode,jdbcType=INTEGER}

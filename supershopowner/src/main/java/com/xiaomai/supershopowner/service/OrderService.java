@@ -55,7 +55,7 @@ public class OrderService {
 				order2GoodDao.insert(og);
 				
 				orderNumber += good.getGoodTotal();
-				totalValue = new BigDecimal(Double.toString(good.getPrice())).
+				totalValue += new BigDecimal(Double.toString(good.getPrice())).
 						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(good.getGoodTotal()))))).doubleValue();
 			}
 			Order o = new Order();
@@ -118,11 +118,14 @@ public class OrderService {
 		log.debug("affrim order starting...");
 		int realReceiveTotal = 0;
 		int updateId;
+		Double totalValue = 0.0;
 		String orderCode = null;
 		try{
 			for(Order2good order2good : order2Goods){
 				order2GoodDao.update(order2good);
 				realReceiveTotal+=order2good.getRealTotal();
+				totalValue += new BigDecimal(Double.toString(order2good.getPrice())).
+						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(order2good.getRealTotal()))))).doubleValue();
 				if(orderCode==null){
 					orderCode = order2good.getOrderCode();
 				}
@@ -131,6 +134,7 @@ public class OrderService {
 			o.setStatus(1);
 			o.setOrderCode(orderCode);
 			o.setActualNumber(realReceiveTotal);
+			o.setActualValue(totalValue);
 			updateId = this.updateOrder(o);
 		}catch(SQLException ex){
 			log.error("exception:", ex);

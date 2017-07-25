@@ -15,6 +15,8 @@ public class Order {
 
     private Double totalValue;
     
+    private Double actualValue;
+    
     private Date updateTime;
     
     private Integer actualNumber;
@@ -82,4 +84,13 @@ public class Order {
 	public void setActualNumber(Integer actualNumber) {
 		this.actualNumber = actualNumber;
 	}
+
+	public Double getActualValue() {
+		return actualValue;
+	}
+
+	public void setActualValue(Double actualValue) {
+		this.actualValue = actualValue;
+	}
+	
 }
