@@ -149,6 +149,8 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr).toString();
 		
 	}
+	//给一个订单添加商品,需要调用pc端7天销售接口,需要关联损耗单
+	//TODO
 	
 	
 

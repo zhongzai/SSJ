@@ -12,20 +12,17 @@
   <sql id="Base_Column_List">
     id, store_code, category_number, goods_number, total_value, total_loss
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="findByStoreCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from storage
-    where id = #{id,jdbcType=INTEGER}
+    where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from storage
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Storage">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Storage" useGeneratedKeys="true" keyProperty="id">
     insert into storage (id, store_code, category_number, 
       goods_number, total_value, total_loss
       )
@@ -33,49 +30,8 @@
       #{goodsNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL}, #{totalLoss,jdbcType=DECIMAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Storage">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into storage
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="storeCode != null">
-        store_code,
-      </if>
-      <if test="categoryNumber != null">
-        category_number,
-      </if>
-      <if test="goodsNumber != null">
-        goods_number,
-      </if>
-      <if test="totalValue != null">
-        total_value,
-      </if>
-      <if test="totalLoss != null">
-        total_loss,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="storeCode != null">
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="categoryNumber != null">
-        #{categoryNumber,jdbcType=INTEGER},
-      </if>
-      <if test="goodsNumber != null">
-        #{goodsNumber,jdbcType=INTEGER},
-      </if>
-      <if test="totalValue != null">
-        #{totalValue,jdbcType=DECIMAL},
-      </if>
-      <if test="totalLoss != null">
-        #{totalLoss,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Storage">
+  
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Storage">
     update storage
     <set>
       <if test="storeCode != null">
@@ -94,15 +50,6 @@
         total_loss = #{totalLoss,jdbcType=DECIMAL},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Storage">
-    update storage
-    set store_code = #{storeCode,jdbcType=VARCHAR},
-      category_number = #{categoryNumber,jdbcType=INTEGER},
-      goods_number = #{goodsNumber,jdbcType=INTEGER},
-      total_value = #{totalValue,jdbcType=DECIMAL},
-      total_loss = #{totalLoss,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=INTEGER}
+    where store_code = #{storeCode,jdbcType=VARCHAR}
   </update>
 </mapper>
