@@ -16,6 +16,8 @@ public class Order {
     private Double totalValue;
     
     private Date updateTime;
+    
+    private Integer actualNumber;
 
     public Integer getId() {
         return id;
@@ -72,5 +74,12 @@ public class Order {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-    
+
+	public Integer getActualNumber() {
+		return actualNumber;
+	}
+
+	public void setActualNumber(Integer actualNumber) {
+		this.actualNumber = actualNumber;
+	}
 }

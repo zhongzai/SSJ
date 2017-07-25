@@ -101,16 +101,42 @@ public class OrderService {
 	//更改订单
 	public int updateOrder(Order order){
 		log.debug("update order starting...");
-		int updateID=0;
+		int updateId = 0;
 		try {
 			order.setUpdateTime(new Date());
-			updateID  =orderDao.update(order);
+			updateId = orderDao.update(order);
 		} catch (SQLException ex) {
 			log.error("exception:", ex);
 			throw new RuntimeException(ex); 
 		}
 		log.debug("update order ending...");
-		return updateID;
+		return updateId;
 	}
-
+	
+	//确认收货，更改订单中商品的实际收货量
+	public int updateAndAffirmOrder(List<Order2good> order2Goods){
+		log.debug("affrim order starting...");
+		int realReceiveTotal = 0;
+		int updateId;
+		String orderCode = null;
+		try{
+			for(Order2good order2good : order2Goods){
+				order2GoodDao.update(order2good);
+				realReceiveTotal+=order2good.getRealTotal();
+				if(orderCode==null){
+					orderCode = order2good.getOrderCode();
+				}
+			}
+			Order o = new Order();
+			o.setStatus(1);
+			o.setOrderCode(orderCode);
+			o.setActualNumber(realReceiveTotal);
+			updateId = this.updateOrder(o);
+		}catch(SQLException ex){
+			log.error("exception:", ex);
+			throw new RuntimeException(ex);
+		}
+		log.debug("affrim order end...");
+		return updateId;
+	}
 }

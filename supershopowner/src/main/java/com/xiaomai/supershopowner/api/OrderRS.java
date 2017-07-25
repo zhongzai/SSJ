@@ -120,16 +120,17 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr).toString();
 	}
 	
+	//确认订单
 	@RequestMapping(value="updateOrder", method = RequestMethod.POST)
-	public String updateOrder(@RequestBody Order order){
+	public String updateOrder(@RequestBody List<Order2good> o2g){
 		RSResult rr = new RSResult();
-		int updateId = 0;
+		int updateId =0;
 		Boolean res;
 		try{
 			res = checkToken.check(request.getHeader("token"));
 			if(res == true){
 				log.debug("call the update orderRs starting...");
-				updateId = orderService.updateOrder(order);
+				updateId = orderService.updateAndAffirmOrder(o2g);
 				rr.setCode("200");
 				rr.setMsg("更新订单成功");
 				rr.setResult(updateId);

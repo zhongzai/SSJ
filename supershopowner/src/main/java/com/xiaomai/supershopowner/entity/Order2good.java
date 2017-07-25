@@ -8,6 +8,8 @@ public class Order2good extends Goods{
     private String goodsCode;
     
     private Integer goodsTotal;
+    
+    private Integer realTotal;
 
     public Integer getId() {
         return id;
@@ -39,5 +41,13 @@ public class Order2good extends Goods{
 
 	public void setGoodsTotal(Integer goodsTotal) {
 		this.goodsTotal = goodsTotal;
+	}
+
+	public Integer getRealTotal() {
+		return realTotal;
+	}
+
+	public void setRealTotal(Integer realTotal) {
+		this.realTotal = realTotal;
 	}
 }

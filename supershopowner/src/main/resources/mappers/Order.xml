@@ -9,9 +9,10 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="order_number" jdbcType="INTEGER" property="orderNumber" />
     <result column="total_value" jdbcType="DECIMAL" property="totalValue" />
+    <result column="actual_number" jdbcType="INTEGER" property="actualNumber" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, order_time, status, order_number, total_value, update_time
+    id, order_code, order_time, status, order_number, total_value, update_time,actual_number
   </sql>
   <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -32,7 +33,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order" useGeneratedKeys="true" keyProperty="id">
-    insert into tb_order (id, order_code, order_time,status, order_number, total_value) values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE},#{status,jdbcType=INTEGER}, #{orderNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL})
+    insert into tb_order (id, order_code, order_time,status, order_number, total_value,actual_number) values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE},#{status,jdbcType=INTEGER}, #{orderNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL},#{actualNumber,jdbcType=INTEGER})
   </insert>
  
   <update id="update" parameterType="com.xiaomai.supershopowner.entity.Order">
@@ -56,8 +57,11 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=DATE},
       </if>
+       <if test="actualNumber != null">
+        actual_number = #{actualNumber,jdbcType=INTEGER},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where order_code = #{orderCode,jdbcType=INTEGER}
   </update>
   
 </mapper>
