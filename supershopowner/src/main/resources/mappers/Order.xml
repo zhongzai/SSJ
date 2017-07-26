@@ -3,6 +3,7 @@
 <mapper namespace="mappers.OrderMapper">
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="order_time" jdbcType="DATE" property="orderTime" />
     <result column="update_time" jdbcType="DATE" property="updateTime" />
@@ -22,10 +23,11 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="findListAll" resultMap="BaseResultMap">
+  <select id="findList" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_order
+    where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
   
   

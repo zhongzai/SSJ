@@ -66,7 +66,7 @@ public class OrderRS extends BaseRS {
 
 	// 查询所有的orders
 	@RequestMapping(value = "findAllOrders", method = RequestMethod.POST)
-	public String findAllOrders() {
+	public String findAllOrders(@RequestParam(value="storeCode",required=false) String storeCode) {
 		RSResult rr = new RSResult();
 		List<Order> os = null;
 		Boolean res;
@@ -74,7 +74,7 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findAllOrdersRS");
-				os = orderService.findAllOrders();
+				os = orderService.findAllOrders(storeCode);
 				rr.setCode("200");
 				rr.setMsg("查询订单成功");
 				rr.setResult(os);

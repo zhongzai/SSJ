@@ -6,6 +6,8 @@ public class Order {
     private Integer id;
 
     private String orderCode;
+    
+    private String storeCode;
 
     private Date orderTime;
 
@@ -92,5 +94,12 @@ public class Order {
 	public void setActualValue(Double actualValue) {
 		this.actualValue = actualValue;
 	}
-	
+
+	public String getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
 }

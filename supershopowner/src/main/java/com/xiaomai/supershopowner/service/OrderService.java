@@ -71,11 +71,11 @@ public class OrderService {
 		log.debug("save orders end...");
 	}
 	//查询所有的订单
-	public List<Order> findAllOrders(){
+	public List<Order> findAllOrders(String storeCode){
 		log.debug("find all orders");
 		List<Order> orders=new ArrayList<Order>();
 		try {
-			orders = orderDao.findListAll();
+			orders = orderDao.selectList(storeCode);
 		} catch (SQLException ex) {
 			log.error("exception:", ex);
 			throw new RuntimeException(ex); 
