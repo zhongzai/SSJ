@@ -12,20 +12,17 @@
   <sql id="Base_Column_List">
     id, store_code, loss_value, loss_number, loss_code, loss_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="findByStoreCode"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from loss
-    where id = #{id,jdbcType=INTEGER}
+    where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from loss
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Loss">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Loss" useGeneratedKeys="true" keyProperty="id">
     insert into loss (id, store_code, loss_value, 
       loss_number, loss_code, loss_time
       )
@@ -33,49 +30,8 @@
       #{lossNumber,jdbcType=INTEGER}, #{lossCode,jdbcType=VARCHAR}, #{lossTime,jdbcType=DATE}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Loss">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into loss
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="storeCode != null">
-        store_code,
-      </if>
-      <if test="lossValue != null">
-        loss_value,
-      </if>
-      <if test="lossNumber != null">
-        loss_number,
-      </if>
-      <if test="lossCode != null">
-        loss_code,
-      </if>
-      <if test="lossTime != null">
-        loss_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="storeCode != null">
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="lossValue != null">
-        #{lossValue,jdbcType=DECIMAL},
-      </if>
-      <if test="lossNumber != null">
-        #{lossNumber,jdbcType=INTEGER},
-      </if>
-      <if test="lossCode != null">
-        #{lossCode,jdbcType=VARCHAR},
-      </if>
-      <if test="lossTime != null">
-        #{lossTime,jdbcType=DATE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Loss">
+ 
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Loss">
     update loss
     <set>
       <if test="storeCode != null">
@@ -94,15 +50,6 @@
         loss_time = #{lossTime,jdbcType=DATE},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Loss">
-    update loss
-    set store_code = #{storeCode,jdbcType=VARCHAR},
-      loss_value = #{lossValue,jdbcType=DECIMAL},
-      loss_number = #{lossNumber,jdbcType=INTEGER},
-      loss_code = #{lossCode,jdbcType=VARCHAR},
-      loss_time = #{lossTime,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
