@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     private Integer id;
@@ -22,6 +23,8 @@ public class Order {
     private Date updateTime;
     
     private Integer actualNumber;
+    
+    private List<Goods> goods;
 
     public Integer getId() {
         return id;
@@ -101,5 +104,13 @@ public class Order {
 
 	public void setStoreCode(String storeCode) {
 		this.storeCode = storeCode;
+	}
+
+	public List<Goods> getGoods() {
+		return goods;
+	}
+
+	public void setGoods(List<Goods> goods) {
+		this.goods = goods;
 	}
 }

@@ -30,7 +30,7 @@ public class OrderService {
 	Order2GoodDao order2GoodDao;
 	
 	//添加订单
-	public void addOrders(List<Goods> gds){
+	public void addOrders(Order or){
 		log.debug("save orders starting...");
 		
 		Order order = new Order();
@@ -42,10 +42,12 @@ public class OrderService {
 		order.setStatus(0);
 		Double totalValue = 0.0;
 		order.setTotalValue(totalValue);
+		order.setStoreCode(or.getStoreCode());
+		
+		List<Goods> gds = or.getGoods();
 		
 		try{
 			orderDao.insert(order);
-			
 			
 			for(Goods good:gds){
 				Order2good og = new Order2good();
@@ -59,7 +61,7 @@ public class OrderService {
 						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(good.getGoodTotal()))))).doubleValue();
 			}
 			Order o = new Order();
-			o.setId(order.getId());
+			o.setOrderCode(orderCode);
 			o.setOrderNumber(orderNumber);
 			o.setTotalValue(totalValue);
 			

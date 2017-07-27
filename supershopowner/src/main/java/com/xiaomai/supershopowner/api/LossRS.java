@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
+import com.xiaomai.supershopowner.entity.Goods;
 import com.xiaomai.supershopowner.entity.Loss;
 import com.xiaomai.supershopowner.entity.Loss2good;
 import com.xiaomai.supershopowner.service.LossService;
@@ -86,5 +88,31 @@ public class LossRS extends BaseRS {
 		return JSONObject.fromObject(rr).toString();
 	}
 	
-
+	
+	//新建损耗单
+	@RequestMapping(value="addloss",method=RequestMethod.POST)
+	public String inserLoss(@RequestBody Loss loss){
+		RSResult rr = new RSResult();
+		Boolean res;
+		try{
+			res = checkToken.check(request.getHeader("token"));
+			if(res == true){
+				log.debug("called inser loss starting...");
+				lossService.addLoss(loss);
+				rr.setCode("200");
+				rr.setMsg("插入损耗单成功");
+				rr.setResult(1);
+			}else{
+				rr.setCode("201");
+				rr.setMsg("token失效！");
+				rr.setResult(null);
+			}
+		}catch(Exception e){
+			log.error("called inser loss failure",e);
+			rr.setCode("400");
+			rr.setMsg("增加损耗单失败");
+			rr.setResult(null);
+		}
+		return JSONObject.fromObject(rr).toString();
+	}
 }

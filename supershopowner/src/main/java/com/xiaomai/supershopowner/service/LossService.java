@@ -1,6 +1,8 @@
 package com.xiaomai.supershopowner.service;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.dao.Loss2GoodsDao;
 import com.xiaomai.supershopowner.dao.LossDao;
+import com.xiaomai.supershopowner.entity.Goods;
 import com.xiaomai.supershopowner.entity.Loss;
 import com.xiaomai.supershopowner.entity.Loss2good;
 
@@ -40,8 +43,8 @@ public class LossService{
 	
 	//损耗单详情
 	public List<Loss2good> findLossGoods(String lossCode){
-		List<Loss2good> l2g = null;
 		log.debug("find loss detail starting...");
+		List<Loss2good> l2g = null;
 		try{
 			l2g = loss2GoodsDao.findLossGoods(lossCode);
 		}catch(SQLException ex){
@@ -51,5 +54,40 @@ public class LossService{
 		log.debug("find loss detail end...");
 		return l2g;
 	}
+	
+	//添加损耗单
+	public void addLoss(Loss loss){
+		log.debug("add the loss starting...");
+		Integer lossNumber= 0;
+		Loss lo = new Loss();
+		String lossCode=loss.getStoreCode()+System.currentTimeMillis();
+		lo.setLossCode(lossCode);
+		lo.setStoreCode(loss.getStoreCode());
+		lo.setLossTime(new Date());
+		List<Goods> gds = loss.getGoods();
+		Double totalValue = 0.0;
+		try{
+			lossDao.insert(lo);
+			for(Goods g:gds){
+				Loss2good l2g = new Loss2good();
+				l2g.setLossCode(lossCode);
+				l2g.setLossTotal(g.getLossTotal());
+				l2g.setGoodsCode(g.getGoodsCode());
+				loss2GoodsDao.insert(l2g);
+				lossNumber+=g.getLossTotal();
+				totalValue += new BigDecimal(Double.toString(g.getPrice())).
+						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(g.getLossTotal()))))).doubleValue();
+			}
+			lo.setLossNumber(lossNumber);
+			lo.setLossValue(totalValue);
+			lossDao.update(lo);
+			
+		}catch(SQLException ex){
+			log.error("Exception: ",ex);
+			throw new RuntimeException(ex);
+		}
+		log.debug("add the loss end...");
+	}
+	
 	
 }

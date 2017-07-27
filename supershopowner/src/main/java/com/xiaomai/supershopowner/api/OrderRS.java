@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Goods;
 import com.xiaomai.supershopowner.entity.Order;
 import com.xiaomai.supershopowner.entity.Order2good;
 import com.xiaomai.supershopowner.service.OrderService;
@@ -36,7 +35,7 @@ public class OrderRS extends BaseRS {
 	// 添加订单
 	@RequestMapping(value = "addorders", method = RequestMethod.POST)
 	public String inserOrder(HttpServletRequest request,
-			@RequestBody List<Goods> goods) throws SQLException {
+			@RequestBody Order order) throws SQLException {
 
 		RSResult rr = new RSResult();
 		Boolean res = checkToken.check(request.getHeader("token"));
@@ -44,7 +43,7 @@ public class OrderRS extends BaseRS {
 		try {
 			if (res == true) {
 				log.debug("call the orderRS");
-				orderService.addOrders(goods);
+				orderService.addOrders(order);
 				rr.setCode("200");
 				rr.setMsg("添加订单成功");
 				rr.setResult(null);

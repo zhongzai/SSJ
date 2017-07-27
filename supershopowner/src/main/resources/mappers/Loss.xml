@@ -8,9 +8,10 @@
     <result column="loss_number" jdbcType="INTEGER" property="lossNumber" />
     <result column="loss_code" jdbcType="VARCHAR" property="lossCode" />
     <result column="loss_time" jdbcType="DATE" property="lossTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, loss_value, loss_number, loss_code, loss_time
+    id, store_code, loss_value, loss_number, loss_code, loss_time,update_time
   </sql>
   <select id="findByStoreCode"  resultMap="BaseResultMap">
     select 
@@ -49,7 +50,10 @@
       <if test="lossTime != null">
         loss_time = #{lossTime,jdbcType=DATE},
       </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where loss_code = #{lossCode,jdbcType=VARCHAR}
   </update>
 </mapper>
