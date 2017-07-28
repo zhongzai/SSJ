@@ -121,7 +121,7 @@ public class OrderRS extends BaseRS {
 	
 	//确认订单
 	@RequestMapping(value="updateOrder", method = RequestMethod.POST)
-	public String updateOrder(@RequestBody List<Order2good> o2g){
+	public String updateOrder(@RequestBody Order o2g){
 		RSResult rr = new RSResult();
 		int updateId =0;
 		Boolean res;

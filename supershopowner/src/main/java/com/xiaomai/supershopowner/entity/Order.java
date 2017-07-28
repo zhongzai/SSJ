@@ -25,6 +25,8 @@ public class Order {
     private Integer actualNumber;
     
     private List<Goods> goods;
+    
+    private List<Order2good> order2good;
 
     public Integer getId() {
         return id;
@@ -112,5 +114,13 @@ public class Order {
 
 	public void setGoods(List<Goods> goods) {
 		this.goods = goods;
+	}
+
+	public List<Order2good> getOrder2good() {
+		return order2good;
+	}
+
+	public void setOrder2good(List<Order2good> order2good) {
+		this.order2good = order2good;
 	}
 }

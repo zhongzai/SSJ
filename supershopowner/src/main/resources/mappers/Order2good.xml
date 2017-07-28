@@ -75,7 +75,7 @@
         real_total = #{realTotal,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where order_code = #{orderCode,jdbcType=VARCHAR} and goods_code = #{goodsCode,jdbcType=VARCHAR}
   </update>
   
 </mapper>

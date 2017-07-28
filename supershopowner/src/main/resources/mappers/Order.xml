@@ -70,7 +70,7 @@
         actual_value = #{actualValue,jdbcType=DECIMAL},
       </if>
     </set>
-    where order_code = #{orderCode,jdbcType=INTEGER}
+    where order_code = #{orderCode,jdbcType=VARCHAR}
   </update>
   
 </mapper>

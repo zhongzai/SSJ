@@ -116,8 +116,9 @@ public class OrderService {
 	}
 	
 	//确认收货，更改订单中商品的实际收货量
-	public int updateAndAffirmOrder(List<Order2good> order2Goods){
+	public int updateAndAffirmOrder(Order order){
 		log.debug("affrim order starting...");
+		List<Order2good> order2Goods = order.getOrder2good();
 		int realReceiveTotal = 0;
 		int updateId;
 		Double totalValue = 0.0;
