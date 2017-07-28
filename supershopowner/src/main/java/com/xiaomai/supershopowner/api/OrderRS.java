@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
+import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Order;
 import com.xiaomai.supershopowner.entity.Order2good;
@@ -88,7 +89,7 @@ public class OrderRS extends BaseRS {
 			rr.setMsg("查询订单失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr).toString();
+		return JSONObject.fromObject(rr,JSONObjectConfig.getInstance()).toString();
 	}
 
 	// 查询订单详情
@@ -116,7 +117,7 @@ public class OrderRS extends BaseRS {
 			rr.setMsg("查询订单失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr).toString();
+		return JSONObject.fromObject(rr,JSONObjectConfig.getInstance()).toString();
 	}
 	
 	//确认订单
