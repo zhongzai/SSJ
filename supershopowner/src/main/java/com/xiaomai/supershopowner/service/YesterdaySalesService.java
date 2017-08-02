@@ -2,6 +2,7 @@ package com.xiaomai.supershopowner.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,41 +14,45 @@ import org.springframework.stereotype.Service;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
-import com.xiaomai.supershopowner.dao.DayCategoryDao;
+import com.xiaomai.supershopowner.dao.LossDao;
+import com.xiaomai.supershopowner.dao.SalesDao;
 import com.xiaomai.supershopowner.entity.Cust;
-import com.xiaomai.supershopowner.entity.DayCategory;
+import com.xiaomai.supershopowner.entity.Loss;
+import com.xiaomai.supershopowner.entity.Sale;
+import com.xiaomai.supershopowner.entity.YesterdaySales;
 
 @Service
-public class DayCategoryService implements BaseService<DayCategory, Integer>{
+public class YesterdaySalesService implements BaseService<YesterdaySales, Integer>{
 	@Resource
-	public DayCategoryDao dayCategoryDao;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(DayCategory.class);
+	public SalesDao salesDao;
+	@Resource
+	public LossDao lossdao;
 	
-	SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 	
-	public List<DayCategory> getDayCategory(Map<String , Object> map){
-		List<DayCategory> list = new ArrayList<>();
+	
+	public YesterdaySales getYesterdaySales(Map<String , Object> map){
+		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
+		Loss loss = new Loss();
+		Sale sale = new Sale();
+		YesterdaySales yds = new YesterdaySales();
 		try {
-			list = dayCategoryDao.findListAllWithMap(map);
-			for(DayCategory dayCategory : list){
-				
-				dayCategory.setSalesTime(formatt.format(dayCategory.getSalesDate()));
-				
-			}
+			loss  = lossdao.findWithMap(map);
+			sale = salesDao.findWithMap(map);
+			yds.setLoss(loss);
+			yds.setSale(sale);
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
-		return list;
+		return yds;
 	}
-
 	@Override
-	public Integer insert(DayCategory t) {
+	public Integer insert(YesterdaySales t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer update(DayCategory t) {
+	public Integer update(YesterdaySales t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,25 +64,25 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 	}
 
 	@Override
-	public DayCategory findById(Integer id) {
+	public YesterdaySales findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DayCategory> findListAll() {
+	public List<YesterdaySales> findListAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public WebPage<DayCategory> findPage(Map<String, Object> map) {
+	public WebPage<YesterdaySales> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DayCategory> findListAllWithMap(Map<String, Object> paramsMap) {
+	public List<YesterdaySales> findListAllWithMap(Map<String, Object> paramsMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}

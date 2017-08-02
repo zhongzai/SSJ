@@ -4,8 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
+import org.apache.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaomai.supershopowner.common.BizErr;
+import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.DayCategory;
 
@@ -35,9 +37,12 @@ public class DayCategoryRS extends BaseRS{
 
 	@Autowired
 	public DayCategoryService dayCategoryService;
+	@Autowired
+	protected CheckToken checkToken;
 	
 	@RequestMapping(value="/findDayCategory" , method = RequestMethod.POST)
-	public @ResponseBody String getDayCategory(@Context HttpHeaders headers,@RequestBody DayCategory dayCategory){
+	public @ResponseBody String getDayCategory(HttpServletRequest request,@RequestBody DayCategory dayCategory){
+		String token = request.getHeader("token");
 		RSResult result = new RSResult();
 		HashMap<String,Object> map = super.getQueryMap();
 		
@@ -48,11 +53,17 @@ public class DayCategoryRS extends BaseRS{
 		map.put("salesDate", formatt.format(dayCategory.getSalesDate()));
 		
 		try {
+			Boolean res=checkToken.check(request.getHeader("token"));
+			if(res==true){
 			List<DayCategory> dayCategoryList = dayCategoryService.getDayCategory(map);
-	
 			result.setCode("200");
 			result.setMsg("Success");
 			result.setResult(dayCategoryList);
+			}else{
+				result.setCode("201");
+				result.setMsg("token失效！");
+				result.setResult(null);
+			}
 		} catch (Exception e) {
 			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
 				result.setCode("400");

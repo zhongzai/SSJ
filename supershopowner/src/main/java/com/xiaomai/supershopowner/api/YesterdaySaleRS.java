@@ -2,12 +2,8 @@ package com.xiaomai.supershopowner.api;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-
-import org.apache.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,41 +15,43 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Article;
-import com.xiaomai.supershopowner.service.ArticleService;
+import com.xiaomai.supershopowner.entity.Sale;
+import com.xiaomai.supershopowner.entity.YesterdaySales;
+import com.xiaomai.supershopowner.service.YesterdaySalesService;
 
 import net.sf.json.JSONObject;
 
-/**
- * 
- * @author 叩学聪
- * @version 文章表数据
- * @return 返回文章信息表数据
- * 根据购创建文章时间查询(createTime)
- */
 @Controller
-@RequestMapping(value="/article")
-public class ArticleRS extends BaseRS{
+@RequestMapping(value="/YesterdaySales")
+public class YesterdaySaleRS extends BaseRS{
 	@Autowired
-	public ArticleService articleService;
+	public YesterdaySalesService yesterdaySalesService;
 	@Autowired
 	protected CheckToken checkToken;
 	
-	@RequestMapping(value="/findArticle" , method = RequestMethod.POST)
-	public @ResponseBody String getArticle(HttpServletRequest request,@RequestBody Article article){
-		String token = request.getHeader("token");
+	/**
+	 * 查询昨日数据
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/getYesterdaySales",method = RequestMethod.POST)
+	public @ResponseBody String getYesterdaySales(HttpServletRequest request,@RequestBody Sale sale){
 		RSResult result = new RSResult();
 		HashMap<String , Object> map = super.getQueryMap();
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-		map.put("createTime", format.format(article.getCreateTime()));
+		YesterdaySales yds = new YesterdaySales();
+		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
+		
+		map.put("storeCode",sale.getStoreCode());
+
+		map.put("salesDate", formatt.format(sale.getSalesDate()));
+		
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
-			
 			if(res==true){
-			List<Article> articleList = articleService.getArticle(map);
+			yds= yesterdaySalesService.getYesterdaySales(map);
 			result.setCode("200");
-			result.setMsg("Success");
-			result.setResult(articleList);
+			result.setMsg("Suscces");
+			result.setResult(yds);
 			}else{
 				result.setCode("201");
 				result.setMsg("token失效！");

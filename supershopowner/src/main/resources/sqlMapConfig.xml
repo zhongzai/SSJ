@@ -20,6 +20,8 @@
 			type="com.xiaomai.supershopowner.entity.Cust" />
 		<typeAlias alias="daycategory"
 			type="com.xiaomai.supershopowner.entity.DayCategory" />
+		<typeAlias alias="flow"
+			type="com.xiaomai.supershopowner.entity.Flow" />
 		<typeAlias alias="goods"
 			type="com.xiaomai.supershopowner.entity.Goods" />
 		<typeAlias alias="loss"
@@ -38,6 +40,8 @@
 			type="com.xiaomai.supershopowner.entity.Sale" />
 		<typeAlias alias="saleanalyse"
 			type="com.xiaomai.supershopowner.entity.SaleAnalyse" />
+		<typeAlias alias="storage"
+			type="com.xiaomai.supershopowner.entity.Storage" />
 		<typeAlias alias="supplementgood"
 			type="com.xiaomai.supershopowner.entity.SupplementGood" />
 		<typeAlias alias="userlogin"
