@@ -1,19 +1,24 @@
 package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Loss {
     private Integer id;
 
     private String storeCode;
 
-    private Long lossValue;
+    private Double lossValue;
 
     private Integer lossNumber;
-
+    
     private String lossCode;
 
     private Date lossTime;
+    
+    private Date updateTime;
+    
+    private List<Goods> goods;
 
     public Integer getId() {
         return id;
@@ -31,15 +36,15 @@ public class Loss {
         this.storeCode = storeCode == null ? null : storeCode.trim();
     }
 
-    public Long getLossValue() {
-        return lossValue;
-    }
+    public Double getLossValue() {
+		return lossValue;
+	}
 
-    public void setLossValue(Long lossValue) {
-        this.lossValue = lossValue;
-    }
+	public void setLossValue(Double lossValue) {
+		this.lossValue = lossValue;
+	}
 
-    public Integer getLossNumber() {
+	public Integer getLossNumber() {
         return lossNumber;
     }
 
@@ -62,4 +67,20 @@ public class Loss {
     public void setLossTime(Date lossTime) {
         this.lossTime = lossTime;
     }
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public List<Goods> getGoods() {
+		return goods;
+	}
+
+	public void setGoods(List<Goods> goods) {
+		this.goods = goods;
+	}
 }

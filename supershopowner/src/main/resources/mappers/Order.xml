@@ -3,14 +3,18 @@
 <mapper namespace="mappers.OrderMapper">
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="order_time" jdbcType="DATE" property="orderTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="order_number" jdbcType="INTEGER" property="orderNumber" />
     <result column="total_value" jdbcType="DECIMAL" property="totalValue" />
+    <result column="actual_number" jdbcType="INTEGER" property="actualNumber" />
+    <result column="actual_value" jdbcType="DECIMAL" property="actualValue" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, order_time, status, order_number, total_value
+    id, store_code,order_code, order_time, status, order_number, total_value, update_time,actual_number,actual_value
   </sql>
   <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -19,65 +23,28 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="findListAll" resultMap="BaseResultMap">
+  <select id="findList" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_order
+    where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
   
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from tb_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order" useGeneratedKeys="true" keyProperty="id">
-    insert into tb_order (id, order_code, order_time,status, order_number, total_value) values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE},#{status,jdbcType=INTEGER}, #{orderNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL})
+    insert into tb_order (id, store_code,order_code, order_time,status, order_number, total_value,actual_number) values (#{id,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE},#{status,jdbcType=INTEGER}, #{orderNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL},#{actualNumber,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Order">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into tb_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="orderCode != null">
-        order_code,
-      </if>
-      <if test="orderTime != null">
-        order_time,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="orderNumber != null">
-        order_number,
-      </if>
-      <if test="totalValue != null">
-        total_value,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="orderCode != null">
-        #{orderCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orderTime != null">
-        #{orderTime,jdbcType=DATE},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="orderNumber != null">
-        #{orderNumber,jdbcType=INTEGER},
-      </if>
-      <if test="totalValue != null">
-        #{totalValue,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
+ 
   <update id="update" parameterType="com.xiaomai.supershopowner.entity.Order">
     update tb_order
     <set>
+     <if test="storeCode != null">
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
       <if test="orderCode != null">
         order_code = #{orderCode,jdbcType=VARCHAR},
       </if>
@@ -93,16 +60,17 @@
       <if test="totalValue != null">
         total_value = #{totalValue,jdbcType=DECIMAL},
       </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+       <if test="actualNumber != null">
+        actual_number = #{actualNumber,jdbcType=INTEGER},
+      </if>
+      <if test="actualValue != null">
+        actual_value = #{actualValue,jdbcType=DECIMAL},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where order_code = #{orderCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Order">
-    update tb_order
-    set order_code = #{orderCode,jdbcType=VARCHAR},
-      order_time = #{orderTime,jdbcType=DATE},
-      status = #{status,jdbcType=INTEGER},
-      order_number = #{orderNumber,jdbcType=INTEGER},
-      total_value = #{totalValue,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

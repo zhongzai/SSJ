@@ -5,54 +5,49 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
     <result column="loss_code" jdbcType="VARCHAR" property="lossCode" />
+    <result column="loss_total" jdbcType="INTEGER" property="lossTotal" />
+    
+    <result column="week_sales" jdbcType="INTEGER" property="weekSales" />
+    <result column="month_sales" jdbcType="INTEGER" property="monthSales" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="images_url" jdbcType="VARCHAR" property="imagesUrl" />
+    <result column="shelf_life" jdbcType="VARCHAR" property="shelfLife" />
+    <result column="turnover_days" jdbcType="INTEGER" property="turnoverDays" />
+    <result column="average_sales" jdbcType="INTEGER" property="averageSales" />
+    <result column="max_order" jdbcType="INTEGER" property="maxOrder" />
+    <result column="min_order" jdbcType="INTEGER" property="minOrder" />
+    <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="purchase_price" jdbcType="DECIMAL" property="purchasePrice" />
+    <result column="inventory" jdbcType="INTEGER" property="inventory" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="coefficien" jdbcType="INTEGER" property="coefficien" />
+    <result column="month_provide" jdbcType="INTEGER" property="monthProvide" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_code, loss_code
+    id, goods_code, loss_code,loss_total
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from loss2good
-    where id = #{id,jdbcType=INTEGER}
+  <select id="findLossGoods" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select lg.id,lg.goods_code,lg.loss_code,lg.loss_total,g.week_sales,g.month_sales,g.price,g.goods_name,g.images_url,g.shelf_life,
+    g.turnover_days,g.average_sales,g.max_order,g.min_order,g.specifications,g.unit,g.purchase_price,g.inventory,g.store_code,
+    g.coefficien,g.month_provide
+    from loss2good lg left join goods g on lg.goods_code = g.goods_code
+    where lg.loss_code = #{lossCode}
+	
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from loss2good
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into loss2good (id, goods_code, loss_code
+  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Loss2good" useGeneratedKeys="true" keyProperty="id">
+    insert into loss2good (id, goods_code, loss_code, loss_total
       )
-    values (#{id,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR}, #{lossCode,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR}, #{lossCode,jdbcType=VARCHAR}, #{lossTotal,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into loss2good
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="goodsCode != null">
-        goods_code,
-      </if>
-      <if test="lossCode != null">
-        loss_code,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="goodsCode != null">
-        #{goodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="lossCode != null">
-        #{lossCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
+  
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
     update loss2good
     <set>
       <if test="goodsCode != null">
@@ -61,13 +56,11 @@
       <if test="lossCode != null">
         loss_code = #{lossCode,jdbcType=VARCHAR},
       </if>
+      <if test="lossTotal != null">
+        loss_total = #{lossTotal,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Loss2good">
-    update loss2good
-    set goods_code = #{goodsCode,jdbcType=VARCHAR},
-      loss_code = #{lossCode,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

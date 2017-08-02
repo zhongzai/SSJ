@@ -30,7 +30,7 @@ public class OrderService {
 	Order2GoodDao order2GoodDao;
 	
 	//添加订单
-	public void addOrders(List<Goods> gds){
+	public void addOrders(Order or){
 		log.debug("save orders starting...");
 		
 		Order order = new Order();
@@ -42,10 +42,12 @@ public class OrderService {
 		order.setStatus(0);
 		Double totalValue = 0.0;
 		order.setTotalValue(totalValue);
+		order.setStoreCode(or.getStoreCode());
+		
+		List<Goods> gds = or.getGoods();
 		
 		try{
 			orderDao.insert(order);
-			
 			
 			for(Goods good:gds){
 				Order2good og = new Order2good();
@@ -55,11 +57,11 @@ public class OrderService {
 				order2GoodDao.insert(og);
 				
 				orderNumber += good.getGoodTotal();
-				totalValue = new BigDecimal(Double.toString(good.getPrice())).
+				totalValue += new BigDecimal(Double.toString(good.getPrice())).
 						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(good.getGoodTotal()))))).doubleValue();
 			}
 			Order o = new Order();
-			o.setId(order.getId());
+			o.setOrderCode(orderCode);
 			o.setOrderNumber(orderNumber);
 			o.setTotalValue(totalValue);
 			
@@ -71,11 +73,11 @@ public class OrderService {
 		log.debug("save orders end...");
 	}
 	//查询所有的订单
-	public List<Order> findAllOrders(){
+	public List<Order> findAllOrders(String storeCode){
 		log.debug("find all orders");
 		List<Order> orders=new ArrayList<Order>();
 		try {
-			orders = orderDao.findListAll();
+			orders = orderDao.selectList(storeCode);
 		} catch (SQLException ex) {
 			log.error("exception:", ex);
 			throw new RuntimeException(ex); 
@@ -98,5 +100,50 @@ public class OrderService {
 		return og;
 	}
 	
-
+	//更改订单
+	public int updateOrder(Order order){
+		log.debug("update order starting...");
+		int updateId = 0;
+		try {
+			order.setUpdateTime(new Date());
+			updateId = orderDao.update(order);
+		} catch (SQLException ex) {
+			log.error("exception:", ex);
+			throw new RuntimeException(ex); 
+		}
+		log.debug("update order ending...");
+		return updateId;
+	}
+	
+	//确认收货，更改订单中商品的实际收货量
+	public int updateAndAffirmOrder(Order order){
+		log.debug("affrim order starting...");
+		List<Order2good> order2Goods = order.getOrder2good();
+		int realReceiveTotal = 0;
+		int updateId;
+		Double totalValue = 0.0;
+		String orderCode = null;
+		try{
+			for(Order2good order2good : order2Goods){
+				order2GoodDao.update(order2good);
+				realReceiveTotal+=order2good.getRealTotal();
+				totalValue += new BigDecimal(Double.toString(order2good.getPrice())).
+						multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(order2good.getRealTotal()))))).doubleValue();
+				if(orderCode==null){
+					orderCode = order2good.getOrderCode();
+				}
+			}
+			Order o = new Order();
+			o.setStatus(1);
+			o.setOrderCode(orderCode);
+			o.setActualNumber(realReceiveTotal);
+			o.setActualValue(totalValue);
+			updateId = this.updateOrder(o);
+		}catch(SQLException ex){
+			log.error("exception:", ex);
+			throw new RuntimeException(ex);
+		}
+		log.debug("affrim order end...");
+		return updateId;
+	}
 }

@@ -41,6 +41,8 @@ public class Goods {
     
     private Integer goodTotal;
     
+    private Integer lossTotal;
+    
 
     public Integer getGoodTotal() {
 		return goodTotal;
@@ -201,4 +203,12 @@ public class Goods {
     public void setMonthProvide(Integer monthProvide) {
         this.monthProvide = monthProvide;
     }
+
+	public Integer getLossTotal() {
+		return lossTotal;
+	}
+
+	public void setLossTotal(Integer lossTotal) {
+		this.lossTotal = lossTotal;
+	}
 }

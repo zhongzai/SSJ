@@ -6,6 +6,7 @@
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
     <result column="goods_total" jdbcType="INTEGER" property="goodsTotal" />
+    <result column="real_total" jdbcType="INTEGER" property="realTotal" />
     
     <result column="week_sales" jdbcType="INTEGER" property="weekSales" />
     <result column="month_sales" jdbcType="INTEGER" property="monthSales" />
@@ -27,7 +28,7 @@
     
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, goods_code, goods_total,
+    id, order_code, goods_code, goods_total,real_total
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -37,7 +38,7 @@
   </select>
   
   <select id="findOrderGoods" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select og.id,og.order_code,og.goods_code,og.goods_total,g.week_sales,g.month_sales,g.price,g.goods_name,g.images_url,g.shelf_life,
+    select og.id,og.order_code,og.goods_code,og.goods_total,og.real_total,g.week_sales,g.month_sales,g.price,g.goods_name,g.images_url,g.shelf_life,
     g.turnover_days,g.average_sales,g.max_order,g.min_order,g.specifications,g.unit,g.purchase_price,g.inventory,g.store_code,
     g.coefficien,g.month_provide
     from order2good og left join goods g on og.goods_code = g.goods_code 
@@ -47,49 +48,18 @@
 	</if> 
   </select>
   
-  
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from order2good
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Order2good" useGeneratedKeys="true" keyProperty="id">
-    insert into order2good (id, order_code, goods_code, goods_total
+    insert into order2good (id, order_code, goods_code, goods_total,real_total
       )
-    values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsTotal,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsTotal,jdbcType=INTEGER},#{realTotal,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Order2good">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into order2good
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="orderCode != null">
-        order_code,
-      </if>
-      <if test="goodsCode != null">
-        goods_code,
-      </if>
-      <if test="goodsTotal != null">
-        goods_total,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="orderCode != null">
-        #{orderCode,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsCode != null">
-        #{goodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsTotal != null">
-        #{goodsTotal,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Order2good">
+  
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Order2good">
     update order2good
     <set>
       <if test="orderCode != null">
@@ -101,14 +71,11 @@
        <if test="goodsTotal != null">
         goods_total = #{goodsTotal,jdbcType=INTEGER},
       </if>
+      <if test="realTotal != null">
+        real_total = #{realTotal,jdbcType=INTEGER},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where order_code = #{orderCode,jdbcType=VARCHAR} and goods_code = #{goodsCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Order2good">
-    update order2good
-    set order_code = #{orderCode,jdbcType=VARCHAR},
-      goods_code = #{goodsCode,jdbcType=VARCHAR},
-      goods_total = #{goodsTotal,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

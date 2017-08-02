@@ -1,11 +1,14 @@
 package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     private Integer id;
 
     private String orderCode;
+    
+    private String storeCode;
 
     private Date orderTime;
 
@@ -14,6 +17,16 @@ public class Order {
     private Integer orderNumber;
 
     private Double totalValue;
+    
+    private Double actualValue;
+    
+    private Date updateTime;
+    
+    private Integer actualNumber;
+    
+    private List<Goods> goods;
+    
+    private List<Order2good> order2good;
 
     public Integer getId() {
         return id;
@@ -62,5 +75,52 @@ public class Order {
 	public void setTotalValue(Double totalValue) {
 		this.totalValue = totalValue;
 	}
-    
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getActualNumber() {
+		return actualNumber;
+	}
+
+	public void setActualNumber(Integer actualNumber) {
+		this.actualNumber = actualNumber;
+	}
+
+	public Double getActualValue() {
+		return actualValue;
+	}
+
+	public void setActualValue(Double actualValue) {
+		this.actualValue = actualValue;
+	}
+
+	public String getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	public List<Goods> getGoods() {
+		return goods;
+	}
+
+	public void setGoods(List<Goods> goods) {
+		this.goods = goods;
+	}
+
+	public List<Order2good> getOrder2good() {
+		return order2good;
+	}
+
+	public void setOrder2good(List<Order2good> order2good) {
+		this.order2good = order2good;
+	}
 }

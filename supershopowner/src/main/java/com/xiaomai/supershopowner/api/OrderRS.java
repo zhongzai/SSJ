@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
+import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Goods;
 import com.xiaomai.supershopowner.entity.Order;
 import com.xiaomai.supershopowner.entity.Order2good;
 import com.xiaomai.supershopowner.service.OrderService;
@@ -35,7 +36,7 @@ public class OrderRS extends BaseRS {
 	// 添加订单
 	@RequestMapping(value = "addorders", method = RequestMethod.POST)
 	public String inserOrder(HttpServletRequest request,
-			@RequestBody List<Goods> goods) throws SQLException {
+			@RequestBody Order order) throws SQLException {
 
 		RSResult rr = new RSResult();
 		Boolean res = checkToken.check(request.getHeader("token"));
@@ -43,7 +44,7 @@ public class OrderRS extends BaseRS {
 		try {
 			if (res == true) {
 				log.debug("call the orderRS");
-				orderService.addOrders(goods);
+				orderService.addOrders(order);
 				rr.setCode("200");
 				rr.setMsg("添加订单成功");
 				rr.setResult(null);
@@ -65,7 +66,7 @@ public class OrderRS extends BaseRS {
 
 	// 查询所有的orders
 	@RequestMapping(value = "findAllOrders", method = RequestMethod.POST)
-	public String findAllOrders() {
+	public String findAllOrders(@RequestParam(value="storeCode",required=false) String storeCode) {
 		RSResult rr = new RSResult();
 		List<Order> os = null;
 		Boolean res;
@@ -73,7 +74,7 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findAllOrdersRS");
-				os = orderService.findAllOrders();
+				os = orderService.findAllOrders(storeCode);
 				rr.setCode("200");
 				rr.setMsg("查询订单成功");
 				rr.setResult(os);
@@ -88,12 +89,12 @@ public class OrderRS extends BaseRS {
 			rr.setMsg("查询订单失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr).toString();
+		return JSONObject.fromObject(rr,JSONObjectConfig.getInstance()).toString();
 	}
 
 	// 查询订单详情
 	@RequestMapping(value = "findOrderGoods", method = RequestMethod.POST)
-	public String findOrderGoods(String orderCode) {
+	public String findOrderGoods(@RequestParam(value="orderCode" ,required=false) String orderCode) {
 		RSResult rr = new RSResult();
 		List<Order2good> o2g = null;
 		Boolean res;
@@ -116,7 +117,41 @@ public class OrderRS extends BaseRS {
 			rr.setMsg("查询订单失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr).toString();
+		return JSONObject.fromObject(rr,JSONObjectConfig.getInstance()).toString();
 	}
+	
+	//确认订单
+	@RequestMapping(value="updateOrder", method = RequestMethod.POST)
+	public String updateOrder(@RequestBody Order o2g){
+		RSResult rr = new RSResult();
+		int updateId =0;
+		Boolean res;
+		try{
+			res = checkToken.check(request.getHeader("token"));
+			if(res == true){
+				log.debug("call the update orderRs starting...");
+				updateId = orderService.updateAndAffirmOrder(o2g);
+				rr.setCode("200");
+				rr.setMsg("更新订单成功");
+				rr.setResult(updateId);
+			}else{
+				rr.setCode("201");
+				rr.setMsg("token失效！");
+				rr.setResult(null);
+			}
+		}catch(SQLException e){
+			log.error("call update OrderRS failure", e);
+			rr.setCode("400");
+			rr.setMsg("更新订单失败");
+			rr.setResult(null);
+		}
+		
+		return JSONObject.fromObject(rr).toString();
+		
+	}
+	//给一个订单添加商品,需要调用pc端7天销售接口,需要关联损耗单
+	//TODO
+	
+	
 
 }
