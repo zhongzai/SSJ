@@ -42,10 +42,7 @@
     g.turnover_days,g.average_sales,g.max_order,g.min_order,g.specifications,g.unit,g.purchase_price,g.inventory,g.store_code,
     g.coefficien,g.month_provide
     from order2good og left join goods g on og.goods_code = g.goods_code 
-    where 1=1
-    <if test="orderCode!=null">
-			   and og.order_code = #{orderCode}
-	</if> 
+    where og.order_code = #{orderCode}
   </select>
   
   <delete id="delete" parameterType="java.lang.Integer">
