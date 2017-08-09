@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
+import com.xiaomai.supershopowner.entity.Loss;
 import com.xiaomai.supershopowner.entity.Sale;
 import com.xiaomai.supershopowner.entity.YesterdaySales;
 import com.xiaomai.supershopowner.service.YesterdaySalesService;
@@ -30,21 +31,20 @@ public class YesterdaySaleRS extends BaseRS{
 	protected CheckToken checkToken;
 	
 	/**
-	 * 查询昨日数据
+	 * 查询昨日数据 
 	 * @param map
 	 * @return
 	 */
 	@RequestMapping(value="/getYesterdaySales",method = RequestMethod.POST)
 	public @ResponseBody String getYesterdaySales(HttpServletRequest request,@RequestBody Sale sale){
+		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		RSResult result = new RSResult();
 		HashMap<String , Object> map = super.getQueryMap();
 		YesterdaySales yds = new YesterdaySales();
-		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
-		
 		map.put("storeCode",sale.getStoreCode());
 
-		map.put("salesDate", formatt.format(sale.getSalesDate()));
-		
+		map.put("salesDate",formatt.format(sale.getSalesDate()));
+	
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){

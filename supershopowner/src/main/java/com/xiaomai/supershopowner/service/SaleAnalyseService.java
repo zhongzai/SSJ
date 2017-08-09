@@ -42,14 +42,14 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 	 * @return
 	 */
 	public List<SaleAnalyse> findByStorePeriod(Map<String, Object> map){
-		List<SaleAnalyse> list =new ArrayList<>();
+		List<SaleAnalyse> listSale =new ArrayList<>();
 		try {
-			list= saleAnalyseDao.findByStorPeriod(map);
+			listSale= saleAnalyseDao.findByStorPeriod(map);
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
 		
-		return list;
+		return listSale;
 	}
 	
 	@Override

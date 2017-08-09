@@ -41,7 +41,6 @@ public class ArticleRS extends BaseRS{
 	
 	@RequestMapping(value="/findArticle" , method = RequestMethod.POST)
 	public @ResponseBody String getArticle(HttpServletRequest request,@RequestBody Article article){
-		String token = request.getHeader("token");
 		RSResult result = new RSResult();
 		HashMap<String , Object> map = super.getQueryMap();
 		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");

@@ -14,19 +14,18 @@
     <result column="four" jdbcType="VARCHAR" property="four" />
     <result column="six" jdbcType="VARCHAR" property="six" />
     <result column="eight" jdbcType="VARCHAR" property="eight" />
-    <result column="ten" jdbcType="VARCHAR" property="ten" />
+    <result column="ten"  jdbcType="VARCHAR" property="ten" />
     <result column="twelve" jdbcType="VARCHAR" property="twelve" />
-    <result column="fourteen" jdbcType="VARCHAR" property="fourteen" />
-    <result column="sixteen" jdbcType="VARCHAR" property="sixteen" />
-    <result column="eighteen" jdbcType="VARCHAR" property="eighteen" />
-    <result column="twenty" jdbcType="VARCHAR" property="twenty" />
-    <result column="twentyTwo" jdbcType="VARCHAR" property="twentyTwo" />
-    <result column="twentyFour" jdbcType="VARCHAR" property="twentyFour" />
+    <result column="fourteen" jdbcType="VARCHAR"  property="fourteen" />
+    <result column="sixteen" jdbcType="VARCHAR"  property="sixteen" />
+    <result column="eighteen" jdbcType="VARCHAR"  property="eighteen" />
+    <result column="twenty"  property="twenty" />
+    <result column="twentyTwo"  property="twentyTwo" />
+    <result column="twentyFour"  property="twentyFour" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, sales_date, sales_period, sales_amount, proportion , two ,four
+     id, store_code, sales_date, sales_period, sales_amount,proportion
   </sql>
-  
   <sql id="queryMap">
 		<if test="salesDate !=null and salesDate != ''">
     		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
@@ -38,31 +37,23 @@
   
   <!-- 查询今日流水 -->
   <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
-  		select * from sale_analyse where 1=1 <include refid="queryMap"/> order by id
-  </select>
-  
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sale_analyse
-    where id = #{id,jdbcType=INTEGER}
+  		select <include refid="Base_Column_List"/> from sale_analyse where 1=1 <include refid="queryMap"/> order by id
   </select>
   
   <sql id="queryMap1">
 		<if test="salesDate !=null and salesDate != ''">
-    		<![CDATA[(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
     	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
 		</if>
    </sql>
-  
   <select id="findByStorPeriod" parameterType="map" resultMap="BaseResultMap1">
   	select  sum(case  WHEN sales_period= '0-2' THEN sales_amount end) two,
   		
-  		sum(case  WHEN sales_period= '2-4' THEN sales_amount end) four
+  		sum(case  WHEN sales_period= '2-4' THEN sales_amount end) four,
   			
-  			<!--  sum(case  WHEN sales_period='4-6' THEN sales_amount end) six,
+  			 sum(case  WHEN sales_period='4-6' THEN sales_amount end) six,
   			
   				sum(case  WHEN sales_period='6-8' THEN sales_amount end) eight,
   				
@@ -80,9 +71,9 @@
   										
   											sum(case  WHEN sales_period='20-22' THEN sales_amount end) twentyTwo,
   											
-  												sum(case  WHEN sales_period='22-24' THEN sales_amount end) twentyFour -->
+  												sum(case  WHEN sales_period='22-24' THEN sales_amount end) twentyFour 
   												
-  			 						 FROM sale_analyse WHERE  <include refid="queryMap1" />
+  			 						 FROM sale_analyse WHERE 1=1 <include refid="queryMap1"/>
   
   </select>
 </mapper>

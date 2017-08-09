@@ -39,7 +39,7 @@ public class SaleAnalyseRS extends BaseRS{
 	protected CheckToken checkToken;
 	
 	/**
-	 * 查询交易流水所有数据
+	 * 查询日销售交易流水所有数据
 	 * @param map
 	 * @return
 	 */
@@ -77,7 +77,7 @@ public class SaleAnalyseRS extends BaseRS{
 	}
 	
 	/**
-	 * 查询交易流水的占比 单独实现
+	 * 查询日销售交易流水的占比 单独实现(柱状图)
 	 * @param map
 	 * @return
 	 */
@@ -94,7 +94,7 @@ public class SaleAnalyseRS extends BaseRS{
 		try{
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			List<SaleAnalyse> saleAnalyseList = saleAnalyseService.findByStorePeriod(map);
+			List<SaleAnalyse> saleAnalyseList =  saleAnalyseService.findByStorePeriod(map);
 			result.setCode("200");
 			result.setMsg("Success");
 			result.setResult(saleAnalyseList);
