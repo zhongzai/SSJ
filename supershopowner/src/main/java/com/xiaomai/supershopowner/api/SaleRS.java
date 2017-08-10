@@ -27,7 +27,10 @@ import com.xiaomai.supershopowner.service.SaleService;
 public class SaleRS extends BaseRS{
 	@Autowired
 	public SaleService saleService;
-	
+	/**
+     * 门店销售数据接口
+     * 
+     */
 	@RequestMapping(value="/findSales",method = RequestMethod.POST)
 	public @ResponseBody String getSaleAnalyseByStoreCode(@Context HttpHeaders headers ,@RequestBody Sale sale){
 		RSResult result = new RSResult();
