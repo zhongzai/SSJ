@@ -21,12 +21,18 @@
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="coefficien" jdbcType="INTEGER" property="coefficien" />
     <result column="month_provide" jdbcType="INTEGER" property="monthProvide" />
+    
+    <result column="categoryOne_code" jdbcType="VARCHAR" property="categoryOneCode" />
+    <result column="categoryOne_name" jdbcType="VARCHAR" property="categoryOneName" />
+    <result column="categoryTwo_code" jdbcType="VARCHAR" property="categoryTwoCode" />
+    <result column="categoryTwo_name" jdbcType="VARCHAR" property="categoryTwoName" />
+    
   </resultMap>
   
   <sql id="Base_Column_List">
     id, goods_code, week_sales, month_sales, price, goods_name, images_url, shelf_life, 
     turnover_days, average_sales, max_order, min_order, specifications, unit, purchase_price, 
-    inventory, store_code, coefficien, month_provide
+    inventory, store_code, coefficien, month_provide,categoryOne_code,categoryOne_name,categoryTwo_code,categoryTwo_name
   </sql>
   
   <sql id="queryMap">

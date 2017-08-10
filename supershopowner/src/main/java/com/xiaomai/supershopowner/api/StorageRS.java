@@ -29,6 +29,7 @@ public class StorageRS  extends BaseRS {
 	@Autowired
 	protected CheckToken checkToken;
 	
+	//查询库存
 	@RequestMapping(value="findStorageByCode", method = RequestMethod.POST)
 	public String findStorageByCode(HttpServletRequest request,@RequestParam(value="storageCode",required=false) String storageCode){
 		RSResult rr = new RSResult();
@@ -53,7 +54,6 @@ public class StorageRS  extends BaseRS {
 			rr.setMsg("查询库存失败");
 			rr.setResult(null);
 		}
-		
 		return JSONObject.fromObject(rr).toString();
 	}
 

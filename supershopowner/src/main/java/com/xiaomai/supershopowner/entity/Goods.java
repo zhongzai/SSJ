@@ -43,6 +43,14 @@ public class Goods {
     
     private Integer lossTotal;
     
+    private String categoryOneCode;
+    
+    private String categoryOneName;
+    
+    private String categoryTwoCode;
+    
+    private String categoryTwoName;
+    
 
     public Integer getGoodTotal() {
 		return goodTotal;
@@ -210,5 +218,37 @@ public class Goods {
 
 	public void setLossTotal(Integer lossTotal) {
 		this.lossTotal = lossTotal;
+	}
+
+	public String getCategoryOneCode() {
+		return categoryOneCode;
+	}
+
+	public void setCategoryOneCode(String categoryOneCode) {
+		this.categoryOneCode = categoryOneCode;
+	}
+
+	public String getCategoryOneName() {
+		return categoryOneName;
+	}
+
+	public void setCategoryOneName(String categoryOneName) {
+		this.categoryOneName = categoryOneName;
+	}
+
+	public String getCategoryTwoCode() {
+		return categoryTwoCode;
+	}
+
+	public void setCategoryTwoCode(String categoryTwoCode) {
+		this.categoryTwoCode = categoryTwoCode;
+	}
+
+	public String getCategoryTwoName() {
+		return categoryTwoName;
+	}
+
+	public void setCategoryTwoName(String categoryTwoName) {
+		this.categoryTwoName = categoryTwoName;
 	}
 }
