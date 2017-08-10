@@ -5,8 +5,10 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.TokenUtils;
