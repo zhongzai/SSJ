@@ -44,7 +44,7 @@ public class OrderRS extends BaseRS {
 		try {
 			if (res == true) {
 				log.debug("call the orderRS");
-				orderService.addOrders(order);
+				orderService.addOrders(order);//TODO
 				rr.setCode("200");
 				rr.setMsg("添加订单成功");
 				rr.setResult(null);
