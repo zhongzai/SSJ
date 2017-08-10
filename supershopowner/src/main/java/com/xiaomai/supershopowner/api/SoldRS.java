@@ -34,7 +34,7 @@ public class SoldRS extends BaseRS{
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		map.put("storeCode", unSoldTranfer.getStoreCode());
-		map.put("turnoverDays", unSoldTranfer.getDays());
+		map.put("days", unSoldTranfer.getDays());
 		
 		try{ 
 			Boolean res=checkToken.check(request.getHeader("token"));

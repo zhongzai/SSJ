@@ -46,7 +46,8 @@
 			type="com.xiaomai.supershopowner.entity.SupplementGood" />
 		<typeAlias alias="userlogin"
 			type="com.xiaomai.supershopowner.entity.UserLogin" />
-			
+		<typeAlias alias="custflow"
+			type="com.xiaomai.supershopowner.entity.CustFlow" />
 
 	</typeAliases>
 
@@ -69,5 +70,6 @@
 		<mapper resource="mappers/Storage.xml" />
 		<mapper resource="mappers/SupplementGood.xml" />
 		<mapper resource="mappers/UserLogin.xml" />
+		<mapper resource="mappers/CustFlow.xml" />
 	</mappers>
 </configuration>

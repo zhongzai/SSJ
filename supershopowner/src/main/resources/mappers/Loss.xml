@@ -33,6 +33,15 @@
     from loss
     where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
+  
+  
+  <select id="findByGoodCode"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from loss
+    where goods_code = #{goodCode,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="delete" parameterType="java.lang.Integer">
     delete from loss
     where id = #{id,jdbcType=INTEGER}

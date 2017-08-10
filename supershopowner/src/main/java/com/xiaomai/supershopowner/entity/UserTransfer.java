@@ -5,8 +5,71 @@ public class UserTransfer {
     private String storeCode;
 
     private String userAccount;
+    
+    private String password;
 
     private String token;
+    
+    private String address;
+    
+    private String phone;
+    
+    private String storeName;
+    
+    private String managerName;
+    
+    private String sex;
+    
+    private String headUrl;
+    
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getHeadUrl() {
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
+	}
 
 	public String getStoreCode() {
 		return storeCode;
@@ -30,6 +93,14 @@ public class UserTransfer {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

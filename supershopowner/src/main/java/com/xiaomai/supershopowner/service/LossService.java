@@ -89,5 +89,18 @@ public class LossService{
 		log.debug("add the loss end...");
 	}
 	
+	//根据good code查询损耗列表
+	public List<Loss> findLossByGoodCode(String goodCode){
+		log.debug("find loss by store code starting...");
+		List<Loss> loss=null;
+		try {
+			loss = lossDao.findLossByGoodCode(goodCode);
+		} catch (SQLException ex) {
+			log.error("Exception: ",ex);
+			throw new RuntimeException(ex);
+		}
+		log.debug("find loss by store code end...");
+		return loss;
+	}
 	
 }
