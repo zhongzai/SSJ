@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.CustFlowMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.CustFlow">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="flow_code" jdbcType="VARCHAR" property="flowCode" />
+    <result column="pay_type" jdbcType="INTEGER" property="payType" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="flow_time" jdbcType="TIMESTAMP" property="flowTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
+    <result column="good_name" jdbcType="VARCHAR" property="goodName" />
+    <result column="good_number" jdbcType="INTEGER" property="goodNumber" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="cust_headUrl" jdbcType="VARCHAR" property="custHeadUrl" />
+    <result column="cust_level" jdbcType="INTEGER" property="custLevel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cust_id, store_code, flow_code, pay_type,amount, flow_time, status, good_code,good_name,good_number,
+    cust_name, cust_headUrl,cust_level
+  </sql>
+  <sql id="queryMap">
+		<if test="salesDate !=null and salesDate != ''">
+    		<![CDATA[and DATE_FORMAT(flow_time, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+   <select id="findByCustFlow" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from cust_flow where 1=1 <include refid="queryMap"/>
+  </select>
+</mapper>
+  

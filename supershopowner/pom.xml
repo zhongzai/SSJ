@@ -300,7 +300,7 @@
 		    <artifactId>shopDubbo</artifactId>
 		    <version>1.0.1</version>
         </dependency>
-
+ 
 	</dependencies>
 
 	<build>
