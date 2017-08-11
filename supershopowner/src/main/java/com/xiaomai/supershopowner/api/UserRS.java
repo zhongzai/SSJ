@@ -25,7 +25,10 @@ public class UserRS extends BaseRS{
 	
 	@Autowired
 	public SuperStoreService superStoreService;
-	
+	/**
+     * 用户登录接口
+     * 
+     */
 	@RequestMapping(value="/login",method = RequestMethod.POST)
 	public @ResponseBody String list(HttpServletRequest request,@RequestBody UserTransfer user){
 		

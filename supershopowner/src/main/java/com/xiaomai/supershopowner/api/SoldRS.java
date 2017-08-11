@@ -27,7 +27,10 @@ public class SoldRS extends BaseRS{
 	public GoodsService goodsService;
 	@Autowired
 	protected CheckToken checkToken;
-	
+	/**
+     * 滞销商品接口
+     * 
+     */
 	@RequestMapping(value="/unSoldList",method = RequestMethod.POST)
 	public @ResponseBody String list(HttpServletRequest request,@RequestBody UnSoldTranfer unSoldTranfer){
 		
@@ -59,7 +62,10 @@ public class SoldRS extends BaseRS{
 		}
 		return JSONObject.fromObject(result).toString();
 	}
-	
+	/**
+     * 售罄商品接口接口
+     * 
+     */
 	@RequestMapping(value="/soldOutList",method = RequestMethod.POST)
 	public @ResponseBody String soldOut(HttpServletRequest request,@RequestBody UnSoldTranfer unSoldTranfer){
 		
