@@ -9,11 +9,23 @@
     <result column="sales_amount" jdbcType="DECIMAL" property="salesAmount" />
     <result column="proportion" jdbcType="DECIMAL" property="proportion" />
   </resultMap>
-  
+  <resultMap  id="BaseResultMap1" type="com.xiaomai.supershopowner.entity.SaleAnalyse">
+  	<result column="two" jdbcType="VARCHAR" property="two" />
+    <result column="four" jdbcType="VARCHAR" property="four" />
+    <result column="six" jdbcType="VARCHAR" property="six" />
+    <result column="eight" jdbcType="VARCHAR" property="eight" />
+    <result column="ten"  jdbcType="VARCHAR" property="ten" />
+    <result column="twelve" jdbcType="VARCHAR" property="twelve" />
+    <result column="fourteen" jdbcType="VARCHAR"  property="fourteen" />
+    <result column="sixteen" jdbcType="VARCHAR"  property="sixteen" />
+    <result column="eighteen" jdbcType="VARCHAR"  property="eighteen" />
+    <result column="twenty"  property="twenty" />
+    <result column="twentyTwo"  property="twentyTwo" />
+    <result column="twentyFour"  property="twentyFour" />
+  </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, sales_date, sales_period, sales_amount, proportion
+     id, store_code, sales_date, sales_period, sales_amount,proportion
   </sql>
-  
   <sql id="queryMap">
 		<if test="salesDate !=null and salesDate != ''">
     		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
@@ -25,107 +37,43 @@
   
   <!-- 查询今日流水 -->
   <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
-  		select * from sale_analyse where 1=1 <include refid="queryMap"/> order by id
+  		select <include refid="Base_Column_List"/> from sale_analyse where 1=1 <include refid="queryMap"/> order by id
   </select>
   
+  <sql id="queryMap1">
+		<if test="salesDate !=null and salesDate != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  <select id="findByStorPeriod" parameterType="map" resultMap="BaseResultMap1">
+  	select  sum(case  WHEN sales_period= '0-2' THEN sales_amount end) two,
+  		
+  		sum(case  WHEN sales_period= '2-4' THEN sales_amount end) four,
+  			
+  			 sum(case  WHEN sales_period='4-6' THEN sales_amount end) six,
+  			
+  				sum(case  WHEN sales_period='6-8' THEN sales_amount end) eight,
+  				
+  					sum(case  WHEN sales_period='8-10' THEN sales_amount end) ten,
+  					
+  						sum(case  WHEN sales_period='10-12' THEN sales_amount end) twelve,
+  						
+  							sum(case  WHEN sales_period='12-14' THEN sales_amount end) fourteen,
+  							
+  								sum(case  WHEN sales_period='14-16' THEN sales_amount end) sixteen,
+  								
+  									sum(case  WHEN sales_period='16-18' THEN sales_amount end) eighteen,
+  									
+  										sum(case  WHEN sales_period='18-20' THEN sales_amount end) twenty,
+  										
+  											sum(case  WHEN sales_period='20-22' THEN sales_amount end) twentyTwo,
+  											
+  												sum(case  WHEN sales_period='22-24' THEN sales_amount end) twentyFour 
+  												
+  			 						 FROM sale_analyse WHERE 1=1 <include refid="queryMap1"/>
   
-  
-  
-  
-  
-  
-  
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sale_analyse
-    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sale_analyse
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.SaleAnalyse">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into sale_analyse (id, store_code, sales_date, 
-      sales_period, sales_amount, proportion
-      )
-    values (#{id,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{salesDate,jdbcType=INTEGER}, 
-      #{salesPeriod,jdbcType=VARCHAR}, #{salesAmount,jdbcType=DECIMAL}, #{proportion,jdbcType=DECIMAL}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.SaleAnalyse">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into sale_analyse
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="storeCode != null">
-        store_code,
-      </if>
-      <if test="salesDate != null">
-        sales_date,
-      </if>
-      <if test="salesPeriod != null">
-        sales_period,
-      </if>
-      <if test="salesAmount != null">
-        sales_amount,
-      </if>
-      <if test="proportion != null">
-        proportion,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="storeCode != null">
-        #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="salesDate != null">
-        #{salesDate,jdbcType=INTEGER},
-      </if>
-      <if test="salesPeriod != null">
-        #{salesPeriod,jdbcType=VARCHAR},
-      </if>
-      <if test="salesAmount != null">
-        #{salesAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="proportion != null">
-        #{proportion,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.SaleAnalyse">
-    update sale_analyse
-    <set>
-      <if test="storeCode != null">
-        store_code = #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="salesDate != null">
-        sales_date = #{salesDate,jdbcType=INTEGER},
-      </if>
-      <if test="salesPeriod != null">
-        sales_period = #{salesPeriod,jdbcType=VARCHAR},
-      </if>
-      <if test="salesAmount != null">
-        sales_amount = #{salesAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="proportion != null">
-        proportion = #{proportion,jdbcType=DECIMAL},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.SaleAnalyse">
-    update sale_analyse
-    set store_code = #{storeCode,jdbcType=VARCHAR},
-      sales_date = #{salesDate,jdbcType=INTEGER},
-      sales_period = #{salesPeriod,jdbcType=VARCHAR},
-      sales_amount = #{salesAmount,jdbcType=DECIMAL},
-      proportion = #{proportion,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

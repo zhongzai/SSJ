@@ -20,9 +20,7 @@ public class LossDao extends BaseDaoImpl<Loss,Integer>{
 		return selectList(getNameSpace()+".findByStoreCode",storeCode);
 	}
 	
-	
 	public List<Loss> findLossByGoodCode(String goodCode) throws SQLException{
 		return selectList(getNameSpace()+".findByGoodCode",goodCode);
 	}
-
 }

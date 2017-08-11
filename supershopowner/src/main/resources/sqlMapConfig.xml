@@ -20,6 +20,8 @@
 			type="com.xiaomai.supershopowner.entity.Cust" />
 		<typeAlias alias="daycategory"
 			type="com.xiaomai.supershopowner.entity.DayCategory" />
+		<typeAlias alias="flow"
+			type="com.xiaomai.supershopowner.entity.Flow" />
 		<typeAlias alias="goods"
 			type="com.xiaomai.supershopowner.entity.Goods" />
 		<typeAlias alias="loss"
@@ -38,11 +40,14 @@
 			type="com.xiaomai.supershopowner.entity.Sale" />
 		<typeAlias alias="saleanalyse"
 			type="com.xiaomai.supershopowner.entity.SaleAnalyse" />
+		<typeAlias alias="storage"
+			type="com.xiaomai.supershopowner.entity.Storage" />
 		<typeAlias alias="supplementgood"
 			type="com.xiaomai.supershopowner.entity.SupplementGood" />
 		<typeAlias alias="userlogin"
 			type="com.xiaomai.supershopowner.entity.UserLogin" />
-			
+		<typeAlias alias="custflow"
+			type="com.xiaomai.supershopowner.entity.CustFlow" />
 
 	</typeAliases>
 
@@ -65,5 +70,6 @@
 		<mapper resource="mappers/Storage.xml" />
 		<mapper resource="mappers/SupplementGood.xml" />
 		<mapper resource="mappers/UserLogin.xml" />
+		<mapper resource="mappers/CustFlow.xml" />
 	</mappers>
 </configuration>

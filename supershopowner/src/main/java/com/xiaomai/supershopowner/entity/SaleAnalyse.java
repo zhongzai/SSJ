@@ -17,8 +17,152 @@ public class SaleAnalyse {
     
     private String salesTime;
     
+    private String two;
+    
+    private String four;
 
-    public Integer getId() {
+    private String six;
+    
+    private String eight;
+    
+    private String ten;
+    
+    private String twelve;
+    
+    private String fourteen;
+    
+    private String sixteen;
+    
+    private String eighteen;
+    
+    private String twenty;
+    
+    private String twentyTwo;
+    
+    private String twentyFour;
+    
+
+    public String getTwo() {
+		return two;
+	}
+
+
+	public void setTwo(String two) {
+		this.two = two;
+	}
+
+
+	public String getFour() {
+		return four;
+	}
+
+
+	public void setFour(String four) {
+		this.four = four;
+	}
+
+
+	public String getSix() {
+		return six;
+	}
+
+
+	public void setSix(String six) {
+		this.six = six;
+	}
+
+
+	public String getEight() {
+		return eight;
+	}
+
+
+	public void setEight(String eight) {
+		this.eight = eight;
+	}
+
+
+	public String getTen() {
+		return ten;
+	}
+
+
+	public void setTen(String ten) {
+		this.ten = ten;
+	}
+
+
+	public String getTwelve() {
+		return twelve;
+	}
+
+
+	public void setTwelve(String twelve) {
+		this.twelve = twelve;
+	}
+
+
+	public String getFourteen() {
+		return fourteen;
+	}
+
+
+	public void setFourteen(String fourteen) {
+		this.fourteen = fourteen;
+	}
+
+
+	public String getSixteen() {
+		return sixteen;
+	}
+
+
+	public void setSixteen(String sixteen) {
+		this.sixteen = sixteen;
+	}
+
+
+	public String getEighteen() {
+		return eighteen;
+	}
+
+
+	public void setEighteen(String eighteen) {
+		this.eighteen = eighteen;
+	}
+
+
+	public String getTwenty() {
+		return twenty;
+	}
+
+
+	public void setTwenty(String twenty) {
+		this.twenty = twenty;
+	}
+
+
+	public String getTwentyTwo() {
+		return twentyTwo;
+	}
+
+
+	public void setTwentyTwo(String twentyTwo) {
+		this.twentyTwo = twentyTwo;
+	}
+
+
+	public String getTwentyFour() {
+		return twentyFour;
+	}
+
+
+	public void setTwentyFour(String twentyFour) {
+		this.twentyFour = twentyFour;
+	}
+
+
+	public Integer getId() {
         return id;
     }
 

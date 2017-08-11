@@ -36,8 +36,18 @@ public class Sale {
     private Double salesTotal;
     
     private Integer bestSalesNumber;
+    
+    private Integer upDown;
 
-    public Integer getBestSalesNumber() {
+    public Integer getUpDown() {
+		return upDown;
+	}
+
+	public void setUpDown(Integer upDown) {
+		this.upDown = upDown;
+	}
+
+	public Integer getBestSalesNumber() {
 		return bestSalesNumber;
 	}
 

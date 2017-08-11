@@ -36,6 +36,21 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 		}
 		return list;
 	}
+	/**
+	 * 查询交易流水的占比 单独实现
+	 * @param map
+	 * @return
+	 */
+	public List<SaleAnalyse> findByStorePeriod(Map<String, Object> map){
+		List<SaleAnalyse> listSale =new ArrayList<>();
+		try {
+			listSale= saleAnalyseDao.findByStorPeriod(map);
+		} catch (Exception e) {
+			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
+		}
+		
+		return listSale;
+	}
 	
 	@Override
 	public Integer insert(SaleAnalyse t) {

@@ -13,6 +13,20 @@
   <sql id="Base_Column_List">
     id, store_code, loss_value, loss_number, loss_code, loss_time,update_time
   </sql>
+    <sql id="queryMap">
+  		<if test="salesDate !=null and salesDate != ''">
+    		<![CDATA[and DATE_FORMAT(loss_time, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+ 
+  <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List"/> from loss where 1=1 <include refid="queryMap" /> order by id
+  		
+  			
+  </select>
   <select id="findByStoreCode"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

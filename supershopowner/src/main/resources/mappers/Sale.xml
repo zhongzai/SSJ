@@ -19,11 +19,12 @@
     <result column="sales_date" jdbcType="TIMESTAMP" property="salesDate" />
     <result column="sales_total" jdbcType="DECIMAL" property="salesTotal" />
     <result column="best_sales_number" jdbcType="INTEGER" property="bestSalesNumber"/>
+    <result column="up_down" jdbcType="INTEGER" property="upDown"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, user_account, store_code, cust_number, profit, loss, average_price, best_category_code, 
     best_category_name, best_goods_code, best_goods_name, consumption_number, new_cust, 
-    after_buying_rate, sales_date, sales_total, best_sales_number
+    after_buying_rate, sales_date, sales_total, best_sales_number, up_down
   </sql>
   <sql id="queryMap">
 		<if test="startDate !=null and startDate != ''">
@@ -43,4 +44,17 @@
     where 1=1 <include refid="queryMap"/>
   </select>
   
+   <sql id="queryMaps">
+		<if test="salesDate !=null and salesDate != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  
+
+  <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List"/> from sale where 1=1 <include refid="queryMaps"/> order by id
+  </select>
 </mapper>

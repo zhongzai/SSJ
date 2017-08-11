@@ -3,8 +3,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
+import org.apache.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaomai.supershopowner.common.BizErr;
+import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.SaleAnalyse;
 import com.xiaomai.supershopowner.service.SaleAnalyseService;
@@ -33,9 +35,16 @@ import net.sf.json.JSONObject;
 public class SaleAnalyseRS extends BaseRS{
 	@Autowired
 	public SaleAnalyseService saleAnalyseService;
+	@Autowired
+	protected CheckToken checkToken;
 	
+	/**
+	 * 查询日销售交易流水所有数据
+	 * @param map
+	 * @return
+	 */
 	@RequestMapping(value="/findSaleAnalyse",method = RequestMethod.POST)
-	public @ResponseBody String getSaleAnalyseByStoreCode(@Context HttpHeaders headers,@RequestBody SaleAnalyse saleAnalyse){
+	public @ResponseBody String getSaleAnalyseByStoreCode(HttpServletRequest request,@RequestBody SaleAnalyse saleAnalyse){
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		
@@ -46,10 +55,17 @@ public class SaleAnalyseRS extends BaseRS{
 		map.put("salesDate", formatter.format(saleAnalyse.getSalesDate()));
 		
 		try{
+			Boolean res=checkToken.check(request.getHeader("token"));
+			if(res==true){
 			List<SaleAnalyse> saleAnalyseList = saleAnalyseService.findByStoreCode(map);
 			result.setCode("200");
 			result.setMsg("Success");
 			result.setResult(saleAnalyseList);
+			}else{
+				result.setCode("201");
+				result.setMsg("token失效！");
+				result.setResult(null);
+			}
 		}catch(Exception ex){
 			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
@@ -58,5 +74,42 @@ public class SaleAnalyseRS extends BaseRS{
 			}
 		}
 		return JSONObject.fromObject(result).toString();
+	}
+	
+	/**
+	 * 查询日销售交易流水的占比 单独实现(柱状图)
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/getSaleAnalyseByProportion",method = RequestMethod.POST)
+	public @ResponseBody String getSaleAnalyseByProportion( @RequestBody SaleAnalyse saleAnalyse){
+		RSResult result = new RSResult();
+		HashMap<String, Object> map =super.getQueryMap();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		map.put("storeCode", saleAnalyse.getStoreCode());
+		
+		map.put("salesDate", formatter.format(saleAnalyse.getSalesDate()));
+		try{
+			Boolean res=checkToken.check(request.getHeader("token"));
+			if(res==true){
+			List<SaleAnalyse> saleAnalyseList =  saleAnalyseService.findByStorePeriod(map);
+			result.setCode("200");
+			result.setMsg("Success");
+			result.setResult(saleAnalyseList);
+			}else{
+				result.setCode("201");
+				result.setMsg("token失效！");
+				result.setResult(null);
+			}
+		}catch(Exception ex){
+			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
+				result.setCode("400");
+				result.setMsg("Fail");
+				result.setResult(null);	
+			}
+		}
+		return 	JSONObject.fromObject(result).toString();
 	}
 }

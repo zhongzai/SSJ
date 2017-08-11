@@ -4,8 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
+import org.apache.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaomai.supershopowner.common.BizErr;
+import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
 import com.xiaomai.supershopowner.service.OneCategoryAnalyseService;
@@ -34,19 +36,29 @@ import net.sf.json.JSONObject;
 public class OneCategoryAnalyseRS extends BaseRS{
 	@Autowired
 	public OneCategoryAnalyseService oneCategoryAnalyseService;
+	@Autowired
+	protected CheckToken checkToken;
 	
 	@RequestMapping(value="/getOneCategoryAnalyse" ,method = RequestMethod.POST)
-	public @ResponseBody String getOneCategoryAnalyse(@Context HttpHeaders headers,@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
+	public @ResponseBody String getOneCategoryAnalyse(HttpServletRequest request,@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
+		String token = request.getHeader("token");
 		RSResult result = new RSResult();
 		HashMap<String,Object> map = super.getQueryMap();
 		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		map.put("storeCode", oneCategoryAnalyse.getStoreCode());
 		map.put("salesDate", formatt.format(oneCategoryAnalyse.getSalesDate()));
 		try {
+			Boolean res=checkToken.check(request.getHeader("token"));
+			if(res==true){
 			List<OneCategoryAnalyse> list = oneCategoryAnalyseService.getOneCategoryAnalyse(map);
 			result.setCode("200");
 			result.setMsg("Suscces");
 			result.setResult(list);
+			}else{
+				result.setCode("201");
+				result.setMsg("token失效！");
+				result.setResult(null);
+			}
 		} catch (Exception e) {
 			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
 				result.setCode("400");

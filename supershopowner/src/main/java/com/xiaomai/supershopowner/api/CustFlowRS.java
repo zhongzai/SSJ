@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,36 +17,34 @@ import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Article;
-import com.xiaomai.supershopowner.service.ArticleService;
+import com.xiaomai.supershopowner.entity.CustFlow;
+import com.xiaomai.supershopowner.service.CustFlowService;
 
 import net.sf.json.JSONObject;
 
-/**
- * 
- * @author 叩学聪
- * @version 文章表数据
- * @return 返回文章信息表数据
- * 根据购创建文章时间查询(createTime)
- */
 @Controller
-@RequestMapping(value="/article")
-public class ArticleRS extends BaseRS{
+@RequestMapping(value="/CustFlow")
+public class CustFlowRS extends BaseRS{
 	@Autowired
-	public ArticleService articleService;
+	public CustFlowService custFlowService;
 	@Autowired
 	protected CheckToken checkToken;
-	
-	@RequestMapping(value="/findArticle" , method = RequestMethod.POST)
-	public @ResponseBody String getArticle(HttpServletRequest request,@RequestBody Article article){
+	/**
+	 * 
+	 * @param custFlow
+	 * @return 根据日期查询到的销售数据
+	 */
+	@RequestMapping(value="/getCustFlow",method = RequestMethod.POST)
+	public @ResponseBody String getCustFlow(HttpServletRequest request,@RequestBody CustFlow custFlow){
 		RSResult result = new RSResult();
-		HashMap<String , Object> map = super.getQueryMap();
-		SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-		map.put("createTime", format.format(article.getCreateTime()));
+		SimpleDateFormat formatt = new SimpleDateFormat();
+		HashMap<String,Object> map = super.getQueryMap();
+		map.put("storeCode", custFlow.getStoreCode());
+		map.put("flowTime", formatt.format(custFlow.getFlowTime()));
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
-			
 			if(res==true){
-			List<Article> articleList = articleService.getArticle(map);
+			List<CustFlow> articleList = custFlowService.getCustFlow(map);
 			result.setCode("200");
 			result.setMsg("Success");
 			result.setResult(articleList);

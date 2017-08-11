@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.entity;
-
+import com.xiaomai.supershopowner.entity.Loss;
+import com.xiaomai.supershopowner.entity.Sale;
 public class YesterdaySales {
 	private Loss loss;
 	

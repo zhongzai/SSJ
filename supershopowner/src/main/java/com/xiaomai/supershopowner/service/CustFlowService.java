@@ -7,32 +7,27 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
-import com.xiaomai.supershopowner.dao.DayCategoryDao;
-import com.xiaomai.supershopowner.entity.Cust;
-import com.xiaomai.supershopowner.entity.DayCategory;
+import com.xiaomai.supershopowner.dao.CustFlowDAO;
+import com.xiaomai.supershopowner.entity.CustFlow;
 
 @Service
-public class DayCategoryService implements BaseService<DayCategory, Integer>{
+public class CustFlowService implements BaseService<CustFlow, Integer>{
+	
 	@Resource
-	public DayCategoryDao dayCategoryDao;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(DayCategory.class);
+	public CustFlowDAO custFlowDao;
 	
-	SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
-	
-	public List<DayCategory> getDayCategory(Map<String , Object> map){
-		List<DayCategory> list = new ArrayList<>();
+	public List<CustFlow> getCustFlow(Map<String,Object> map){
+		List<CustFlow> list =new ArrayList<>();
+		SimpleDateFormat  fromat = new SimpleDateFormat("YYYY-MM-dd");
 		try {
-			list = dayCategoryDao.findListAllWithMap(map);
-			for(DayCategory dayCategory : list){
-				
-				dayCategory.setSalesTime(formatt.format(dayCategory.getSalesDate()));
-				
+			list = custFlowDao.findByCustFlow(map);
+			for(CustFlow custFlow : list){
+				custFlow.setFlowDate(fromat.format(custFlow.getFlowTime()));
 			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
@@ -41,13 +36,13 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 	}
 
 	@Override
-	public Integer insert(DayCategory t) {
+	public Integer insert(CustFlow t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer update(DayCategory t) {
+	public Integer update(CustFlow t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,25 +54,25 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 	}
 
 	@Override
-	public DayCategory findById(Integer id) {
+	public CustFlow findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DayCategory> findListAll() {
+	public List<CustFlow> findListAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public WebPage<DayCategory> findPage(Map<String, Object> map) {
+	public WebPage<CustFlow> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DayCategory> findListAllWithMap(Map<String, Object> paramsMap) {
+	public List<CustFlow> findListAllWithMap(Map<String, Object> paramsMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -87,4 +82,6 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 }
