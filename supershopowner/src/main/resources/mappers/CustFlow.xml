@@ -22,8 +22,8 @@
     cust_name, cust_headUrl,cust_level
   </sql>
   <sql id="queryMap">
-		<if test="salesDate !=null and salesDate != ''">
-    		<![CDATA[and DATE_FORMAT(flow_time, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+		<if test="flowTime !=null and flowTime != ''">
+    		<![CDATA[and DATE_FORMAT(flow_time, '%Y-%m-%d') =  DATE_FORMAT(#{flowTime}, '%Y-%m-%d')]]>
     	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}

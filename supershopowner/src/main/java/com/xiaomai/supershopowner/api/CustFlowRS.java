@@ -40,7 +40,7 @@ public class CustFlowRS extends BaseRS{
 		SimpleDateFormat formatt = new SimpleDateFormat();
 		HashMap<String,Object> map = super.getQueryMap();
 		map.put("storeCode", custFlow.getStoreCode());
-		map.put("flowTime", formatt.format(custFlow.getFlowTime()));
+		map.put("flowTime",formatt.format(custFlow.getFlowTime()));
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
