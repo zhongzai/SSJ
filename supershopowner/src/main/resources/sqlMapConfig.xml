@@ -48,6 +48,8 @@
 			type="com.xiaomai.supershopowner.entity.UserLogin" />
 		<typeAlias alias="custflow"
 			type="com.xiaomai.supershopowner.entity.CustFlow" />
+		<typeAlias alias="weeksales"
+			type="com.xiaomai.supershopowner.entity.WeekSales" />
 
 	</typeAliases>
 
@@ -71,5 +73,6 @@
 		<mapper resource="mappers/SupplementGood.xml" />
 		<mapper resource="mappers/UserLogin.xml" />
 		<mapper resource="mappers/CustFlow.xml" />
+		<mapper resource="mappers/WeekSales.xml" />
 	</mappers>
 </configuration>
