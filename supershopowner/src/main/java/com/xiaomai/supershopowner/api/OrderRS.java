@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -208,7 +209,7 @@ public class OrderRS extends BaseRS {
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
-				rr.setResult(gor);
+				rr.setResult(null);
 			}
 		} catch (Exception e) {
 			log.error("called findGoodByQR failure", e);
@@ -223,27 +224,65 @@ public class OrderRS extends BaseRS {
 	@RequestMapping(value="findAllOneItems")
 	public String findAllOneItems(@RequestParam(value="levelNumber",required=false) String levelNumber){
 		RSResult rr = new RSResult();
-		GoodsCategory gcy = new GoodsCategory();
-		gcy.setGcateLevelnumber(Integer.valueOf(levelNumber));
-		
-		List<GoodsCategory> gcs = superStoreService.getGoodscategory(gcy);
-		for(GoodsCategory gcay:gcs){
-			System.out.println(gcay.getGcateCode()+":"+gcay.getGcateName());
+		Map<String,String> map = new HashMap<String,String>();
+		Boolean res;
+		try {
+			res = checkToken.check(request.getHeader("token"));
+			if (res == true) {
+				log.debug("call the findGoodByQR starting...");
+				GoodsCategory gcy = new GoodsCategory();
+				gcy.setGcateLevelnumber(Integer.valueOf(levelNumber));
+				
+				List<GoodsCategory> gcs = superStoreService.getGoodscategory(gcy);
+				for(GoodsCategory gcay:gcs){
+					map.put(gcay.getGcateCode(), gcay.getGcateName());
+				}
+				rr.setCode("200");
+				rr.setMsg("获取一级目录成功");
+				rr.setResult(gcs);
+			} else {
+				rr.setCode("201");
+				rr.setMsg("token失效！");
+				rr.setResult(null);
+			}
+		} catch (Exception e) {
+			log.error("called findGoodByQR failure", e);
+			rr.setCode("400");
+			rr.setMsg("获取一级目录失败");
+			rr.setResult(null);
 		}
 		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
 				.toString();
 	}
 	
 	@RequestMapping(value="findAllTwoItems")
-	public String findAllTwoItems(@RequestParam(value="gcateCode",required=false) String gcateCode){
+	public String findAllTwoItems(@RequestParam(value="oneLevelCode",required=false) String oneLevelCode){
 		RSResult rr = new RSResult();
-		GoodsCategory gcy = new GoodsCategory();
-		gcy.setGcateCode(gcateCode);
 		
-		List<GoodsCategory> gcs = superStoreService.getGoodscategory(gcy);
-		for(GoodsCategory gcay:gcs){
-			System.out.println(gcay.getSonList());
+		Boolean res;
+		try {
+			res = checkToken.check(request.getHeader("token"));
+			if (res == true) {
+				log.debug("call the findGoodByQR starting...");
+				GoodsCategory gcy = new GoodsCategory();
+				gcy.setGcateCode(oneLevelCode);
+				
+				List<GoodsCategory> gcs = superStoreService.getGoodscategory(gcy);
+				rr.setCode("200");
+				rr.setMsg("获取特定的一级下的所有二级目录成功");
+				rr.setResult(gcs);
+			} else {
+				rr.setCode("201");
+				rr.setMsg("token失效！");
+				rr.setResult(null);
+			}
+		} catch (Exception e) {
+			log.error("called findGoodByQR failure", e);
+			rr.setCode("400");
+			rr.setMsg("获取特定的一级下的所有二级目录失败");
+			rr.setResult(null);
 		}
+		
 		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
 				.toString();
 	}
