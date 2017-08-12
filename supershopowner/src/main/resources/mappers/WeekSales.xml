@@ -4,20 +4,40 @@
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.WeekSales">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="sales_date" jdbcType="DATE" property="salesDate" />
     <result column="temperature" jdbcType="VARCHAR" property="temperature" />
     <result column="sales_number" jdbcType="INTEGER" property="salesNumber" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, good_code, sales_date, temperature, sales_number
+    id, good_code, sales_date, temperature, sales_number,store_code
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  
+  <sql id="queryMap">
+		<if test="nowDate !=null and nowDate != ''"> 
+    <![CDATA[ and date_add(date(#{nowDate}),INTERVAL -7 DAY) < sales_date ]]>
+    </if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from week_sales
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  
+  <select id="findWeekSales" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from week_sales
+    where 1=1
+    <include refid="queryMap"/>
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from week_sales
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -64,7 +84,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
+  <update id="update" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
     update week_sales
     <set>
       <if test="goodCode != null">
@@ -82,12 +102,5 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
-    update week_sales
-    set good_code = #{goodCode,jdbcType=VARCHAR},
-      sales_date = #{salesDate,jdbcType=DATE},
-      temperature = #{temperature,jdbcType=VARCHAR},
-      sales_number = #{salesNumber,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

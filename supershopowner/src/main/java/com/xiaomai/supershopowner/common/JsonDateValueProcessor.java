@@ -9,7 +9,7 @@ import net.sf.json.processors.JsonValueProcessor;
 
 public class JsonDateValueProcessor implements JsonValueProcessor{
 
-	private String format ="yyyy-MM-dd HH:mm:ss";  
+	private String format ="yyyy-MM-dd";  
     
     public JsonDateValueProcessor() {  
         super();  

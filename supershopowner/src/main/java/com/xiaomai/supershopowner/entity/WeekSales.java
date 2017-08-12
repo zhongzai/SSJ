@@ -12,8 +12,19 @@ public class WeekSales {
     private String temperature;
 
     private Integer salesNumber;
+    
+    private String storeCode;
+    
 
-    public Integer getId() {
+    public String getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	public Integer getId() {
         return id;
     }
 
