@@ -42,6 +42,9 @@
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
 		</if>
+		<if test="goodsCode != null">
+			and goods_code = #{goodsCode,jdbcType=VARCHAR}
+		</if>
    </sql>
   
   <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">

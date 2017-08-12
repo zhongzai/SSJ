@@ -3,22 +3,25 @@
 <mapper namespace="mappers.WeekSales">
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.WeekSales">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
+    <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="sales_date" jdbcType="DATE" property="salesDate" />
     <result column="temperature" jdbcType="VARCHAR" property="temperature" />
     <result column="sales_number" jdbcType="INTEGER" property="salesNumber" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, good_code, sales_date, temperature, sales_number,store_code
+    id, goods_code, sales_date, temperature, sales_number,store_code
   </sql>
   
   <sql id="queryMap">
 		<if test="nowDate !=null and nowDate != ''"> 
-    <![CDATA[ and date_add(date(#{nowDate}),INTERVAL -7 DAY) < sales_date ]]>
-    </if>
+    		<![CDATA[ and date_add(date(#{nowDate}),INTERVAL -7 DAY) < sales_date ]]>
+    	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsCode != null">
+			and goods_code = #{goodsCode,jdbcType=VARCHAR}
 		</if>
    </sql>
   
@@ -42,7 +45,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
-    insert into week_sales (id, good_code, sales_date, 
+    insert into week_sales (id, goods_code, sales_date, 
       temperature, sales_number)
     values (#{id,jdbcType=INTEGER}, #{goodCode,jdbcType=VARCHAR}, #{salesDate,jdbcType=DATE}, 
       #{temperature,jdbcType=VARCHAR}, #{salesNumber,jdbcType=INTEGER})
@@ -53,8 +56,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="goodCode != null">
-        good_code,
+      <if test="goodsCode != null">
+        goods_code,
       </if>
       <if test="salesDate != null">
         sales_date,
@@ -87,8 +90,8 @@
   <update id="update" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
     update week_sales
     <set>
-      <if test="goodCode != null">
-        good_code = #{goodCode,jdbcType=VARCHAR},
+      <if test="goodsCode != null">
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
       </if>
       <if test="salesDate != null">
         sales_date = #{salesDate,jdbcType=DATE},

@@ -5,7 +5,7 @@ import java.util.Date;
 public class WeekSales {
     private Integer id;
 
-    private String goodCode;
+    private String goodsCode;
 
     private Date salesDate;
 
@@ -31,16 +31,16 @@ public class WeekSales {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public String getGoodsCode() {
+		return goodsCode;
+	}
 
-    public String getGoodCode() {
-        return goodCode;
-    }
+	public void setGoodsCode(String goodsCode) {
+		this.goodsCode = goodsCode;
+	}
 
-    public void setGoodCode(String goodCode) {
-        this.goodCode = goodCode == null ? null : goodCode.trim();
-    }
-
-    public Date getSalesDate() {
+	public Date getSalesDate() {
         return salesDate;
     }
 
