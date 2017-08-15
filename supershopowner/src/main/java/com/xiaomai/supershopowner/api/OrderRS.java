@@ -256,7 +256,7 @@ public class OrderRS extends BaseRS {
 	}
 	
 	@RequestMapping(value="findAllTwoItems")
-	public String findAllTwoItems(@RequestParam(value="oneLevelCode",required=false) String oneLevelCode){
+	public String findAllTwoItems(@RequestParam(value="gcateParentCode",required=false) String gcateParentCode){
 		RSResult rr = new RSResult();
 		
 		Boolean res;
@@ -265,7 +265,7 @@ public class OrderRS extends BaseRS {
 			if (res == true) {
 				log.debug("call the findGoodByQR starting...");
 				GoodsCategory gcy = new GoodsCategory();
-				gcy.setGcateCode(oneLevelCode);
+				gcy.setGcateParentCode(gcateParentCode);
 				
 				List<GoodsCategory> gcs = superStoreService.getGoodscategory(gcy);
 				rr.setCode("200");
