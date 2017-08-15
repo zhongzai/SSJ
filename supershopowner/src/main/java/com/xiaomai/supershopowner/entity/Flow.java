@@ -6,18 +6,28 @@ public class Flow {
     private Integer id;
 
     private String flowCode;
+    
+    private String storeCode;
 
     private Integer type;
 
     private Integer amount;
-
+    
     private Date flowTime;
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public String getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(String storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	public void setId(Integer id) {
         this.id = id;
     }
 

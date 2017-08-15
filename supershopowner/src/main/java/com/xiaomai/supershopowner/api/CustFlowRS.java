@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Article;
 import com.xiaomai.supershopowner.entity.CustFlow;
 import com.xiaomai.supershopowner.service.CustFlowService;
-
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value="/CustFlow")

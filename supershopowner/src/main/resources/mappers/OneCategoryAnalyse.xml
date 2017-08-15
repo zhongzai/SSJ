@@ -33,4 +33,10 @@
   		
   			<include refid="queryMap" /> order by ranking 
   </select>
+  
+  <select id="findBestGcate" parameterType="map" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List"/> from one_category_analyse where 1=1 
+  		
+  			<include refid="queryMap" /> order by ranking 
+  </select>
 </mapper>

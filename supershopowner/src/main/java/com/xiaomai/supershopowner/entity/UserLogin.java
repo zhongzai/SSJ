@@ -2,6 +2,9 @@ package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.xiaomai.supershopowner.common.JsonDateTimeSerializer;
+
 public class UserLogin {
     private Integer id;
 
@@ -9,6 +12,7 @@ public class UserLogin {
 
     private String token;
 
+    @JsonSerialize(using = JsonDateTimeSerializer.class)
     private Date lastLogin;
 
     public Integer getId() {

@@ -2,6 +2,7 @@ package com.xiaomai.supershopowner.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,11 @@ import org.springframework.stereotype.Service;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
+import com.xiaomai.supershopowner.dao.DayCategoryDao;
+import com.xiaomai.supershopowner.dao.OneCategoryAnalyseDao;
 import com.xiaomai.supershopowner.dao.SalesDao;
+import com.xiaomai.supershopowner.entity.DayCategory;
+import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
 import com.xiaomai.supershopowner.entity.Sale;
 import com.xiaomai.supershopowner.entity.SalesTranfer;
 
@@ -21,6 +26,12 @@ import com.xiaomai.supershopowner.entity.SalesTranfer;
 public class SaleService implements BaseService<Sale, Integer>{
 	@Resource
 	public SalesDao saleDao;
+	
+	@Resource
+	public DayCategoryDao dayCategoryDao;
+	
+	@Resource
+	public OneCategoryAnalyseDao oneCategoryAnalyseDao;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(SaleService.class);
 	public SalesTranfer findSales(Map<String, Object> map){
 		
@@ -31,6 +42,19 @@ public class SaleService implements BaseService<Sale, Integer>{
 			List<Sale> list= saleDao.findListAllWithMap(map);
 			
 			for(Sale sales : list){
+				Map<String, Object> map1 = new HashMap<String, Object>();
+				map1.put("salesDate", sales.getSalesDate());
+				map1.put("storeCode", sales.getStoreCode());
+				
+				//根据时间和门店Code查询当天最佳品类信息
+				DayCategory dayCategory = dayCategoryDao.findBestGcate(map1);
+				
+				//根据时间和门店Code查询当天最佳单品信息
+				OneCategoryAnalyse oneCategoryAnalyse = oneCategoryAnalyseDao.findBestGcate(map1);
+				
+				sales.setBestCategoryName(dayCategory.getCategoryName());
+				sales.setBestGoodsName(oneCategoryAnalyse.getCategoryName());
+				
 				if(formatter.format(new Date()).equals(formatter.format(sales.getSalesDate()))){
 					salesTranfer.setTodaySales(sales);
 				}else{

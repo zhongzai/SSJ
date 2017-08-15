@@ -13,4 +13,9 @@ public class JSONObjectConfig {
 		jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor());
 		return jsonConfig;
 	}
+	
+	public static JsonConfig getTime(){
+		jsonConfig.registerJsonValueProcessor(Date.class,new JsonDateTimeProcessor());
+		return jsonConfig;
+	}
 }

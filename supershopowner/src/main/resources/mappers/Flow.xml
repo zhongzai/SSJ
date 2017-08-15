@@ -4,92 +4,19 @@
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Flow">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="flow_code" jdbcType="VARCHAR" property="flowCode" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="flow_time" jdbcType="DATE" property="flowTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, flow_code, type, amount, flow_time
+    id, flow_code, type, amount, flow_time,store_code
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="findByStoreCode" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from flow
-    where id = #{id,jdbcType=INTEGER}
+    where store_code = #{storeCode,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from flow
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Flow">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into flow (id, flow_code, type, 
-      amount, flow_time)
-    values (#{id,jdbcType=INTEGER}, #{flowCode,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{amount,jdbcType=DECIMAL}, #{flowTime,jdbcType=DATE})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.Flow">
-    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into flow
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      id,
-      <if test="flowCode != null">
-        flow_code,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="amount != null">
-        amount,
-      </if>
-      <if test="flowTime != null">
-        flow_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      #{id,jdbcType=INTEGER},
-      <if test="flowCode != null">
-        #{flowCode,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="amount != null">
-        #{amount,jdbcType=DECIMAL},
-      </if>
-      <if test="flowTime != null">
-        #{flowTime,jdbcType=DATE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaomai.supershopowner.entity.Flow">
-    update flow
-    <set>
-      <if test="flowCode != null">
-        flow_code = #{flowCode,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="amount != null">
-        amount = #{amount,jdbcType=DECIMAL},
-      </if>
-      <if test="flowTime != null">
-        flow_time = #{flowTime,jdbcType=DATE},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaomai.supershopowner.entity.Flow">
-    update flow
-    set flow_code = #{flowCode,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      amount = #{amount,jdbcType=DECIMAL},
-      flow_time = #{flowTime,jdbcType=DATE}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

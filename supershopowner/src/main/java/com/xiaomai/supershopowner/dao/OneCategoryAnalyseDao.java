@@ -1,5 +1,8 @@
 package com.xiaomai.supershopowner.dao;
 
+import java.sql.SQLException;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
@@ -13,4 +16,7 @@ public class OneCategoryAnalyseDao extends BaseDaoImpl<OneCategoryAnalyse, Integ
 		return "mappers.OneCategoryAnalyseMapper";
 	}
 
+	public OneCategoryAnalyse findBestGcate(Map<String, Object> map)throws SQLException{
+		return selectOne(getNameSpace()+".findBestGcate",map);
+	}
 }
