@@ -2,6 +2,7 @@ package com.xiaomai.supershopowner.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,10 @@ public class Loss2GoodsDao extends BaseDaoImpl<Loss2good,Integer>{
 	
 	public List<Loss2good> findLossGoods(String lossCode) throws SQLException{
 		return selectList(getNameSpace()+".findLossGoods",lossCode);
+	}
+	
+	public List<Loss2good> findLossByOneGood(Map<String,Object> map) throws SQLException{
+		return selectList(getNameSpace()+".findLossByOneGood",map);
 	}
 
 }
