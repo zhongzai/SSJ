@@ -9,50 +9,57 @@ public class Article {
 
     private String content;
 
-    private String resource;
+    private String subtitle;
 
     private Date createTime;
 
-    private Integer isRecommended;
+    private Integer operatorId;
+    
+    private String	operator;
+    
+    private String	comment;
+    
+    private String	type;
+    
+    private String	source;
+    
+    private Integer status;
 
-    private Integer imagesId;
-
+    private Date updateTime;
 
 	public Integer getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getResource() {
-        return resource;
-    }
+	public String getSubtitle() {
+		return subtitle;
+	}
 
-    public void setResource(String resource) {
-        this.resource = resource == null ? null : resource.trim();
-    }
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
 
-
-
-    public Date getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
@@ -60,19 +67,61 @@ public class Article {
 		this.createTime = createTime;
 	}
 
-	public Integer getIsRecommended() {
-        return isRecommended;
-    }
+	public Integer getOperatorId() {
+		return operatorId;
+	}
 
-    public void setIsRecommended(Integer isRecommended) {
-        this.isRecommended = isRecommended;
-    }
+	public void setOperatorId(Integer operatorId) {
+		this.operatorId = operatorId;
+	}
 
-    public Integer getImagesId() {
-        return imagesId;
-    }
+	public String getOperator() {
+		return operator;
+	}
 
-    public void setImagesId(Integer imagesId) {
-        this.imagesId = imagesId;
-    }
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	
 }

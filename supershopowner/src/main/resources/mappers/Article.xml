@@ -5,13 +5,18 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="resource" jdbcType="VARCHAR" property="resource" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="is_recommended" jdbcType="INTEGER" property="isRecommended" />
-    <result column="images_id" jdbcType="INTEGER" property="imagesId" />
+    <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="operatorId" jdbcType="INTEGER" property="operatorId" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, content, resource, create_time, is_recommended, images_id
+    id, title, content, create_time,subtitle,operatorId,operator,comment,type,source,status,update_time
   </sql>
       <sql id="queryMap">
 		<if test="createTime !=null and createTime != ''">
@@ -20,6 +25,6 @@
    </sql> 
     
    <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from article where 1=1 <include refid="queryMap"/> order by id
+	  	select <include refid="Base_Column_List" /> from tb_article where 1=1 <include refid="queryMap"/> order by id
    </select>
 </mapper>
