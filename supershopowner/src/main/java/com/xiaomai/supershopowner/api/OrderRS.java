@@ -185,7 +185,8 @@ public class OrderRS extends BaseRS {
 	@RequestMapping(value = "findGoodByQR", method = RequestMethod.POST)
 	public String findGoodByQR(
 			@RequestParam(value = "sku", required = true) String sku,
-			@RequestParam(value = "storeCode", required = true) String storeCode) {
+			@RequestParam(value = "storeCode", required = true) String storeCode,
+			@RequestParam(value = "goodsCode", required = true) String goodsCode) {
 		RSResult rr = new RSResult();
 		HashMap<String, Object> map = super.getQueryMap();
 		map.put("storeCode", storeCode);
@@ -196,15 +197,27 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findGoodByQR starting...");
-				GoodsInfoDto gid = superStoreService.getGoodsInfoBySku(sku);
-				map.put("goodsCode", gid.getGoodsCode());
-				gor.setGoodsInforDto(gid);
-				List<Goods> gs = goodsService.findGoods(map);
-				gor.setGs(gs);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				map.put("nowDate", sdf.format(new Date()));
-				List<WeekSales> ws = weekSalesService.findWeekSales(map);
-				gor.setWs(ws);
+				if(null!=sku){
+					GoodsInfoDto gid = superStoreService.getGoodsInfoBySku(sku);
+					map.put("goodsCode", gid.getGoodsCode());
+					gor.setGoodsInforDto(gid);
+					List<Goods> gs = goodsService.findGoods(map);
+					gor.setGs(gs);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					map.put("nowDate", sdf.format(new Date()));
+					List<WeekSales> ws = weekSalesService.findWeekSales(map);
+					gor.setWs(ws);
+				}else{
+					map.put("goodsCode", goodsCode);
+					List<Goods> gs = goodsService.findGoods(map);
+					gor.setGs(gs);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					map.put("nowDate", sdf.format(new Date()));
+					List<WeekSales> ws = weekSalesService.findWeekSales(map);
+					gor.setWs(ws);
+				}
+				
+				
 				rr.setCode("200");
 				rr.setMsg("扫描二维码获取商品信息成功");
 				rr.setResult(gor);
