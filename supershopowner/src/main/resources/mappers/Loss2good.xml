@@ -7,6 +7,12 @@
     <result column="loss_code" jdbcType="VARCHAR" property="lossCode" />
     <result column="loss_total" jdbcType="INTEGER" property="lossTotal" />
     
+   <result column="loss_value" jdbcType="DECIMAL" property="lossValue" />
+    <result column="loss_number" jdbcType="INTEGER" property="lossNumber" />
+    <result column="loss_time" jdbcType="DATE" property="lossTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    
+    
     <result column="week_sales" jdbcType="INTEGER" property="weekSales" />
     <result column="month_sales" jdbcType="INTEGER" property="monthSales" />
     <result column="price" jdbcType="DECIMAL" property="price" />
@@ -28,6 +34,15 @@
   <sql id="Base_Column_List">
     id, goods_code, loss_code,loss_total
   </sql>
+  <sql id="queryMap">
+    	<if test="storeCode != null">
+			and l.store_code = #{storeCode,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsCode != null">
+			and lg.goods_code = #{goodsCode,jdbcType=VARCHAR}
+		</if>
+   </sql>
+  
   <select id="findLossGoods" parameterType="java.lang.String" resultMap="BaseResultMap">
     select lg.id,lg.goods_code,lg.loss_code,lg.loss_total,g.week_sales,g.month_sales,g.price,g.goods_name,g.images_url,g.shelf_life,
     g.turnover_days,g.average_sales,g.max_order,g.min_order,g.specifications,g.unit,g.purchase_price,g.inventory,g.store_code,
@@ -36,6 +51,17 @@
     where lg.loss_code = #{lossCode}
 	
   </select>
+  
+  <select id="findLossByOneGood" parameterType="map" resultMap="BaseResultMap">
+    select lg.id,lg.goods_code,lg.loss_code,lg.loss_total,l.loss_value,l.loss_number,l.loss_time,l.update_time,g.week_sales,g.month_sales,g.price,g.goods_name,g.images_url,g.shelf_life,
+    g.turnover_days,g.average_sales,g.max_order,g.min_order,g.specifications,g.unit,g.purchase_price,g.inventory,g.store_code,
+    g.coefficien,g.month_provide
+    from loss2good lg left join loss l on lg.loss_code = l.loss_code left join goods g on lg.goods_code = g.goods_code
+    where 1=1 <include refid="queryMap" />
+	
+  </select>
+  
+  
   <delete id="delete" parameterType="java.lang.Integer">
     delete from loss2good
     where id = #{id,jdbcType=INTEGER}

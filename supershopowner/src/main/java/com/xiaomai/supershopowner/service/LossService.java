@@ -2,8 +2,10 @@ package com.xiaomai.supershopowner.service;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +103,20 @@ public class LossService{
 		}
 		log.debug("find loss by store code end...");
 		return loss;
+	}
+	
+	//查询每个单品里的损耗
+	public List<Loss2good> findLossByOneGood(Map<String,Object> map){
+		log.debug("find loss by one good starting...");
+		List<Loss2good> lgs = new ArrayList<Loss2good>();
+		try {
+			lgs = loss2GoodsDao.findLossByOneGood(map);
+		} catch (SQLException ex) {
+			log.error("Exception: ",ex);
+			throw new RuntimeException(ex);
+		}
+		log.debug("find loss by one good end");
+		return lgs;
 	}
 	
 }

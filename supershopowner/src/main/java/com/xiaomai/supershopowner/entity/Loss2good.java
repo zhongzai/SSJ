@@ -1,5 +1,7 @@
 package com.xiaomai.supershopowner.entity;
 
+import java.util.Date;
+
 public class Loss2good extends Goods{
     private Integer id;
 
@@ -8,8 +10,50 @@ public class Loss2good extends Goods{
     private String lossCode;
     
     private Integer lossTotal;
+    
 
-    public Integer getId() {
+    private Double lossValue;
+
+    private Integer lossNumber;
+    
+    private Date lossTime;
+    
+    private Date updateTime;
+    
+
+	public Double getLossValue() {
+		return lossValue;
+	}
+
+	public void setLossValue(Double lossValue) {
+		this.lossValue = lossValue;
+	}
+
+	public Integer getLossNumber() {
+		return lossNumber;
+	}
+
+	public void setLossNumber(Integer lossNumber) {
+		this.lossNumber = lossNumber;
+	}
+
+	public Date getLossTime() {
+		return lossTime;
+	}
+
+	public void setLossTime(Date lossTime) {
+		this.lossTime = lossTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getId() {
         return id;
     }
 
