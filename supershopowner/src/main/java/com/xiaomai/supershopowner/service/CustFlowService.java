@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,12 +22,8 @@ public class CustFlowService implements BaseService<CustFlow, Integer>{
 	
 	public List<CustFlow> getCustFlow(Map<String,Object> map){
 		List<CustFlow> list =new ArrayList<>();
-		SimpleDateFormat  fromat = new SimpleDateFormat("YYYY-MM-dd");
 		try {
 			list = custFlowDao.findByCustFlow(map);
-			for(CustFlow custFlow : list){
-				custFlow.setFlowDate(fromat.format(custFlow.getFlowTime()));
-			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

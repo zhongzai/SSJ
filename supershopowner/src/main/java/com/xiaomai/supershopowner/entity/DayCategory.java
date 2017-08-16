@@ -18,16 +18,6 @@ public class DayCategory {
     private Integer selesNumber;
 
     private Double proportion;
-    
-    private String salesTime;
-
-    public String getSalesTime() {
-		return salesTime;
-	}
-
-	public void setSalesTime(String salesTime) {
-		this.salesTime = salesTime;
-	}
 
 	public Integer getId() {
         return id;

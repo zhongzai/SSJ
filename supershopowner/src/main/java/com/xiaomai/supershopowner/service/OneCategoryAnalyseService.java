@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +24,9 @@ public class OneCategoryAnalyseService implements BaseService<OneCategoryAnalyse
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	
 	public List<OneCategoryAnalyse> getOneCategoryAnalyse(Map<String,Object> map){
-		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		List<OneCategoryAnalyse> list = new ArrayList<>();
 		try {
 			list = OneCategoryAnalyseDao.findListAllWithMap(map);
-			for(OneCategoryAnalyse oneCategoryAnalyses : list){
-				oneCategoryAnalyses.setSalesTime(formatt.format(oneCategoryAnalyses.getSalesDate()));
-			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

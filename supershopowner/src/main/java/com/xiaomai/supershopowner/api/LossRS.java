@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Goods;
+
 import com.xiaomai.supershopowner.entity.Loss;
 import com.xiaomai.supershopowner.entity.Loss2good;
 import com.xiaomai.supershopowner.service.LossService;

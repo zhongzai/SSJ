@@ -29,7 +29,6 @@ public class YesterdaySalesService implements BaseService<YesterdaySales, Intege
 	public LossDao lossdao;
 	
 	public YesterdaySales getYesterdaySales(Map<String , Object> map) throws ParseException{
-		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		List<Loss> lossList = new ArrayList<>();
 		YesterdaySales yds = new YesterdaySales();
 		Loss loss = new Loss();

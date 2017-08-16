@@ -7,8 +7,6 @@ public class CustFlow {
 	
 	private String storeCode;
 	
-	private String FlowDate;
-	
 	private String custId;
 	
 	private String flowCode;
@@ -41,12 +39,6 @@ public class CustFlow {
 	}
 	public String getStoreCode() {
 		return storeCode;
-	}
-	public String getFlowDate() {
-		return FlowDate;
-	}
-	public void setFlowDate(String flowDate) {
-		FlowDate = flowDate;
 	}
 	public void setStoreCode(String storeCode) {
 		this.storeCode = storeCode;

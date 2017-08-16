@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +9,6 @@ import javax.annotation.Resource;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
-
-
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
@@ -19,20 +16,14 @@ import com.xiaomai.supershopowner.dao.CustDao;
 import com.xiaomai.supershopowner.entity.Cust;
 
 @Service
-public class CustService implements BaseService<Cust, Integer>{
+public class CustService  implements BaseService<Cust, Integer>{
 	@Resource
 	public CustDao custDao;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	public List<Cust> getfindComingTime(Map<String,Object> map){
-		
 		List<Cust> list = new ArrayList<>();
-		
-		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		try {
 			list = custDao.findListAllWithMap(map);
-			for(Cust custs : list){
-				custs.setComingDate(formatt.format(custs.getComingTime()));
-			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
@@ -85,5 +76,4 @@ public class CustService implements BaseService<Cust, Integer>{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 }

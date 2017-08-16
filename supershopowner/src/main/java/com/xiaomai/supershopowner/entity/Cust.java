@@ -27,16 +27,6 @@ public class Cust {
 
     private String categoryCode;
     
-    private String comingDate;
-
-    public String getComingDate() {
-		return comingDate;
-	}
-
-	public void setComingDate(String comingDate) {
-		this.comingDate = comingDate;
-	}
-
 	public Integer getId() {
         return id;
     }

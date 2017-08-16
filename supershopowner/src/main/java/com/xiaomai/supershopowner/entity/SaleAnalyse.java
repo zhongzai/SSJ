@@ -15,8 +15,6 @@ public class SaleAnalyse {
 
     private Double proportion;
     
-    private String salesTime;
-    
     private String two;
     
     private String four;
@@ -174,16 +172,6 @@ public class SaleAnalyse {
     public String getStoreCode() {
         return storeCode;
     }
-
-    public String getSalesTime() {
-		return salesTime;
-	}
-
-
-	public void setSalesTime(String salesTime) {
-		this.salesTime = salesTime;
-	}
-
 
 	public void setStoreCode(String storeCode) {
         this.storeCode = storeCode == null ? null : storeCode.trim();

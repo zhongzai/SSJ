@@ -23,14 +23,8 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 	private org.slf4j.Logger log = LoggerFactory.getLogger(SaleAnalyseService.class);
 	public List<SaleAnalyse> findByStoreCode(Map<String, Object> map){
 		List<SaleAnalyse> list =new ArrayList<>();
-		SimpleDateFormat  fromat = new SimpleDateFormat("YYYY-MM-dd");
 		try {
 			 list= saleAnalyseDao.findByStoreCode(map);
-			 for(SaleAnalyse saleAnalyses : list){
-					
-					saleAnalyses.setSalesTime(fromat.format(saleAnalyses.getSalesDate()));
-					
-				}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
@@ -48,7 +42,6 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
-		
 		return listSale;
 	}
 	

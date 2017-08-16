@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-import org.apache.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
+import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.DayCategory;
 
@@ -71,6 +70,6 @@ public class DayCategoryRS extends BaseRS{
 				result.setResult(null);	
 			}
 		}
-		return JSONObject.fromObject(result).toString();
+		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
 }

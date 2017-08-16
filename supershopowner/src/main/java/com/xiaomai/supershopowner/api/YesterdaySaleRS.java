@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
+import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Loss;
 import com.xiaomai.supershopowner.entity.Sale;
 import com.xiaomai.supershopowner.entity.YesterdaySales;
 import com.xiaomai.supershopowner.service.YesterdaySalesService;
@@ -64,6 +64,6 @@ public class YesterdaySaleRS extends BaseRS{
 				result.setResult(null);	
 			}
 		}
-		return JSONObject.fromObject(result).toString();
+		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
 }

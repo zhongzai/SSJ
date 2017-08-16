@@ -22,16 +22,6 @@ public class OneCategoryAnalyse {
     private Long totalSales;
 
     private Long netProfit;
-    
-    private String salesTime;
-
-    public String getSalesTime() {
-		return salesTime;
-	}
-
-	public void setSalesTime(String salesTime) {
-		this.salesTime = salesTime;
-	}
 
 	public Integer getId() {
         return id;

@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +26,8 @@ public class ArticleService implements BaseService<Article, Integer>{
 	
 	public List<Article> getArticle(Map<String , Object> map){
 		List<Article> list = new ArrayList<>();
-		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		try {
 			list = articleDao.findListAllWithMap(map);
-			for(Article articles : list){
-				
-				articles.setCreateDate(formatt.format(articles.getCreateTime()));
-			}	
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
