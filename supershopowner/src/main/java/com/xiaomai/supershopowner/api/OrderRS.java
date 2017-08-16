@@ -2,6 +2,7 @@ package com.xiaomai.supershopowner.api;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.GoodQR;
 import com.xiaomai.supershopowner.entity.Goods;
+import com.xiaomai.supershopowner.entity.GoodsInfoDtoTransfer;
 import com.xiaomai.supershopowner.entity.Order;
 import com.xiaomai.supershopowner.entity.Order2good;
 import com.xiaomai.supershopowner.entity.WeekSales;
@@ -286,5 +288,58 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
 				.toString();
 	}
+	
+	@RequestMapping(value="findAllGoods")
+	public String findAllGoods(@RequestParam(value="shopCode",required=false) String shopCode,@RequestParam(value="typeCode",required=false) String typeCode){
+		RSResult rr = new RSResult();
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		map.put("storeCode", shopCode);
+		List<GoodsInfoDtoTransfer> gidts= new ArrayList<GoodsInfoDtoTransfer>();
+		Boolean res;
+		try {
+			res = checkToken.check(request.getHeader("token"));
+			if (res == true) {
+				log.debug("call the findAllGoods starting...");
+				
+				
+				
+				List<GoodsInfoDto> gids = superStoreService.getGoodsInfoByType(shopCode, typeCode);
+				
+				for(GoodsInfoDto gid:gids){
+					map.put("goodsCode", gid.getGoodsCode());
+					
+					
+					List<Goods> gs = goodsService.findGoods(map);
+					GoodsInfoDtoTransfer gidt = new GoodsInfoDtoTransfer();
+					gs.forEach((v)->{
+						gidt.setGoods(v);
+					});
+					gidt.setShelfLife(gid.getShelfLife());
+					gidt.setCoefficien(gid.getCoefficien());
+					gidt.setGoodsCode(gid.getGoodsCode());
+					gidt.setGoodsName(gid.getGoodsName());
+					gidt.setPrice(gid.getPrice());
+					
+					gidts.add(gidt);
+				}
+				rr.setCode("200");
+				rr.setMsg("获取类目下所有的商品成功");
+				rr.setResult(gidts);
+			} else {
+				rr.setCode("201");
+				rr.setMsg("token失效！");
+				rr.setResult(null);
+			}
+		} catch (Exception e) {
+			log.error("called findAllGoods failure", e);
+			rr.setCode("400");
+			rr.setMsg("获取类目下所有的商品失败");
+			rr.setResult(null);
+		}
+		
+		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+				.toString();
+	}
+	
 
 }

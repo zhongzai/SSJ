@@ -43,7 +43,7 @@ public class SaleService implements BaseService<Sale, Integer>{
 			
 			for(Sale sales : list){
 				Map<String, Object> map1 = new HashMap<String, Object>();
-				map1.put("salesDate", sales.getSalesDate());
+				map1.put("salesDate", formatter.format(sales.getSalesDate()));
 				map1.put("storeCode", sales.getStoreCode());
 				
 				//根据时间和门店Code查询当天最佳品类信息
@@ -51,10 +51,12 @@ public class SaleService implements BaseService<Sale, Integer>{
 				
 				//根据时间和门店Code查询当天最佳单品信息
 				OneCategoryAnalyse oneCategoryAnalyse = oneCategoryAnalyseDao.findBestGcate(map1);
-				
-				sales.setBestCategoryName(dayCategory.getCategoryName());
-				sales.setBestGoodsName(oneCategoryAnalyse.getCategoryName());
-				
+				if(dayCategory!=null){
+					sales.setBestCategoryName(dayCategory.getCategoryName());
+				}
+				if(oneCategoryAnalyse!=null){
+					sales.setBestGoodsName(oneCategoryAnalyse.getCategoryName());
+				}	
 				if(formatter.format(new Date()).equals(formatter.format(sales.getSalesDate()))){
 					salesTranfer.setTodaySales(sales);
 				}else{
