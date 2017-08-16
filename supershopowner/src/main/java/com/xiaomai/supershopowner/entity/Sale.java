@@ -2,6 +2,9 @@ package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.xiaomai.supershopowner.common.JsonDateTimeSerializer;
+
 public class Sale {
     private Integer id;
 
@@ -31,6 +34,7 @@ public class Sale {
 
     private Double afterBuyingRate;
 
+    @JsonSerialize(using = JsonDateTimeSerializer.class)
     private Date salesDate;
 
     private Double salesTotal;

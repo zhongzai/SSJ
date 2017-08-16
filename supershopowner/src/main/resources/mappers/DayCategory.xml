@@ -29,8 +29,8 @@
 	  	select <include refid="Base_Column_List" /> from day_category where 1=1 <include refid="queryMap"/> order by ranking
    </select>
    
-   <select id="findBestGcate" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from day_category where 1=1 <include refid="queryMap"/> order by ranking
+   <select id="findBestGcate" parameterType="map" resultMap="BaseResultMap">	  	
+	  	select <include refid="Base_Column_List" /> from day_category  where seles_number in(select max(seles_number) from day_category where 1=1 <include refid="queryMap"/>)  group by store_code
    </select>
  
 </mapper>

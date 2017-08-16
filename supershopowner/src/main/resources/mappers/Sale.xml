@@ -9,10 +9,6 @@
     <result column="profit" jdbcType="DECIMAL" property="profit" />
     <result column="loss" jdbcType="DECIMAL" property="loss" />
     <result column="average_price" jdbcType="DECIMAL" property="averagePrice" />
-    <result column="best_category_code" jdbcType="VARCHAR" property="bestCategoryCode" />
-    <result column="best_category_name" jdbcType="VARCHAR" property="bestCategoryName" />
-    <result column="best_goods_code" jdbcType="VARCHAR" property="bestGoodsCode" />
-    <result column="best_goods_name" jdbcType="VARCHAR" property="bestGoodsName" />
     <result column="consumption_number" jdbcType="INTEGER" property="consumptionNumber" />
     <result column="new_cust" jdbcType="INTEGER" property="newCust" />
     <result column="after_buying_rate" jdbcType="DECIMAL" property="afterBuyingRate" />
@@ -22,8 +18,7 @@
     <result column="up_down" jdbcType="INTEGER" property="upDown"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_account, store_code, cust_number, profit, loss, average_price, best_category_code, 
-    best_category_name, best_goods_code, best_goods_name, consumption_number, new_cust, 
+    id, user_account, store_code, cust_number, profit, loss, average_price,consumption_number, new_cust, 
     after_buying_rate, sales_date, sales_total, best_sales_number, up_down
   </sql>
   <sql id="queryMap">
