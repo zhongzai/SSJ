@@ -38,18 +38,4 @@
     from sale
     where 1=1 <include refid="queryMap"/>
   </select>
-  
-   <sql id="queryMaps">
-		<if test="salesDate !=null and salesDate != ''">
-    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
-    	</if>
-    	<if test="storeCode != null">
-			and store_code = #{storeCode,jdbcType=VARCHAR}
-		</if>
-   </sql>
-  
-
-  <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
-  		select <include refid="Base_Column_List"/> from sale where 1=1 <include refid="queryMaps"/> order by id
-  </select>
 </mapper>

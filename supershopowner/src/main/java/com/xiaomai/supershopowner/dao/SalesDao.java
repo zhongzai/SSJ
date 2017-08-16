@@ -17,7 +17,4 @@ public class SalesDao extends BaseDaoImpl<Sale, Integer> {
 		// TODO Auto-generated method stub
 		return "mappers.SaleMapper";
 	}
-	public Sale findWithMap(Map<String, Object> map)throws SQLException{
-		return selectOne(getNameSpace()+".findByStoreCode",map);
-	}
 }
