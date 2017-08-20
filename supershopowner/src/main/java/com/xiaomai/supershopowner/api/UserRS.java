@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
@@ -52,6 +53,27 @@ public class UserRS extends BaseRS{
 				result.setMsg("Fail");
 				result.setResult(null);
 			}
+		}catch(Exception ex){
+			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
+				result.setCode("400");
+				result.setMsg("Fail");
+				result.setResult(null);	
+			}
+		}
+		return JSONObject.fromObject(result).toString();
+	}
+	/**
+     * 根据token查询用户 
+     * 
+     */
+	@RequestMapping(value="/checkToken",method = RequestMethod.POST)
+	public @ResponseBody String list(HttpServletRequest request,@RequestParam String token){
+		RSResult result = new RSResult();
+		try{ 
+			Boolean tokens = userService.findUserByToken(token);
+				result.setCode("201");
+				result.setMsg("Fail");
+				result.setResult(tokens);
 		}catch(Exception ex){
 			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
