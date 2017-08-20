@@ -76,7 +76,7 @@ public class UserRS extends BaseRS{
 				result.setResult(tokens);
 		}catch(Exception ex){
 			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
-				result.setCode("400");
+				result.setCode("201");
 				result.setMsg("Fail");
 				result.setResult(null);	
 			}
