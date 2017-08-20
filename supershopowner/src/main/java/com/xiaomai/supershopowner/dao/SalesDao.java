@@ -7,8 +7,6 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.xiaomai.supershopowner.entity.Sale;
-import com.xiaomai.supershopowner.entity.SaleAnalyse;
-import com.xiaomai.supershopowner.entity.YesterdaySales;
 @Repository
 public class SalesDao extends BaseDaoImpl<Sale, Integer> {
 
