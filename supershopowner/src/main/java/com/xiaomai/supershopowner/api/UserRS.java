@@ -71,7 +71,7 @@ public class UserRS extends BaseRS{
 		RSResult result = new RSResult();
 		try{ 
 			Boolean tokens = userService.findUserByToken(token);
-				result.setCode("201");
+				result.setCode("200");
 				result.setMsg("Fail");
 				result.setResult(tokens);
 		}catch(Exception ex){
