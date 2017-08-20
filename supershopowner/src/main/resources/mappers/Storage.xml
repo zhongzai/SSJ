@@ -2,15 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.StorageMapper">
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Storage">
-    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="category_number" jdbcType="INTEGER" property="categoryNumber" />
     <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
     <result column="total_value" jdbcType="DECIMAL" property="totalValue" />
-    <result column="total_loss" jdbcType="DECIMAL" property="totalLoss" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, category_number, goods_number, total_value, total_loss
+     store_code, category_number, goods_number, total_value
   </sql>
   <select id="findByStoreCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -24,10 +22,10 @@
   </delete>
   <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Storage" useGeneratedKeys="true" keyProperty="id">
     insert into storage (id, store_code, category_number, 
-      goods_number, total_value, total_loss
+      goods_number, total_value
       )
     values (#{id,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{categoryNumber,jdbcType=INTEGER}, 
-      #{goodsNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL}, #{totalLoss,jdbcType=DECIMAL}
+      #{goodsNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL}
       )
   </insert>
   
