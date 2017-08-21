@@ -2,15 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.StorageMapper">
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Storage">
-    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="category_number" jdbcType="INTEGER" property="categoryNumber" />
     <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
     <result column="total_value" jdbcType="DECIMAL" property="totalValue" />
-    <result column="total_loss" jdbcType="DECIMAL" property="totalLoss" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, category_number, goods_number, total_value, total_loss
+     store_code, category_number, goods_number, total_value
   </sql>
   <select id="findByStoreCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -18,38 +16,4 @@
     from storage
     where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
-  <delete id="delete" parameterType="java.lang.Integer">
-    delete from storage
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.Storage" useGeneratedKeys="true" keyProperty="id">
-    insert into storage (id, store_code, category_number, 
-      goods_number, total_value, total_loss
-      )
-    values (#{id,jdbcType=INTEGER}, #{storeCode,jdbcType=VARCHAR}, #{categoryNumber,jdbcType=INTEGER}, 
-      #{goodsNumber,jdbcType=INTEGER}, #{totalValue,jdbcType=DECIMAL}, #{totalLoss,jdbcType=DECIMAL}
-      )
-  </insert>
-  
-  <update id="update" parameterType="com.xiaomai.supershopowner.entity.Storage">
-    update storage
-    <set>
-      <if test="storeCode != null">
-        store_code = #{storeCode,jdbcType=VARCHAR},
-      </if>
-      <if test="categoryNumber != null">
-        category_number = #{categoryNumber,jdbcType=INTEGER},
-      </if>
-      <if test="goodsNumber != null">
-        goods_number = #{goodsNumber,jdbcType=INTEGER},
-      </if>
-      <if test="totalValue != null">
-        total_value = #{totalValue,jdbcType=DECIMAL},
-      </if>
-      <if test="totalLoss != null">
-        total_loss = #{totalLoss,jdbcType=DECIMAL},
-      </if>
-    </set>
-    where store_code = #{storeCode,jdbcType=VARCHAR}
-  </update>
 </mapper>

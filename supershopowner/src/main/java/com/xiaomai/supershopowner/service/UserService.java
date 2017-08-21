@@ -50,5 +50,22 @@ public class UserService{
 		}
 		return resposeUser;
     }
+    /**
+     * 根据token查询用户 
+     * 
+     */
+    public Boolean findUserByToken(String token){
+		try {			
+			UserLogin userLogin = userLoginDao.getLatestLoginedUserByToken(token);
+			if (userLogin != null){
+				return true;
+			}else{
+				return false;
+			}
+			
+		} catch (SQLException ex) {
+			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
+		}
+    }
 
 }

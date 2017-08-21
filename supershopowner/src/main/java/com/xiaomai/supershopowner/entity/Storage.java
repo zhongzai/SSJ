@@ -1,8 +1,6 @@
 package com.xiaomai.supershopowner.entity;
 
 public class Storage {
-    private Integer id;
-
     private String storeCode;
 
     private Integer categoryNumber;
@@ -10,16 +8,6 @@ public class Storage {
     private Integer goodsNumber;
 
     private Long totalValue;
-
-    private Long totalLoss;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getStoreCode() {
         return storeCode;
@@ -53,11 +41,4 @@ public class Storage {
         this.totalValue = totalValue;
     }
 
-    public Long getTotalLoss() {
-        return totalLoss;
-    }
-
-    public void setTotalLoss(Long totalLoss) {
-        this.totalLoss = totalLoss;
-    }
 }
