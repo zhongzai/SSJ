@@ -15,6 +15,14 @@ public class Sale {
     private Integer custNumber;
 
     private Double profit;
+    
+    private Double salesWeekToday;
+    
+    private Double salesWeekNow;
+    
+    private Integer custWeekToday;
+    
+    private Integer custWeekNow;
 
     private Double loss;
 
@@ -40,16 +48,7 @@ public class Sale {
     private Double salesTotal;
     
     private Integer bestSalesNumber;
-    
-    private Integer upDown;
-
-    public Integer getUpDown() {
-		return upDown;
-	}
-
-	public void setUpDown(Integer upDown) {
-		this.upDown = upDown;
-	}
+  
 
 	public Integer getBestSalesNumber() {
 		return bestSalesNumber;
@@ -188,5 +187,37 @@ public class Sale {
     public void setSalesDate(Date salesDate) {
         this.salesDate = salesDate;
     }
+
+	public Double getSalesWeekToday() {
+		return salesWeekToday;
+	}
+
+	public void setSalesWeekToday(Double salesWeekToday) {
+		this.salesWeekToday = salesWeekToday;
+	}
+
+	public Double getSalesWeekNow() {
+		return salesWeekNow;
+	}
+
+	public void setSalesWeekNow(Double salesWeekNow) {
+		this.salesWeekNow = salesWeekNow;
+	}
+
+	public Integer getCustWeekToday() {
+		return custWeekToday;
+	}
+
+	public void setCustWeekToday(Integer custWeekToday) {
+		this.custWeekToday = custWeekToday;
+	}
+
+	public Integer getCustWeekNow() {
+		return custWeekNow;
+	}
+
+	public void setCustWeekNow(Integer custWeekNow) {
+		this.custWeekNow = custWeekNow;
+	}
 
 }

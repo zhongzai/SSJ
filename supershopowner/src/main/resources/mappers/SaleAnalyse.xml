@@ -7,6 +7,7 @@
     <result column="sales_date" jdbcType="TIMESTAMP" property="salesDate" />
     <result column="sales_period" jdbcType="VARCHAR" property="salesPeriod" />
     <result column="sales_amount" jdbcType="DECIMAL" property="salesAmount" />
+    <result column="cust_number" jdbcType="INTEGER" property="custNumber" />
     <result column="proportion" jdbcType="DECIMAL" property="proportion" />
   </resultMap>
   <resultMap  id="BaseResultMap1" type="com.xiaomai.supershopowner.entity.SaleAnalyse">
@@ -24,7 +25,7 @@
     <result column="twentyFour"  property="twentyFour" />
   </resultMap>
   <sql id="Base_Column_List">
-     id, store_code, sales_date, sales_period, sales_amount,proportion
+     id, store_code, sales_date, sales_period, sales_amount,proportion,cust_number
   </sql>
   <sql id="queryMap">
 		<if test="salesDate !=null and salesDate != ''">

@@ -5,8 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="sales_date" jdbcType="TIMESTAMP" property="salesDate" />
-    <result column="category_code" jdbcType="VARCHAR" property="categoryCode" />
-    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
+    <result column="good_name" jdbcType="VARCHAR" property="goodName" />
     <result column="ranking" jdbcType="INTEGER" property="ranking" />
     <result column="seles_number" jdbcType="INTEGER" property="selesNumber" />
     <result column="price" jdbcType="DECIMAL" property="price" />
@@ -14,7 +14,7 @@
     <result column="net_profit" jdbcType="DECIMAL" property="netProfit" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, sales_date, category_code, category_name, ranking, seles_number, 
+    id, store_code, sales_date, good_code, good_name, ranking, seles_number, 
     price, total_sales, net_profit
   </sql>
   

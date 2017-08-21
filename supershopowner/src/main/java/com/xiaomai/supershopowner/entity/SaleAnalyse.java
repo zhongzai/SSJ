@@ -15,6 +15,8 @@ public class SaleAnalyse {
 
     private Double proportion;
     
+    private Integer custNumber;
+    
     private String two;
     
     private String four;
@@ -47,6 +49,16 @@ public class SaleAnalyse {
 
 	public void setTwo(String two) {
 		this.two = two;
+	}
+
+
+	public Integer getCustNumber() {
+		return custNumber;
+	}
+
+
+	public void setCustNumber(Integer custNumber) {
+		this.custNumber = custNumber;
 	}
 
 

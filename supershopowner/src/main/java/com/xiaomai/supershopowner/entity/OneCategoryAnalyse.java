@@ -13,9 +13,9 @@ public class OneCategoryAnalyse {
     @JsonSerialize(using = JsonDateTimeSerializer.class)
     private Date salesDate;
 
-    private String categoryCode;
+    private String goodCode;
 
-    private String categoryName;
+    private String goodName;
 
     private Integer ranking;
 
@@ -51,23 +51,24 @@ public class OneCategoryAnalyse {
         this.salesDate = salesDate;
     }
 
-    public String getCategoryCode() {
-        return categoryCode;
-    }
 
-    public void setCategoryCode(String categoryCode) {
-        this.categoryCode = categoryCode == null ? null : categoryCode.trim();
-    }
+    public String getGoodCode() {
+		return goodCode;
+	}
 
-    public String getCategoryName() {
-        return categoryName;
-    }
+	public void setGoodCode(String goodCode) {
+		this.goodCode = goodCode;
+	}
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName == null ? null : categoryName.trim();
-    }
+	public String getGoodName() {
+		return goodName;
+	}
 
-    public Integer getRanking() {
+	public void setGoodName(String goodName) {
+		this.goodName = goodName;
+	}
+
+	public Integer getRanking() {
         return ranking;
     }
 

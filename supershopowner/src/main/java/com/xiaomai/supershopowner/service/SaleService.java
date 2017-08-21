@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +56,26 @@ public class SaleService implements BaseService<Sale, Integer>{
 					sales.setBestCategoryName(dayCategory.getCategoryName());
 				}
 				if(oneCategoryAnalyse!=null){
-					sales.setBestGoodsName(oneCategoryAnalyse.getCategoryName());
+					sales.setBestGoodsName(oneCategoryAnalyse.getGoodName());
 				}	
 				if(formatter.format(new Date()).equals(formatter.format(sales.getSalesDate()))){
+					Calendar   cal   =   Calendar.getInstance();
+					cal.add(Calendar.DATE,   -7);
+					
+					String lastWeek = new SimpleDateFormat( "yyyy-MM-dd ").format(cal.getTime());
+					
+/*					String lastWeekNow = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(cal.getTime());
+*/					
+					Map<String, Object> map2 = new HashMap<String, Object>();
+					map2.put("salesDate", lastWeek);
+					map2.put("storeCode", sales.getStoreCode());
+					
+					//根据日期查询上周今日的数据
+					Sale sale = saleDao.findSaleWithMap(map2);
+					//根据日期查询上周此时的数据
+					
+					sales.setCustWeekToday(sale.getCustNumber());
+					sales.setSalesWeekToday(sale.getSalesTotal());
 					salesTranfer.setTodaySales(sales);
 				}else{
 					salesTranfer.setYestodaySales(sales);
