@@ -31,6 +31,12 @@
 		<if test="salesDate !=null and salesDate != ''">
     		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
     	</if>
+    	<if test="startTime !=null and startTime != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d %H:%i:%S') >=  DATE_FORMAT(#{startTime}, '%Y-%m-%d %H:%i:%S')]]>
+    	</if>
+    	<if test="endTime !=null and endTime != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d %H:%i:%S') <=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')]]>
+    	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
 		</if>
@@ -38,6 +44,10 @@
   
   <!-- 查询今日流水 -->
   <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List"/> from sale_analyse where 1=1 <include refid="queryMap"/> order by id
+  </select>
+  
+  <select id="findNowSales" parameterType="map" resultMap="BaseResultMap">
   		select <include refid="Base_Column_List"/> from sale_analyse where 1=1 <include refid="queryMap"/> order by id
   </select>
   

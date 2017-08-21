@@ -17,10 +17,12 @@ import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
 import com.xiaomai.supershopowner.dao.DayCategoryDao;
 import com.xiaomai.supershopowner.dao.OneCategoryAnalyseDao;
+import com.xiaomai.supershopowner.dao.SaleAnalyseDao;
 import com.xiaomai.supershopowner.dao.SalesDao;
 import com.xiaomai.supershopowner.entity.DayCategory;
 import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
 import com.xiaomai.supershopowner.entity.Sale;
+import com.xiaomai.supershopowner.entity.SaleAnalyse;
 import com.xiaomai.supershopowner.entity.SalesTranfer;
 
 @Service
@@ -30,6 +32,9 @@ public class SaleService implements BaseService<Sale, Integer>{
 	
 	@Resource
 	public DayCategoryDao dayCategoryDao;
+	
+	@Resource
+	public SaleAnalyseDao saleAnalyseDao;
 	
 	@Resource
 	public OneCategoryAnalyseDao oneCategoryAnalyseDao;
@@ -72,12 +77,56 @@ public class SaleService implements BaseService<Sale, Integer>{
 					
 					//根据日期查询上周今日的数据
 					Sale sale = saleDao.findSaleWithMap(map2);
-					//根据日期查询上周此时的数据
 					
-					sales.setCustWeekToday(sale.getCustNumber());
-					sales.setSalesWeekToday(sale.getSalesTotal());
+					Map<String, Object> map3 = new HashMap<String, Object>();
+					map3.put("startTime", new SimpleDateFormat( "yyyy-MM-dd").format(cal.getTime()));
+					map3.put("endTime",  new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(cal.getTime()));
+					map3.put("storeCode", sales.getStoreCode());
+					//根据日期查询上周此时的数据
+					List<SaleAnalyse> saleAnalyseList = saleAnalyseDao.findNowSales(map3);
+					Double salesTotal =(double) 0;
+					Integer custNumber =0;
+					if(saleAnalyseList.size()!=0){
+						for(SaleAnalyse saleAnalyse : saleAnalyseList){
+							salesTotal+=(saleAnalyse.getSalesAmount()==null)?0:(saleAnalyse.getSalesAmount());
+							custNumber+=(saleAnalyse.getCustNumber()==null)?0:saleAnalyse.getCustNumber();
+						}
+					}
+					//升降标识
+					//根据日期查询昨天的销售信息
+					Calendar   cal1   =   Calendar.getInstance();
+					cal1.add(Calendar.DATE,   -1);
+					String yes = new SimpleDateFormat( "yyyy-MM-dd ").format(cal1.getTime());
+					Map<String, Object> map4 = new HashMap<String, Object>();
+					map4.put("salesDate", yes);
+					map4.put("storeCode", sales.getStoreCode());
+					
+					Sale yesSale = saleDao.findSaleWithMap(map4);
+					
+					sales.setTodayCustUpdown((sales.getCustNumber()>(yesSale==null?0:yesSale.getCustNumber())?"up":"down"));//0降，1升
+					sales.setTodaySalesUpdown((sales.getSalesTotal()>(yesSale==null?0:yesSale.getSalesTotal())?"up":"down"));
+					sales.setProfitUpdown((sales.getProfit()>(yesSale==null?0:yesSale.getProfit())?"up":"down"));
+					sales.setLossUpdown((sales.getLoss()>(yesSale==null?0:yesSale.getLoss())?"up":"down"));
+					sales.setAveragePriceUpdown((sales.getAveragePrice()>(yesSale==null?0:yesSale.getAveragePrice())?"up":"down"));
+					sales.setCustWeekNow(custNumber);
+					sales.setSalesWeekNow(salesTotal);
+					sales.setCustWeekToday((sale==null)?0:sale.getCustNumber());
+					sales.setSalesWeekToday((sale==null)?0:sale.getSalesTotal());
 					salesTranfer.setTodaySales(sales);
 				}else{
+					//根据日期查询前天销售信息
+					Calendar   cal2   =   Calendar.getInstance();
+					cal2.add(Calendar.DATE,   -2);
+					String last = new SimpleDateFormat( "yyyy-MM-dd ").format(cal2.getTime());
+					
+					Map<String, Object> map5 = new HashMap<String, Object>();
+					map5.put("salesDate", last);
+					map5.put("storeCode", sales.getStoreCode());
+					
+					Sale lastSale = saleDao.findSaleWithMap(map5);
+					
+					sales.setYesCustUpdown(sales.getCustNumber()>(lastSale==null?0:lastSale.getCustNumber())?"up":"down");
+					sales.setYesSalesUpdown(sales.getSalesTotal()>(lastSale==null?0:lastSale.getSalesTotal())?"up":"down");
 					salesTranfer.setYestodaySales(sales);
 				}
 			}

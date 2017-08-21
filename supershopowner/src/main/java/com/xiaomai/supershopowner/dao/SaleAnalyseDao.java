@@ -21,4 +21,8 @@ public class SaleAnalyseDao extends BaseDaoImpl<SaleAnalyse, Integer> {
 	public List<SaleAnalyse> findByStorPeriod(Map<String, Object> map)throws SQLException{
 		return selectList(getNameSpace()+".findByStorPeriod",map);
 	}
+	
+	public List<SaleAnalyse> findNowSales(Map<String, Object> map)throws SQLException{
+		return selectList(getNameSpace()+".findNowSales",map);
+	}
 }

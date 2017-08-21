@@ -295,14 +295,27 @@
 		    <artifactId>curator-framework</artifactId>
 		    <version>1.1.10</version>
 		</dependency>
-		
         <dependency>
 		    <groupId>shop-headquarters-1.0-dubbo</groupId>
 		    <artifactId>shopDubbo</artifactId>
 		    <version>1.0.1</version>
         </dependency>
- 
+        
+        <dependency>
+		    	<groupId>com.xiaomai.mall</groupId>
+				<artifactId>scan.client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        
 	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>xiaomai Team Repository</name>
+			<url>http://nexus.imxiaomai.com:8081/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
 
 	<build>
 

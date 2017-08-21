@@ -48,7 +48,76 @@ public class Sale {
     private Double salesTotal;
     
     private Integer bestSalesNumber;
-  
+    
+    private String todaySalesUpdown;
+    
+    private String todayCustUpdown;
+    
+    private String yesSalesUpdown;
+    
+    private String yesCustUpdown;
+    
+    private String averagePriceUpdown;
+    
+    private String profitUpdown;
+    
+    private String lossUpdown;
+	
+	public String getTodaySalesUpdown() {
+		return todaySalesUpdown;
+	}
+
+	public void setTodaySalesUpdown(String todaySalesUpdown) {
+		this.todaySalesUpdown = todaySalesUpdown;
+	}
+
+	public String getTodayCustUpdown() {
+		return todayCustUpdown;
+	}
+
+	public void setTodayCustUpdown(String todayCustUpdown) {
+		this.todayCustUpdown = todayCustUpdown;
+	}
+
+	public String getYesSalesUpdown() {
+		return yesSalesUpdown;
+	}
+
+	public void setYesSalesUpdown(String yesSalesUpdown) {
+		this.yesSalesUpdown = yesSalesUpdown;
+	}
+
+	public String getYesCustUpdown() {
+		return yesCustUpdown;
+	}
+
+	public void setYesCustUpdown(String yesCustUpdown) {
+		this.yesCustUpdown = yesCustUpdown;
+	}
+
+	public String getAveragePriceUpdown() {
+		return averagePriceUpdown;
+	}
+
+	public void setAveragePriceUpdown(String averagePriceUpdown) {
+		this.averagePriceUpdown = averagePriceUpdown;
+	}
+
+	public String getProfitUpdown() {
+		return profitUpdown;
+	}
+
+	public void setProfitUpdown(String profitUpdown) {
+		this.profitUpdown = profitUpdown;
+	}
+
+	public String getLossUpdown() {
+		return lossUpdown;
+	}
+
+	public void setLossUpdown(String lossUpdown) {
+		this.lossUpdown = lossUpdown;
+	}
 
 	public Integer getBestSalesNumber() {
 		return bestSalesNumber;
