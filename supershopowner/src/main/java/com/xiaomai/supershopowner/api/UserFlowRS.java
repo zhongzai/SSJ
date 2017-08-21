@@ -41,7 +41,7 @@ public class UserFlowRS extends BaseRS{
 			if(res==true){
 			
 			List<Flow> flowList = flowService.findByStoreCode(flow.getStoreCode());
-				result.setCode("201");
+				result.setCode("200");
 				result.setMsg("Fail");
 				result.setResult(flowList);
 			}else{
