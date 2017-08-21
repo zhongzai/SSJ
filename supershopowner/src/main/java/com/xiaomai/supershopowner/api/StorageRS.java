@@ -31,14 +31,14 @@ public class StorageRS  extends BaseRS {
 	
 	//查询库存
 	@RequestMapping(value="findStorageByCode", method = RequestMethod.POST)
-	public String findStorageByCode(HttpServletRequest request,@RequestParam(value="storageCode",required=false) String storageCode){
+	public String findStorageByCode(HttpServletRequest request,@RequestParam(value="storeCode",required=false) String storeCode){
 		RSResult rr = new RSResult();
 		Storage storage=null;
 		try{
 			Boolean res = checkToken.check(request.getHeader("token"));
 			if(res == true){
 				log.debug("call the findStorageByCodeRS...");
-				storage = storageService.findStorageByCode(storageCode);
+				storage = storageService.findStorageByCode(storeCode);
 				rr.setCode("200");
 				rr.setMsg("查询库存成功");
 				rr.setResult(storage);

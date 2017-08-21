@@ -26,6 +26,17 @@ public class OneCategoryAnalyse {
     private Long totalSales;
 
     private Long netProfit;
+    
+    private Integer type;
+    
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
 	public Integer getId() {
         return id;

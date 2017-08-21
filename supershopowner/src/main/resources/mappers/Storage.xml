@@ -10,7 +10,7 @@
   <sql id="Base_Column_List">
      store_code, category_number, goods_number, total_value
   </sql>
-  <select id="findByStoreCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="findByStoreCode" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from storage

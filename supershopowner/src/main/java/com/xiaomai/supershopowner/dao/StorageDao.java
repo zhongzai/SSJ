@@ -15,8 +15,8 @@ public class StorageDao extends BaseDaoImpl<Storage,Integer>{
 		return "mappers.StorageMapper";
 	}
 	
-	public Storage getStorageByCode(String storageCode) throws SQLException{
-		return selectOne(getNameSpace()+".findByStoreCode",storageCode);
+	public Storage getStorageByCode(String storeCode) throws SQLException{
+		return selectOne(getNameSpace()+".findByStoreCode",storeCode);
 	}
 
 }

@@ -18,11 +18,11 @@ public class StorageService {
 	@Autowired
 	StorageDao storageDao;
 	
-	public Storage findStorageByCode(String storageCode){
+	public Storage findStorageByCode(String storeCode){
 		log.debug("find storage by code starting...");
 		Storage storage=null;
 		try {
-			storage = storageDao.getStorageByCode(storageCode);
+			storage = storageDao.getStorageByCode(storeCode);
 		} catch (SQLException ex) {
 			log.error("exception:", ex);
 			throw new RuntimeException(ex); 

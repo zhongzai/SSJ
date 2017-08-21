@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
+
+import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.common.WebPage;
@@ -19,11 +21,14 @@ import com.xiaomai.supershopowner.entity.Cust;
 public class CustService  implements BaseService<Cust, Integer>{
 	@Resource
 	public CustDao custDao;
+	
+	public SuperStoreService superStoreService;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	public List<Cust> getfindComingTime(Map<String,Object> map){
 		List<Cust> list = new ArrayList<>();
 		try {
 			list = custDao.findListAllWithMap(map);
+			superStoreService.getMemberById(1);
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

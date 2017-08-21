@@ -10,5 +10,5 @@
     <dubbo:reference interface="com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService" id="superStoreService" url="dubbo://123.56.70.138:20886" group="TEST_SUPER" />
     
     <dubbo:reference interface="com.xiaomai.mall.scan.client.service.RechargeDubboService" id="rechargeDubboService" url="dubbo://123.56.141.5:20880" group="TEST" />
-   
+  
 </beans>

@@ -46,6 +46,7 @@ public class OneCategoryAnalyseRS extends BaseRS{
 		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
 		map.put("storeCode", oneCategoryAnalyse.getStoreCode());
 		map.put("salesDate", formatt.format(oneCategoryAnalyse.getSalesDate()));
+		map.put("type", oneCategoryAnalyse.getType());
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){

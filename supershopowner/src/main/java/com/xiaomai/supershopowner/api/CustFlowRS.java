@@ -23,7 +23,7 @@ import com.xiaomai.supershopowner.entity.CustFlow;
 import com.xiaomai.supershopowner.service.CustFlowService;
 
 @Controller
-@RequestMapping(value="/CustFlow")
+@RequestMapping(value="/custFlow")
 public class CustFlowRS extends BaseRS{
 	@Autowired
 	public CustFlowService custFlowService;
