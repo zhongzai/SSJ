@@ -54,11 +54,11 @@
     where 1=1 <include refid="queryMap"/>
   </select>
   
-  <select id="findSoldOutList" resultMap="BaseResultMap">
+  <select id="findList" parameterType="map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from goods
-    where  <![CDATA[inventory<=0 ]]> and store_code = #{storeCode,jdbcType=VARCHAR} 
+    where  <![CDATA[inventory<=0 ]]> and store_code = #{storeCode,jdbcType=VARCHAR} limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
   
   

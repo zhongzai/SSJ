@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.sun.webkit.WebPage;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
-import com.xiaomai.supershopowner.common.WebPage;
 import com.xiaomai.supershopowner.dao.CustFlowDAO;
 import com.xiaomai.supershopowner.entity.CustFlow;
 
@@ -56,12 +56,6 @@ public class CustFlowService implements BaseService<CustFlow, Integer>{
 
 	@Override
 	public List<CustFlow> findListAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WebPage<CustFlow> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -10,11 +10,10 @@ import javax.annotation.Resource;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.sun.webkit.WebPage;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
-import com.xiaomai.supershopowner.common.WebPage;
 import com.xiaomai.supershopowner.dao.DayCategoryDao;
-import com.xiaomai.supershopowner.entity.Cust;
 import com.xiaomai.supershopowner.entity.DayCategory;
 
 @Service
@@ -61,12 +60,6 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 
 	@Override
 	public List<DayCategory> findListAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WebPage<DayCategory> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}

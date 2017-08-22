@@ -39,11 +39,11 @@ public class SoldRS extends BaseRS{
 		map.put("storeCode", unSoldTranfer.getStoreCode());
 		map.put("days", unSoldTranfer.getDays());
 		
+		
 		try{ 
 			Boolean res=checkToken.check(request.getHeader("token"));
 			
 			if(res==true){
-			
 			List<Goods> goodsList = goodsService.findGoods(map);
 			result.setCode("200");
 			result.setMsg("Success");
@@ -76,10 +76,12 @@ public class SoldRS extends BaseRS{
 		try{ 
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			List<Goods> goodsList = goodsService.findSoldOutList(unSoldTranfer.getStoreCode());
+				
+			List<Goods> list = goodsService.findGoods(map);
+				
 			result.setCode("200");
 			result.setMsg("Success");
-			result.setResult(goodsList);
+			result.setResult(list);
 			}else{
 				result.setCode("201");
 				result.setMsg("token失效！");

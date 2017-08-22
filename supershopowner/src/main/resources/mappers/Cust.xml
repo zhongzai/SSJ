@@ -24,8 +24,11 @@
 		<if test="comingTime !=null and comingTime != ''">
     		<![CDATA[and DATE_FORMAT(coming_time, '%Y-%m-%d') =  DATE_FORMAT(#{comingTime}, '%Y-%m-%d')]]>
     	</if>
-    	<if test="storeCode != null">
-			and store_code = #{storeCode,jdbcType=VARCHAR}
+    	<if test="storeCode != null and type==0">
+			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is null
+		</if>
+		<if test="storeCode != null and type==1">
+			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is not null
 		</if>
    </sql> 
     <!-- 日来客分析  按照消费金额从到小排序 -->

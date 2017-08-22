@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
-import com.xiaomai.supershopowner.common.WebPage;
 import com.xiaomai.supershopowner.dao.ArticleDao;
 import com.xiaomai.supershopowner.entity.Article;
 import com.xiaomai.supershopowner.entity.Cust;
@@ -60,12 +59,6 @@ public class ArticleService implements BaseService<Article, Integer>{
 
 	@Override
 	public List<Article> findListAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public WebPage<Article> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -4,8 +4,6 @@ package com.xiaomai.supershopowner.service;
 import java.util.List;
 import java.util.Map;
 
-import com.xiaomai.supershopowner.common.WebPage;
-
 /**
  *
  * @param <T> 实体类
@@ -43,13 +41,6 @@ public interface BaseService<T,ID extends java.io.Serializable> {
 	 * @return
 	 */
 	public List<T> findListAll();
-	
-	/**
-	 * 分页查询
-	 * @param map
-	 * @return
-	 */
-	public abstract WebPage<T> findPage(Map<String, Object> map);
 	
 	/**
 	 * 查找条件部分

@@ -3,14 +3,11 @@ package com.xiaomai.supershopowner.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-
-import com.xiaomai.supershopowner.common.WebPage;
 
 
 
@@ -97,19 +94,16 @@ public abstract class BaseDaoImpl<T, KEY extends Serializable> extends MyBatisSu
 		return (T) getSqlSessionTemplate().selectOne(statement, parameter);
 	}
 	
-	public WebPage<T> findPage(final Map<String, Object> paramsMap) throws SQLException {
-		WebPage<T> webPage = new WebPage<T>(((Number) selectOne(getStatement(FINDLISTCOUNT),paramsMap)).intValue(), (Integer)paramsMap.get("rows"), (Integer)paramsMap.get("page"));
-		List<T> result = selectList(paramsMap);
-		webPage.setRows(result == null ? new ArrayList<T>() : result);
-		return webPage;
-	}
-	
 	public List<T> findListAll() throws SQLException{
 		return this.getSqlSessionTemplate().selectList(getStatement(FINDLISTALL));
 	}
 	
 	public List<T> findListAllWithMap(Map<String,Object> paramsMap) throws SQLException{
 		return this.getSqlSessionTemplate().selectList(getStatement(FINDLISTALLWITHMAP), paramsMap);
+	}
+	
+	public List<T> findList(HashMap<String, Object> map) throws SQLException {
+		return  selectList(getStatement(FINDLIST), map);
 	}
 
 	private Map<?, ?> toParameterMap(Object parameter) {

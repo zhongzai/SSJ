@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
-import com.xiaomai.supershopowner.common.WebPage;
 import com.xiaomai.supershopowner.dao.SaleAnalyseDao;
 import com.xiaomai.supershopowner.entity.SaleAnalyse;
 
@@ -67,11 +65,6 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 	}
 	@Override
 	public List<SaleAnalyse> findListAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public WebPage<SaleAnalyse> findPage(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}

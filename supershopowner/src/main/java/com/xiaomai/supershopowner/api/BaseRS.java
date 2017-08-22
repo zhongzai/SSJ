@@ -66,21 +66,21 @@ public class BaseRS {
     
 
     protected HashMap<String, Object> getQueryMap() {
-        int page = 1;
-        int rows = 20;
+    	int pageNum = 1;
+        int pageSize = 10;
 
         // 翻页相关参数
         HashMap<String, Object> map = new HashMap<String, Object>();
-        page = StringUtils.isNotBlank(request.getParameter("page"))
-                && StringUtils.isNumeric(request.getParameter("page")) ? Integer
-                .parseInt(request.getParameter("page")) : page;
-        rows = StringUtils.isNotBlank(request.getParameter("rows"))
-                && StringUtils.isNumeric(request.getParameter("rows")) ? Integer
-                .parseInt(request.getParameter("rows")) : rows;
-        int startIndex = (page - 1) * rows < 0 ? 0 : (page - 1) * rows;
+        pageNum = StringUtils.isNotBlank(request.getHeader("pageNum"))
+                        && StringUtils.isNumeric(request.getHeader("pageNum")) ? Integer
+                        .parseInt(request.getHeader("pageNum")) : pageNum;
+        pageSize =
+                StringUtils.isNotBlank(request.getHeader("pageSize"))
+                        && StringUtils.isNumeric(request.getHeader("pageSize")) ? Integer
+                        .parseInt(request.getHeader("pageSize")) : pageSize;
+        int startIndex = (pageNum - 1) * pageSize < 0 ? 0 : (pageNum - 1) * pageSize;
         map.put("startIndex", startIndex);
-        map.put("rows", rows);
-        map.put("page", page);
+        map.put("pageSize", pageSize);
         return map;
     }
 

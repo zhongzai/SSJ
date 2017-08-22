@@ -9,6 +9,6 @@
     <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
     <dubbo:reference interface="com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService" id="superStoreService" url="dubbo://123.56.70.138:20886" group="TEST_SUPER" />
     
-    <dubbo:reference interface="com.xiaomai.mall.scan.client.service.RechargeDubboService" id="rechargeDubboService" url="dubbo://123.56.141.5:20880" group="TEST" />
+    <dubbo:reference interface="com.xiaomai.mall.scan.client.service.RechargeDubboService" version="1.0.0" id="rechargeDubboService" url="dubbo://123.56.141.5:20880" group="TEST" />
   
 </beans>

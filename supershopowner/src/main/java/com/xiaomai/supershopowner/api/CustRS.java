@@ -45,7 +45,7 @@ public class CustRS extends BaseRS{
 	
 	@RequestMapping(value="/findCust" , method = RequestMethod.POST)	
 	public @ResponseBody String getfindCustComingTime(HttpServletRequest request,@RequestBody Cust cust){
-		String token = request.getHeader("token");
+		
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		
@@ -53,6 +53,7 @@ public class CustRS extends BaseRS{
 		
 		map.put("storeCode",cust.getStoreCode());
 		map.put("comingTime", formatter.format(cust.getComingTime()));
+		map.put("type", cust.getType());
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
@@ -84,7 +85,6 @@ public class CustRS extends BaseRS{
 	 */
 	@RequestMapping(value="/findMemberDto" , method = RequestMethod.POST)	
 	public @ResponseBody String getfindCustComingTime(HttpServletRequest request,@RequestBody String storeCode,int curentPage,int pageSize){
-		String token = request.getHeader("token");
 		RSResult result = new RSResult();
 	
 		try {
