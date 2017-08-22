@@ -2,15 +2,11 @@ package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.xiaomai.supershopowner.common.JsonDateTimeSerializer;
-
 public class DayCategory {
     private Integer id;
 
     private String storeCode;
 
-    @JsonSerialize(using = JsonDateTimeSerializer.class)
     private Date salesDate;
 
     private String categoryCode;
@@ -22,6 +18,18 @@ public class DayCategory {
     private Integer selesNumber;
 
     private Double proportion;
+    
+    private Integer totalNumber;
+
+
+
+	public Integer getTotalNumber() {
+		return totalNumber;
+	}
+
+	public void setTotalNumber(Integer totalNumber) {
+		this.totalNumber = totalNumber;
+	}
 
 	public Integer getId() {
         return id;

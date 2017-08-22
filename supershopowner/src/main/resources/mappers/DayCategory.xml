@@ -10,10 +10,10 @@
     <result column="ranking" jdbcType="INTEGER" property="ranking" />
     <result column="seles_number" jdbcType="INTEGER" property="selesNumber" />
     <result column="proportion" jdbcType="DECIMAL" property="proportion" />
+    <result column="sales_total_number" jdbcType="INTEGER" property="totalNumber" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, store_code, sales_date, category_code, category_name, ranking, seles_number, 
-    proportion
+    id,store_code,sales_date,category_code,category_name,ranking,seles_number,proportion,sales_total_number
   </sql>
   
  <sql id="queryMap">
