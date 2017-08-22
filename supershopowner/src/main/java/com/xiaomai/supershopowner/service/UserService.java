@@ -21,8 +21,8 @@ public class UserService{
 	@Resource
 	private UserLoginDao  userLoginDao ; 
     
-    public UserTransfer login(UserTransfer user){
     	
+	public UserTransfer login(UserTransfer user){
     	UserTransfer resposeUser= new UserTransfer();
 		try {			
 			//根据用户名查询用户登录

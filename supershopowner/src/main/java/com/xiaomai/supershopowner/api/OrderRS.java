@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.BaseDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsCategory;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
 import com.xiaomai.supershopowner.common.CheckToken;
@@ -147,29 +148,29 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 
-	// 确认订单
+	// 完成收货
 	@RequestMapping(value = "updateOrder", method = RequestMethod.POST)
 	public String updateOrder(@RequestBody Order o2g) {
 		RSResult rr = new RSResult();
-		int updateId = 0;
+		BaseDto updateBaseDto = null;
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the update orderRs starting...");
-				updateId = orderService.updateAndAffirmOrder(o2g);
+				updateBaseDto = superStoreService.saveStorePurchaseInfo(o2g.getStorePurchaseGoodItems());
 				rr.setCode("200");
-				rr.setMsg("更新订单成功");
-				rr.setResult(updateId);
+				rr.setMsg("收货成功");
+				rr.setResult(updateBaseDto);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
 				rr.setResult(null);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			log.error("call update OrderRS failure", e);
 			rr.setCode("400");
-			rr.setMsg("更新订单失败");
+			rr.setMsg("收货失败");
 			rr.setResult(null);
 		}
 
@@ -177,16 +178,14 @@ public class OrderRS extends BaseRS {
 
 	}
 
-	// 给一个订单添加商品,需要调用pc端7天销售接口,需要关联损耗单
-	// TODO
 
 	// 扫描二维码获取商品信息
 
 	@RequestMapping(value = "findGoodByQR", method = RequestMethod.POST)
 	public String findGoodByQR(
-			@RequestParam(value = "sku", required = true) String sku,
+			@RequestParam(value = "sku", required = false) String sku,
 			@RequestParam(value = "storeCode", required = true) String storeCode,
-			@RequestParam(value = "goodsCode", required = true) String goodsCode) {
+			@RequestParam(value = "goodsCode", required = false) String goodsCode) {
 		RSResult rr = new RSResult();
 		HashMap<String, Object> map = super.getQueryMap();
 		map.put("storeCode", storeCode);
@@ -236,6 +235,7 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 	
+	//获取所有的一级类目
 	@RequestMapping(value="findAllOneItems")
 	public String findAllOneItems(@RequestParam(value="levelNumber",required=false) String levelNumber){
 		RSResult rr = new RSResult();
@@ -270,6 +270,7 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 	
+	//获取所有一级类目下的所有的二级类目
 	@RequestMapping(value="findAllTwoItems")
 	public String findAllTwoItems(@RequestParam(value="gcateParentCode",required=false) String gcateParentCode){
 		RSResult rr = new RSResult();
@@ -301,7 +302,7 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
 				.toString();
 	}
-	
+	//根据类目查询所有的商品
 	@RequestMapping(value="findAllGoods")
 	public String findAllGoods(@RequestParam(value="shopCode",required=false) String shopCode,@RequestParam(value="typeCode",required=false) String typeCode){
 		RSResult rr = new RSResult();

@@ -3,6 +3,8 @@ package com.xiaomai.supershopowner.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.imxiaomai.shop.web.superStoreDubbo.domain.StorePurchaseGoodItems;
+
 public class Order {
     private Integer id;
 
@@ -27,8 +29,20 @@ public class Order {
     private List<Goods> goods;
     
     private List<Order2good> order2good;
+    
+    List<StorePurchaseGoodItems> storePurchaseGoodItems;
 
-    public Integer getId() {
+    
+	public List<StorePurchaseGoodItems> getStorePurchaseGoodItems() {
+		return storePurchaseGoodItems;
+	}
+
+	public void setStorePurchaseGoodItems(
+			List<StorePurchaseGoodItems> storePurchaseGoodItems) {
+		this.storePurchaseGoodItems = storePurchaseGoodItems;
+	}
+
+	public Integer getId() {
         return id;
     }
 
