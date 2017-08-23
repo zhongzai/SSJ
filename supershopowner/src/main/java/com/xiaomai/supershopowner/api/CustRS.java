@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
-import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsCategory;
-import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
-import com.imxiaomai.shop.web.superStoreDubbo.domain.UserDto;
-import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Cust;
@@ -67,11 +64,9 @@ public class CustRS extends BaseRS{
 				result.setResult(null);
 			}
 		} catch (Exception e) {
-			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result).toString();
 	}
@@ -100,11 +95,9 @@ public class CustRS extends BaseRS{
 				result.setResult(null);
 			}
 		} catch (Exception e) {
-			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result).toString();
 	}

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Sale;
@@ -52,11 +51,9 @@ public class SaleRS extends BaseRS{
 			result.setMsg("Success");
 			result.setResult(sales);
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result,JSONObjectConfig.getInstance()).toString();
 	}

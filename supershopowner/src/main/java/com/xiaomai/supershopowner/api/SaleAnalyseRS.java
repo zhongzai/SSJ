@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.SaleAnalyse;
 import com.xiaomai.supershopowner.service.SaleAnalyseService;
-
-import net.sf.json.JSONObject;
 
 /**
  * 
@@ -65,11 +65,9 @@ public class SaleAnalyseRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
@@ -102,11 +100,9 @@ public class SaleAnalyseRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return 	JSONObject.fromObject(result).toString();
 	}

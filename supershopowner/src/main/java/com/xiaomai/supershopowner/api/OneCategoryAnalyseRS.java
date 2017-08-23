@@ -40,7 +40,6 @@ public class OneCategoryAnalyseRS extends BaseRS{
 	
 	@RequestMapping(value="/getOneCategoryAnalyse" ,method = RequestMethod.POST)
 	public @ResponseBody String getOneCategoryAnalyse(HttpServletRequest request,@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
-		String token = request.getHeader("token");
 		RSResult result = new RSResult();
 		HashMap<String,Object> map = super.getQueryMap();
 		SimpleDateFormat formatt = new SimpleDateFormat("YYYY-MM-dd");
@@ -60,11 +59,9 @@ public class OneCategoryAnalyseRS extends BaseRS{
 				result.setResult(null);
 			}
 		} catch (Exception e) {
-			if(BizErr.EX_UPDATE_FAIL.equals(e.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}

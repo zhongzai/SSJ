@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Goods;
@@ -54,11 +53,9 @@ public class SoldRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result).toString();
 	}
@@ -88,11 +85,9 @@ public class SoldRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result).toString();
 	}

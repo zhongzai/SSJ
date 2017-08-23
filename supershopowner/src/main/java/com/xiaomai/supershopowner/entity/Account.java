@@ -1,35 +1,29 @@
 package com.xiaomai.supershopowner.entity;
 
+import java.math.BigDecimal;
+
 public class Account {
-    private Integer id;
+    private String phone;
 
-    private String userAccount;
+    private BigDecimal balance;
 
-    private Double balance;
 
-    public Integer getId() {
-        return id;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public String getUserAccount() {
-        return userAccount;
-    }
-
-    public void setUserAccount(String userAccount) {
-        this.userAccount = userAccount == null ? null : userAccount.trim();
-    }
-
-	public Double getBalance() {
+	public BigDecimal getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Double balance) {
+	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
 	}
+
 
     
 }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.UserDto;
-import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.UserTransfer;
 import com.xiaomai.supershopowner.service.UserService;
@@ -54,11 +53,9 @@ public class UserRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result).toString();
 	}
@@ -75,11 +72,9 @@ public class UserRS extends BaseRS{
 				result.setMsg("Fail");
 				result.setResult(tokens);
 		}catch(Exception ex){
-			if(BizErr.EX_UPDATE_FAIL.equals(ex.getMessage())){
 				result.setCode("201");
 				result.setMsg("Fail");
 				result.setResult(null);	
-			}
 		}
 		return JSONObject.fromObject(result).toString();
 	}

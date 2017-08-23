@@ -1,37 +1,29 @@
 package com.xiaomai.supershopowner.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Flow {
-    private Integer id;
-
     private String flowCode;
     
-    private String storeCode;
+    private String phone;
 
     private Integer type;
 
-    private Integer amount;
+    private BigDecimal amount;
     
     private Date flowTime;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public String getStoreCode() {
-		return storeCode;
+    public String getPhone() {
+		return phone;
 	}
 
-	public void setStoreCode(String storeCode) {
-		this.storeCode = storeCode;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFlowCode() {
+	public String getFlowCode() {
         return flowCode;
     }
 
@@ -47,15 +39,16 @@ public class Flow {
         this.type = type;
     }
 
-    public Integer getAmount() {
-        return amount;
-    }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
+    public BigDecimal getAmount() {
+		return amount;
+	}
 
-    public Date getFlowTime() {
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public Date getFlowTime() {
         return flowTime;
     }
 

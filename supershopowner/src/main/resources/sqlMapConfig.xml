@@ -12,16 +12,12 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="account"
-			type="com.xiaomai.supershopowner.entity.Account" />
 		<typeAlias alias="article"
 			type="com.xiaomai.supershopowner.entity.Article" />
 		<typeAlias alias="cust"
 			type="com.xiaomai.supershopowner.entity.Cust" />
 		<typeAlias alias="daycategory"
 			type="com.xiaomai.supershopowner.entity.DayCategory" />
-		<typeAlias alias="flow"
-			type="com.xiaomai.supershopowner.entity.Flow" />
 		<typeAlias alias="goods"
 			type="com.xiaomai.supershopowner.entity.Goods" />
 		<typeAlias alias="loss"
@@ -55,11 +51,9 @@
 
 
 	<mappers>
-		<mapper resource="mappers/Account.xml" />
 		<mapper resource="mappers/Article.xml" />
 		<mapper resource="mappers/Cust.xml" />
 		<mapper resource="mappers/DayCategory.xml" />
-		<mapper resource="mappers/Flow.xml" />
 		<mapper resource="mappers/Goods.xml" />
 		<mapper resource="mappers/Loss2good.xml" />
 		<mapper resource="mappers/Loss.xml" />
