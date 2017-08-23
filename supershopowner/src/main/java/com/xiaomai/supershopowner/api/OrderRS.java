@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.api;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.BaseDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsCategory;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrder;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrderItemsRsp;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
@@ -64,14 +68,15 @@ public class OrderRS extends BaseRS {
 
 		RSResult rr = new RSResult();
 		Boolean res = checkToken.check(request.getHeader("token"));
+		BaseDto updateBaseDto = null;
 
 		try {
 			if (res == true) {
 				log.debug("call the orderRS");
-				orderService.addOrders(order);// TODO
+				updateBaseDto = superStoreService.saveStorePurchaseInfo(order.getStorePurchaseGoodItems());
 				rr.setCode("200");
 				rr.setMsg("添加订单成功");
-				rr.setResult(null);
+				rr.setResult(updateBaseDto);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
@@ -88,21 +93,47 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr).toString();
 	}
 
-	// 查询所有的orders
+	// 查询所有的订单
 	@RequestMapping(value = "findAllOrders", method = RequestMethod.POST)
 	public String findAllOrders(
 			@RequestParam(value = "storeCode", required = false) String storeCode) {
 		RSResult rr = new RSResult();
-		List<Order> os = null;
+		Pager<SuperPurchaseOrder> spo = null;
+		List<SuperPurchaseOrder> spsList = new ArrayList<SuperPurchaseOrder>();
+		int totalOrderNumber=0;
+		int totalActualNumber=0;
+		Double totalOrderValue=0.0;
+		Double totalActualVal=0.0;
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
+				
 				log.debug("call the findAllOrdersRS");
-				os = orderService.findAllOrders(storeCode);
+				spo = superStoreService.selectPurchaseOrder(storeCode, null==request.getHeader("pageNum")?1:Integer.valueOf(request.getHeader("pageNum")), null==request.getHeader("pageSize")?10:Integer.valueOf(request.getHeader("pageSize")));
+				
+				for(SuperPurchaseOrder sp:spo.getResult()){
+					List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(sp.getOrderCode());
+					
+					for(SuperPurchaseOrderItemsRsp spoir:spoirs){
+						totalOrderNumber+=(null==spoir.getOrderNumber()?0:spoir.getOrderNumber());
+						totalActualNumber+=(null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber());
+						
+						totalOrderValue += spoir.getPurcorderGoodsPrice().
+								multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(totalOrderNumber))))).doubleValue();
+						totalActualVal += spoir.getPurcorderGoodsPrice().
+								multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(totalActualNumber))))).doubleValue();
+					}
+					sp.setActualNumber(String.valueOf(totalActualNumber));
+					sp.setOrderNumber(String.valueOf(totalOrderNumber));
+					sp.setReceiveTotalAmount(String.valueOf(totalActualVal));
+					sp.setOrderTotalAmount(String.valueOf(totalOrderValue));
+					spsList.add(sp);
+				}
+				spo.setResult(spsList);
 				rr.setCode("200");
 				rr.setMsg("查询订单成功");
-				rr.setResult(os);
+				rr.setResult(spo);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
@@ -148,7 +179,7 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 
-	// 完成收货
+	//完成收货
 	@RequestMapping(value = "updateOrder", method = RequestMethod.POST)
 	public String updateOrder(@RequestBody Order o2g) {
 		RSResult rr = new RSResult();
@@ -158,7 +189,7 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the update orderRs starting...");
-				updateBaseDto = superStoreService.saveStorePurchaseInfo(o2g.getStorePurchaseGoodItems());
+				
 				rr.setCode("200");
 				rr.setMsg("收货成功");
 				rr.setResult(updateBaseDto);
