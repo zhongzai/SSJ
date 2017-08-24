@@ -159,7 +159,10 @@ public class OrderRS extends BaseRS {
 			@RequestParam(value = "storeCode", required = true) String storeCode) {
 		DecimalFormat df = new DecimalFormat("0.00");
 		RSResult rr = new RSResult();
+		int totalOrderNumber=0;
+		int totalActualNumber=0;
 		Double totalOrderValue=0.0;
+		Double totalActualVal=0.0;
 		OrderTransfer otf = new OrderTransfer();
 		List<SuperPurchaseOrderItemsRspTransfer> sL = new ArrayList<SuperPurchaseOrderItemsRspTransfer>();
 		Boolean res;
@@ -170,30 +173,32 @@ public class OrderRS extends BaseRS {
 				List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(orderCode);
 				
 				for(SuperPurchaseOrderItemsRsp spoir:spoirs){
+					totalOrderNumber+=(null==spoir.getOrderNumber()?0:spoir.getOrderNumber());
+					totalActualNumber+=(null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber());
+					
 					totalOrderValue += spoir.getPurcorderGoodsPrice().
 							multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getOrderNumber()?0:spoir.getOrderNumber())))))).doubleValue();
+					totalActualVal += spoir.getPurcorderGoodsPrice().
+							multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber())))))).doubleValue();
 					
 					SuperPurchaseOrderItemsRspTransfer spf = new SuperPurchaseOrderItemsRspTransfer();
-					spf.setGoodsCode(spoir.getGoodsCode());
-					spf.setGoodsName(spoir.getGoodsName());
-					spf.setOrderNumber(spoir.getOrderNumber());
-					spf.setPurcorderGoodsPrice(spoir.getPurcorderGoodsPrice());
-					spf.setReceiveNumber(spoir.getReceiveNumber());
-					spf.setUnit(spoir.getUnit());
-					
+					spf.setSuperPurchaseOrderItemsRsp(spoir);
 					Map<String,Object> map = new HashMap<String,Object>();
 					map.put("storeCode", storeCode);
 					map.put("goodsCode", spoir.getGoodsCode());
 					Goods g = goodsService.findLatestGoods(map);
 					if(null!=g){
-						spf.setWeekSales(String.valueOf(g.getWeekSales()));
+						spf.setGoods(g);
 					}else{
-						spf.setWeekSales("0");
+						spf.setGoods(null);
 					}
 					sL.add(spf);
 				}
 				otf.setSpoirt(sL);
-				otf.setTotalOrderValue(String.valueOf(df.format(totalOrderValue)));
+				otf.setActualNumber(String.valueOf(totalActualNumber));
+				otf.setOrderNumber(String.valueOf(totalOrderNumber));
+				otf.setReceiveTotalAmount(String.valueOf(df.format(totalActualNumber)));
+				otf.setOrderTotalAmount(String.valueOf(df.format(totalOrderValue)));
 				rr.setCode("200");
 				rr.setMsg("查询订单成功");
 				rr.setResult(otf);
