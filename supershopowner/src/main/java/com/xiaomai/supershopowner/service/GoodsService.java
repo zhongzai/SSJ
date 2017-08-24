@@ -1,11 +1,13 @@
 package com.xiaomai.supershopowner.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.common.BizErr;
@@ -15,6 +17,8 @@ import com.xiaomai.supershopowner.entity.Goods;
 
 @Service
 public class GoodsService implements BaseService<Goods, Integer>{
+	
+	private org.slf4j.Logger log = LoggerFactory.getLogger(OrderService.class);
 	@Resource
 	public GoodsDao goodsDao;
 	
@@ -29,6 +33,18 @@ public class GoodsService implements BaseService<Goods, Integer>{
 		return list;
 	}
 	
+	public Goods findLatestGoods(Map<String, Object> map){
+		Goods gs =null;
+		try{
+			log.debug("findLatestGoods stating...");
+			gs= goodsDao.findLatestGoods(map);
+			log.debug("findLatestGoods end");
+		}catch(SQLException ex){
+			log.error("exception:", ex);
+			throw new RuntimeException(ex); 
+		}
+		return gs;
+	}
 	
 	@Override
 	public Integer insert(Goods t) {
