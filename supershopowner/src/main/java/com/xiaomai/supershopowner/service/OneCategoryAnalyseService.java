@@ -25,9 +25,7 @@ public class OneCategoryAnalyseService implements BaseService<OneCategoryAnalyse
 	public List<OneCategoryAnalyse> getOneCategoryAnalyse(Map<String,Object> map){
 		List<OneCategoryAnalyse> list = new ArrayList<>();
 		try {
-			if(list.size()!=0){
 				list = OneCategoryAnalyseDao.findListAllWithMap(map);
-			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

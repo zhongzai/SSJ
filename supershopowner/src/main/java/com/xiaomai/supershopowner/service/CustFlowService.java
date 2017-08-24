@@ -24,9 +24,8 @@ public class CustFlowService implements BaseService<CustFlow, Integer>{
 	public List<CustFlow> getCustFlow(HashMap<String,Object> map){
 		List<CustFlow> list =new ArrayList<>();
 		try {
-			if(list.size()!=0){
 				list = custFlowDao.findList(map);
-			}
+			
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

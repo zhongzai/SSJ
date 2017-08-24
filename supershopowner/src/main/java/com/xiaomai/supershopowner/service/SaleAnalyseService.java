@@ -22,9 +22,7 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 	public List<SaleAnalyse> findByStoreCode(Map<String, Object> map){
 		List<SaleAnalyse> list =new ArrayList<>();
 		try {
-			if(list.size()!=0){
 				list= saleAnalyseDao.findByStoreCode(map);
-			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

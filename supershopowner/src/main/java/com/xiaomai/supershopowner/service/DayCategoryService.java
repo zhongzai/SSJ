@@ -27,9 +27,7 @@ public class DayCategoryService implements BaseService<DayCategory, Integer>{
 	public List<DayCategory> getDayCategory(Map<String , Object> map){
 		List<DayCategory> list = new ArrayList<>();
 		try {
-			if(list.size()!=0){
 				list = dayCategoryDao.findListAllWithMap(map);
-			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
