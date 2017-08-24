@@ -2,6 +2,7 @@ package com.xiaomai.supershopowner.api;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +36,8 @@ import com.xiaomai.supershopowner.entity.GoodQR;
 import com.xiaomai.supershopowner.entity.Goods;
 import com.xiaomai.supershopowner.entity.GoodsInfoDtoTransfer;
 import com.xiaomai.supershopowner.entity.Order;
-import com.xiaomai.supershopowner.entity.Order2good;
+import com.xiaomai.supershopowner.entity.OrderTransfer;
+import com.xiaomai.supershopowner.entity.SuperPurchaseOrderItemsRspTransfer;
 import com.xiaomai.supershopowner.entity.WeekSales;
 import com.xiaomai.supershopowner.service.GoodsService;
 import com.xiaomai.supershopowner.service.OrderService;
@@ -98,6 +100,7 @@ public class OrderRS extends BaseRS {
 	public String findAllOrders(
 			@RequestParam(value = "storeCode", required = false) String storeCode) {
 		RSResult rr = new RSResult();
+		DecimalFormat df = new DecimalFormat("0.00");
 		Pager<SuperPurchaseOrder> spo = null;
 		List<SuperPurchaseOrder> spsList = new ArrayList<SuperPurchaseOrder>();
 		int totalOrderNumber=0;
@@ -120,14 +123,14 @@ public class OrderRS extends BaseRS {
 						totalActualNumber+=(null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber());
 						
 						totalOrderValue += spoir.getPurcorderGoodsPrice().
-								multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(totalOrderNumber))))).doubleValue();
+								multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getOrderNumber()?0:spoir.getOrderNumber())))))).doubleValue();
 						totalActualVal += spoir.getPurcorderGoodsPrice().
-								multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf(totalActualNumber))))).doubleValue();
+								multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber())))))).doubleValue();
 					}
 					sp.setActualNumber(String.valueOf(totalActualNumber));
 					sp.setOrderNumber(String.valueOf(totalOrderNumber));
-					sp.setReceiveTotalAmount(String.valueOf(totalActualVal));
-					sp.setOrderTotalAmount(String.valueOf(totalOrderValue));
+					sp.setReceiveTotalAmount(String.valueOf(df.format(totalActualVal)));
+					sp.setOrderTotalAmount(String.valueOf(df.format(totalOrderValue)));
 					spsList.add(sp);
 				}
 				spo.setResult(spsList);
@@ -152,18 +155,53 @@ public class OrderRS extends BaseRS {
 	// 查询订单详情
 	@RequestMapping(value = "findOrderGoods", method = RequestMethod.POST)
 	public String findOrderGoods(
-			@RequestParam(value = "orderCode", required = false) String orderCode) {
+			@RequestParam(value = "orderCode", required = true) String orderCode,
+			@RequestParam(value = "storeCode", required = true) String storeCode) {
+		DecimalFormat df = new DecimalFormat("0.00");
 		RSResult rr = new RSResult();
-		List<Order2good> o2g = null;
+		int totalOrderNumber=0;
+		int totalActualNumber=0;
+		Double totalOrderValue=0.0;
+		Double totalActualVal=0.0;
+		OrderTransfer otf = new OrderTransfer();
+		List<SuperPurchaseOrderItemsRspTransfer> sL = new ArrayList<SuperPurchaseOrderItemsRspTransfer>();
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findOrderGoods");
-				o2g = orderService.findOrderGoods(orderCode);
+				List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(orderCode);
+				
+				for(SuperPurchaseOrderItemsRsp spoir:spoirs){
+					totalOrderNumber+=(null==spoir.getOrderNumber()?0:spoir.getOrderNumber());
+					totalActualNumber+=(null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber());
+					
+					totalOrderValue += spoir.getPurcorderGoodsPrice().
+							multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getOrderNumber()?0:spoir.getOrderNumber())))))).doubleValue();
+					totalActualVal += spoir.getPurcorderGoodsPrice().
+							multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber())))))).doubleValue();
+					
+					SuperPurchaseOrderItemsRspTransfer spf = new SuperPurchaseOrderItemsRspTransfer();
+					spf.setSuperPurchaseOrderItemsRsp(spoir);
+					Map<String,Object> map = new HashMap<String,Object>();
+					map.put("storeCode", storeCode);
+					map.put("goodsCode", spoir.getGoodsCode());
+					Goods g = goodsService.findLatestGoods(map);
+					if(null!=g){
+						spf.setGoods(g);
+					}else{
+						spf.setGoods(null);
+					}
+					sL.add(spf);
+				}
+				otf.setSpoirt(sL);
+				otf.setActualNumber(String.valueOf(totalActualNumber));
+				otf.setOrderNumber(String.valueOf(totalOrderNumber));
+				otf.setReceiveTotalAmount(String.valueOf(df.format(totalActualNumber)));
+				otf.setOrderTotalAmount(String.valueOf(df.format(totalOrderValue)));
 				rr.setCode("200");
 				rr.setMsg("查询订单成功");
-				rr.setResult(o2g);
+				rr.setResult(otf);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
