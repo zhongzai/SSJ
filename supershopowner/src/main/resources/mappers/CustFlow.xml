@@ -29,8 +29,8 @@
 			and store_code = #{storeCode,jdbcType=VARCHAR}
 		</if>
    </sql>
-   <select id="findByCustFlow" parameterType="map" resultMap="BaseResultMap">
-		select <include refid="Base_Column_List"/> from cust_flow where 1=1 <include refid="queryMap"/>
+   <select id="findList" parameterType="map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from cust_flow where 1=1 <include refid="queryMap"/> limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
 </mapper>
   

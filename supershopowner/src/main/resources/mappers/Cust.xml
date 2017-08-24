@@ -32,7 +32,8 @@
 		</if>
    </sql> 
     <!-- 日来客分析  按照消费金额从到小排序 -->
-   <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
+   <select id="findList" parameterType="map" resultMap="BaseResultMap">
 	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> order by consumption_amount desc
+	  		limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
    </select>
 </mapper>

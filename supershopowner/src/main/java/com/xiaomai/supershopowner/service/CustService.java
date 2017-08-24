@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
 import com.sun.webkit.WebPage;
 import com.xiaomai.supershopowner.common.BizErr;
 import com.xiaomai.supershopowner.common.BizException;
@@ -25,18 +26,23 @@ public class CustService  implements BaseService<Cust, Integer>{
 	public SuperStoreService superStoreService;
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	public List<Cust> getfindComingTime(HashMap<String,Object> map){
-		List<Cust> list = new ArrayList<>();
+		List<Cust> newList = new ArrayList<>();
 		try {
-			list = custDao.findListAllWithMap(map);
-			/*for(Cust cust : list){
-				MemberDto  memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
-				cust.s
+			List<Cust> list = custDao.findList(map);
+			if(list.size()!=0){
+				for(Cust cust : list){
+					
+					MemberDto  memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
+					cust.setCustSex(memberDto.getCustSex());
+					cust.setCustPhone(memberDto.getCustPhone());
+					cust.setCustName(memberDto.getCustName());
+					newList.add(cust);
+				}
 			}
-			*/
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
-		return list;
+		return newList;
 	}
 	@Override
 	public Integer insert(Cust t) {

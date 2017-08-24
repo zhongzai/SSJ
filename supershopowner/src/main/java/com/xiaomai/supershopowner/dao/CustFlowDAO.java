@@ -16,8 +16,4 @@ public class CustFlowDAO extends BaseDaoImpl<CustFlow, Integer>{
 		return "mappers.CustFlowMapper";
 		
 	}
-	public List<CustFlow> findByCustFlow(Map<String, Object> map)throws SQLException{
-		return selectList(getNameSpace()+".findByCustFlow",map);
-	}
-
 }

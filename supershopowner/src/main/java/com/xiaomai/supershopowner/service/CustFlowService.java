@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +21,12 @@ public class CustFlowService implements BaseService<CustFlow, Integer>{
 	@Resource
 	public CustFlowDAO custFlowDao;
 	
-	public List<CustFlow> getCustFlow(Map<String,Object> map){
+	public List<CustFlow> getCustFlow(HashMap<String,Object> map){
 		List<CustFlow> list =new ArrayList<>();
 		try {
-			list = custFlowDao.findByCustFlow(map);
+			if(list.size()!=0){
+				list = custFlowDao.findList(map);
+			}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

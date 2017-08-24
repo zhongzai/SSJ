@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +24,10 @@ public class ArticleService implements BaseService<Article, Integer>{
 	
 	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
 	
-	public List<Article> getArticle(Map<String , Object> map){
+	public List<Article> getArticle(HashMap<String , Object> map){
 		List<Article> list = new ArrayList<>();
 		try {
-			list = articleDao.findListAllWithMap(map);
+			list = articleDao.findList(map);
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}

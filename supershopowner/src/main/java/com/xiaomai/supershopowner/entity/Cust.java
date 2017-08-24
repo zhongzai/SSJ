@@ -29,6 +29,46 @@ public class Cust {
     
     private Integer type;
     
+	private String custSex;
+	
+	private String custPhone;
+	
+	public String getCustSex() {
+		return custSex;
+	}
+
+	public void setCustSex(String custSex) {
+		this.custSex = custSex;
+	}
+
+	public String getCustPhone() {
+		return custPhone;
+	}
+
+	public void setCustPhone(String custPhone) {
+		this.custPhone = custPhone;
+	}
+
+	public boolean isStoredValue() {
+		return storedValue;
+	}
+
+	public void setStoredValue(boolean storedValue) {
+		this.storedValue = storedValue;
+	}
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+	private boolean storedValue;
+	
+	private String custName; 
+    
 	public Integer getType() {
 		return type;
 	}
