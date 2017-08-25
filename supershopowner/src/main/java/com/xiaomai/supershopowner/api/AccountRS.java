@@ -19,6 +19,7 @@ import com.imxiaomai.member.po.Member;
 import com.imxiaomai.member.po.MemberBalanceLog;
 import com.imxiaomai.member.service.MemberService;
 import com.xiaomai.mall.scan.client.service.RechargeDubboService;
+import com.xiaomai.mall.scan.client.vo.InvoiceVo;
 import com.xiaomai.mall.scan.client.vo.RechargeVo;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
@@ -39,7 +40,6 @@ public class AccountRS extends BaseRS{
 	@Autowired
 	protected RechargeDubboService rechargeDubboService;
 	
-	private org.slf4j.Logger log = LoggerFactory.getLogger(OrderService.class);
 	/**
      * 账户余额接口
      * 
@@ -140,6 +140,8 @@ public class AccountRS extends BaseRS{
 				rechargeVo.setPayType(1);
 				rechargeVo.setRechargeAmount(recharge.getRechargeAmount());
 				rechargeVo.setShopCode(recharge.getStoreCode());
+				rechargeVo.setInvoice(new InvoiceVo());
+				rechargeVo.setPlatform("SH");
 			
 			    String parms = rechargeDubboService.createRechargeOrder(rechargeVo);
 				result.setCode("200");
@@ -151,6 +153,7 @@ public class AccountRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
+			ex.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
