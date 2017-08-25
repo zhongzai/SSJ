@@ -27,6 +27,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.BaseDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsCategory;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.PurchaseOrderInstockPDAReq;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrder;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrderItemsRsp;
 import com.xiaomai.supershopowner.common.CheckToken;
@@ -37,6 +38,7 @@ import com.xiaomai.supershopowner.entity.Goods;
 import com.xiaomai.supershopowner.entity.GoodsInfoDtoTransfer;
 import com.xiaomai.supershopowner.entity.Order;
 import com.xiaomai.supershopowner.entity.OrderTransfer;
+import com.xiaomai.supershopowner.entity.ReceiveGoods;
 import com.xiaomai.supershopowner.entity.SuperPurchaseOrderItemsRspTransfer;
 import com.xiaomai.supershopowner.entity.WeekSales;
 import com.xiaomai.supershopowner.service.GoodsService;
@@ -115,10 +117,10 @@ public class OrderRS extends BaseRS {
 				log.debug("call the findAllOrdersRS");
 				spo = superStoreService.selectPurchaseOrder(storeCode, null==request.getHeader("pageNum")?1:Integer.valueOf(request.getHeader("pageNum")), null==request.getHeader("pageSize")?10:Integer.valueOf(request.getHeader("pageSize")));
 				
-				for(SuperPurchaseOrder sp:spo.getResult()){
+				for(SuperPurchaseOrder sp:spo.getResult()){//查询所有的订单
 					List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(sp.getOrderCode());
 					
-					for(SuperPurchaseOrderItemsRsp spoir:spoirs){
+					for(SuperPurchaseOrderItemsRsp spoir:spoirs){//查询一个订单中多个商品,为了获取订单中商品的下单数量，实际收货数量
 						totalOrderNumber+=(null==spoir.getOrderNumber()?0:spoir.getOrderNumber());
 						totalActualNumber+=(null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber());
 						
@@ -170,9 +172,9 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findOrderGoods");
-				List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(orderCode);
+				List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(orderCode);//根据订单号查询所有商品
 				
-				for(SuperPurchaseOrderItemsRsp spoir:spoirs){
+				for(SuperPurchaseOrderItemsRsp spoir:spoirs){//为了获取订单数，实际收货数，订单总价，时间收货总价，周销，月销等
 					totalOrderNumber+=(null==spoir.getOrderNumber()?0:spoir.getOrderNumber());
 					totalActualNumber+=(null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber());
 					
@@ -181,16 +183,27 @@ public class OrderRS extends BaseRS {
 					totalActualVal += spoir.getPurcorderGoodsPrice().
 							multiply(new BigDecimal(Double.toString(Double.parseDouble(String.valueOf((null==spoir.getReceiveNumber()?0:spoir.getReceiveNumber())))))).doubleValue();
 					
-					SuperPurchaseOrderItemsRspTransfer spf = new SuperPurchaseOrderItemsRspTransfer();
-					spf.setSuperPurchaseOrderItemsRsp(spoir);
+					SuperPurchaseOrderItemsRspTransfer spf = new SuperPurchaseOrderItemsRspTransfer();//返回数据给前端，包含了订单的基本详情，还包含本地库中的weekSales,MonSales,Inventory库存
+					spf.setGoodsCode(spoir.getGoodsCode());
+					spf.setGoodsName(spoir.getGoodsName());
+					spf.setOrderNumber(spoir.getOrderNumber());
+					spf.setPurcorderGoodsPrice(spoir.getPurcorderGoodsPrice());
+					spf.setReceiveNumber(spoir.getReceiveNumber());
+					spf.setUnit(spoir.getUnit());
+					spf.setShelfLife(spoir.getShelfLife());//shelfLife     保质期
+					spf.setSpecification(spoir.getSpecification());//specification  商品规格
 					Map<String,Object> map = new HashMap<String,Object>();
 					map.put("storeCode", storeCode);
 					map.put("goodsCode", spoir.getGoodsCode());
-					Goods g = goodsService.findLatestGoods(map);
+					Goods g = goodsService.findLatestGoods(map);//查询本地数据库中的Good 得到weekSale 等
 					if(null!=g){
-						spf.setGoods(g);
+						spf.setWeekSales(String.valueOf(g.getWeekSales()));
+						spf.setMonthSales(String.valueOf(g.getMonthSales()));
+						spf.setInventory(String.valueOf(g.getInventory()));
 					}else{
-						spf.setGoods(null);
+						spf.setWeekSales(null);
+						spf.setMonthSales(null);
+						spf.setInventory(null);
 					}
 					sL.add(spf);
 				}
@@ -219,15 +232,37 @@ public class OrderRS extends BaseRS {
 
 	//完成收货
 	@RequestMapping(value = "updateOrder", method = RequestMethod.POST)
-	public String updateOrder(@RequestBody Order o2g) {
+	public String updateOrder(@RequestBody  ReceiveGoods rgs) {
 		RSResult rr = new RSResult();
 		BaseDto updateBaseDto = null;
+		List<PurchaseOrderInstockPDAReq> poipdars = new ArrayList<PurchaseOrderInstockPDAReq>();
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the update orderRs starting...");
-				
+				for(SuperPurchaseOrderItemsRsp sr:rgs.getSuperPurchaseOrderItemsRspL()){
+					PurchaseOrderInstockPDAReq poipda = new PurchaseOrderInstockPDAReq();
+					poipda.setPurcorderCode(rgs.getPurcorderCode());
+					poipda.setUserId(rgs.getUserId());
+					poipda.setUserName(rgs.getUserName());
+					poipda.setShopCode(rgs.getShopCode());
+					poipda.setShopName(rgs.getShopName());
+					poipda.setPurchaseType(rgs.getPurchaseType());
+					poipda.setSupplyCommodityId(rgs.getSupplyCommodityId());
+					poipda.setSupplyCommodityName(rgs.getSupplyCommodityName());
+					poipda.setOutBizCode(rgs.getOutBizCode());
+					
+					//设置每个商品的信息
+					poipda.setGoodsCode(sr.getGoodsCode());
+					poipda.setGoodsName(sr.getGoodsName());
+					poipda.setPurcorderGoodsPrice(sr.getPurcorderGoodsPrice());
+					poipda.setPurcorderGoodsCount(sr.getOrderNumber());
+					poipda.setInstockCount(sr.getReceiveNumber());
+					poipdars.add(poipda);
+				}
+				updateBaseDto = superStoreService.saveSuperPurchaseOrder(poipdars);
+				log.debug("call the update orderRs end");
 				rr.setCode("200");
 				rr.setMsg("收货成功");
 				rr.setResult(updateBaseDto);
@@ -266,7 +301,7 @@ public class OrderRS extends BaseRS {
 			if (res == true) {
 				log.debug("call the findGoodByQR starting...");
 				if(null!=sku){
-					GoodsInfoDto gid = superStoreService.getGoodsInfoBySku(sku);
+					GoodsInfoDto gid = superStoreService.getGoodsInfoByCgbk(sku);
 					map.put("goodsCode", gid.getGoodsCode());
 					gor.setGoodsInforDto(gid);
 					List<Goods> gs = goodsService.findGoods(map);
@@ -284,8 +319,6 @@ public class OrderRS extends BaseRS {
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);
 					gor.setWs(ws);
 				}
-				
-				
 				rr.setCode("200");
 				rr.setMsg("扫描二维码获取商品信息成功");
 				rr.setResult(gor);
@@ -383,20 +416,18 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findAllGoods starting...");
-				
-				
-				
 				List<GoodsInfoDto> gids = superStoreService.getGoodsInfoByType(shopCode, typeCode);
 				
 				for(GoodsInfoDto gid:gids){
 					map.put("goodsCode", gid.getGoodsCode());
+					Goods gs = goodsService.findLatestGoods(map);//查询本地数据库中最新的统计数据获取周销，月销等
 					
-					
-					List<Goods> gs = goodsService.findGoods(map);
 					GoodsInfoDtoTransfer gidt = new GoodsInfoDtoTransfer();
-					gs.forEach((v)->{
-						gidt.setGoods(v);
-					});
+					if(null!=gs){
+						gidt.setWeekSales(String.valueOf(gs.getWeekSales()));
+						gidt.setMonthProvide(String.valueOf(gs.getMonthProvide()));
+						gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
+					}
 					gidt.setShelfLife(gid.getShelfLife());
 					gidt.setCoefficien(gid.getCoefficien());
 					gidt.setGoodsCode(gid.getGoodsCode());

@@ -2,26 +2,40 @@ package com.xiaomai.supershopowner.entity;
 
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrderItemsRsp;
 
-public class SuperPurchaseOrderItemsRspTransfer{
+public class SuperPurchaseOrderItemsRspTransfer extends SuperPurchaseOrderItemsRsp{
 
-	private Goods goods;
+
+
+	private String weekSales;
 	
-	private SuperPurchaseOrderItemsRsp superPurchaseOrderItemsRsp;
+	private String monthSales;
+	
+	private String inventory;
 
-	public Goods getGoods() {
-		return goods;
+	public String getWeekSales() {
+		return weekSales;
 	}
 
-	public void setGoods(Goods goods) {
-		this.goods = goods;
+	public void setWeekSales(String weekSales) {
+		this.weekSales = weekSales;
 	}
 
-	public SuperPurchaseOrderItemsRsp getSuperPurchaseOrderItemsRsp() {
-		return superPurchaseOrderItemsRsp;
+	public String getMonthSales() {
+		return monthSales;
 	}
 
-	public void setSuperPurchaseOrderItemsRsp(
-			SuperPurchaseOrderItemsRsp superPurchaseOrderItemsRsp) {
-		this.superPurchaseOrderItemsRsp = superPurchaseOrderItemsRsp;
+	public void setMonthSales(String monthSales) {
+		this.monthSales = monthSales;
 	}
+
+	public String getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(String inventory) {
+		this.inventory = inventory;
+	}
+	
+	
+	
 }

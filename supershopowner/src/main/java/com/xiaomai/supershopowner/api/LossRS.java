@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.BaseDto;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Loss;
 import com.xiaomai.supershopowner.entity.Loss2good;
+import com.xiaomai.supershopowner.entity.LossTransfer;
 import com.xiaomai.supershopowner.service.LossService;
 
 
@@ -34,6 +37,9 @@ public class LossRS extends BaseRS {
 	
 	@Autowired
 	protected CheckToken checkToken;
+	
+	@Autowired
+	SuperStoreService superStoreService;
 	
 	//损耗单列表
 	@RequestMapping(value="getLossByStoreCode",method=RequestMethod.POST)
@@ -94,17 +100,18 @@ public class LossRS extends BaseRS {
 	
 	//新建损耗单
 	@RequestMapping(value="addloss",method=RequestMethod.POST)
-	public String inserLoss(@RequestBody Loss loss){
+	public String inserLoss(@RequestBody LossTransfer lossTransfer){
 		RSResult rr = new RSResult();
+		BaseDto baseDto=null;
 		Boolean res;
 		try{
 			res = checkToken.check(request.getHeader("token"));
 			if(res == true){
 				log.debug("called inser loss starting...");
-				lossService.addLoss(loss);
+				baseDto = superStoreService.addLossReport(lossTransfer.getLossReportDetailDto());
 				rr.setCode("200");
 				rr.setMsg("插入损耗单成功");
-				rr.setResult(1);
+				rr.setResult(baseDto);
 			}else{
 				rr.setCode("201");
 				rr.setMsg("token失效！");
