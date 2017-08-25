@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.BaseDto;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.LossReportDto;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
@@ -45,16 +47,16 @@ public class LossRS extends BaseRS {
 	@RequestMapping(value="getLossByStoreCode",method=RequestMethod.POST)
 	public String getLossByStoreCode(@RequestParam(value="storeCode",required=false) String storeCode){
 		RSResult rr = new RSResult();
-		List<Loss> loss = null;
+		Pager<LossReportDto> ld= null;
 		Boolean res;
 		try{
 			res = checkToken.check(request.getHeader("token"));
 			if(res==true){
 				log.debug("called getLossByStoreCode starting...");
-				loss = lossService.findLossByStoreCode(storeCode);
+				ld = superStoreService.getLossRepootListByShopcode(storeCode, null==request.getHeader("pageNum")?1:Integer.valueOf(request.getHeader("pageNum")), null==request.getHeader("pageSize")?10:Integer.valueOf(request.getHeader("pageSize")));
 				rr.setCode("200");
 				rr.setMsg("查询损耗单列表成功");
-				rr.setResult(loss);
+				rr.setResult(ld);
 			}else{
 				rr.setCode("201");
 				rr.setMsg("token失效！");
@@ -73,16 +75,16 @@ public class LossRS extends BaseRS {
 	@RequestMapping(value="getLossGoods",method=RequestMethod.POST)
 	public String getLossGoods(@RequestParam(value="lossCode",required=false) String lossCode){
 		RSResult rr = new RSResult();
-		List<Loss2good> loss2Good = null;
+		List<LossReportDto> ld= new ArrayList<LossReportDto>(); 
 		Boolean res;
 		try{
 			res = checkToken.check(request.getHeader("token"));
 			if(res == true){
 				log.debug("called getLossGoods starting...");
-				loss2Good = lossService.findLossGoods(lossCode);
+				ld = superStoreService.getLossRepootDtoByLossReportNo(lossCode);
 				rr.setCode("200");
 				rr.setMsg("查询损耗详情成功");
-				rr.setResult(loss2Good);
+				rr.setResult(ld);
 			}else{
 				rr.setCode("201");
 				rr.setMsg("token失效！");
