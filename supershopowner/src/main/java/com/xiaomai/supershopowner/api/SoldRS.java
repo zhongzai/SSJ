@@ -74,7 +74,7 @@ public class SoldRS extends BaseRS{
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
 				
-			List<Goods> list = goodsService.findGoods(map);
+			List<Goods> list = goodsService.findSoldOutList(map);
 				
 			result.setCode("200");
 			result.setMsg("Success");

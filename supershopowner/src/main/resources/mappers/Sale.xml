@@ -14,11 +14,10 @@
     <result column="after_buying_rate" jdbcType="DECIMAL" property="afterBuyingRate" />
     <result column="sales_date" jdbcType="TIMESTAMP" property="salesDate" />
     <result column="sales_total" jdbcType="DECIMAL" property="salesTotal" />
-    <result column="best_sales_number" jdbcType="INTEGER" property="bestSalesNumber"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, user_account, store_code, cust_number, profit, loss, average_price,consumption_number, new_cust, 
-    after_buying_rate, sales_date, sales_total, best_sales_number
+    after_buying_rate, sales_date, sales_total
   </sql>
   <sql id="queryMap">
 		<if test="startDate !=null and startDate != ''">

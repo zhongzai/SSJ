@@ -29,6 +29,15 @@
 			and store_code = #{storeCode,jdbcType=VARCHAR} order by net_profit desc
 		</if>
    </sql>
+   
+   <sql id="queryMap1">
+  		<if test="salesDate !=null and salesDate != ''">
+    		<![CDATA[and DATE_FORMAT(sales_date, '%Y-%m-%d') =  DATE_FORMAT(#{salesDate}, '%Y-%m-%d')]]>
+    	</if>
+    	<if test="storeCode != null">
+			and store_code = #{storeCode,jdbcType=VARCHAR} order by total_sales desc
+		</if>
+   </sql>
 
  <!-- 查询单品分析表  按照销量排序 -->
   <select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
@@ -38,6 +47,6 @@
   </select>
   
   <select id="findBestGcate" parameterType="map" resultMap="BaseResultMap">
-  		select <include refid="Base_Column_List" /> from one_category_analyse  where seles_number in(select max(seles_number) from one_category_analyse where 1=1 <include refid="queryMap"/>)  group by store_code
+  		select <include refid="Base_Column_List" /> from one_category_analyse  where seles_number in(select max(seles_number) from one_category_analyse where 1=1 <include refid="queryMap1"/>)and store_code = #{storeCode,jdbcType=VARCHAR}  group by store_code
   </select>
 </mapper>

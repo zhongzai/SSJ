@@ -67,8 +67,13 @@
     select 
     <include refid="Base_Column_List" />
     from goods
-    where  <![CDATA[inventory<=0 ]]> and store_code = #{storeCode,jdbcType=VARCHAR} limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    where 1=1 <include refid="queryMap"/>limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
   
-  
+  <select id="findSoldOutList" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where 1=1 <include refid="queryMap"/> <![CDATA[and inventory<=0]]>  limit  #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
 </mapper>
