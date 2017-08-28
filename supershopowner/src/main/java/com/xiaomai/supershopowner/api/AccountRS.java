@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +26,6 @@ import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Account;
 import com.xiaomai.supershopowner.entity.Flow;
 import com.xiaomai.supershopowner.entity.RechargeTransfer;
-import com.xiaomai.supershopowner.service.OrderService;
 
 @Controller
 @RequestMapping(value="/account")

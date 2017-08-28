@@ -47,7 +47,7 @@ public class Sale {
 
     private Double salesTotal;
     
-    private Integer bestSalesNumber;
+    private Integer salesTotalNumber;
     
     private String todaySalesUpdown;
     
@@ -119,12 +119,13 @@ public class Sale {
 		this.lossUpdown = lossUpdown;
 	}
 
-	public Integer getBestSalesNumber() {
-		return bestSalesNumber;
+
+	public Integer getSalesTotalNumber() {
+		return salesTotalNumber;
 	}
 
-	public void setBestSalesNumber(Integer bestSalesNumber) {
-		this.bestSalesNumber = bestSalesNumber;
+	public void setSalesTotalNumber(Integer salesTotalNumber) {
+		this.salesTotalNumber = salesTotalNumber;
 	}
 
 	public Integer getId() {

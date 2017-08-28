@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.service;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,10 +59,12 @@ public class SaleService implements BaseService<Sale, Integer>{
 				OneCategoryAnalyse oneCategoryAnalyse = oneCategoryAnalyseDao.findBestGcate(map1);
 				if(dayCategory!=null){
 					sales.setBestCategoryName(dayCategory.getCategoryName());
+					sales.setSalesTotalNumber(dayCategory.getTotalNumber());
 				}
 				if(oneCategoryAnalyse!=null){
 					sales.setBestGoodsName(oneCategoryAnalyse.getGoodName());
 				}	
+				
 				if(formatter.format(new Date()).equals(formatter.format(sales.getSalesDate()))){
 					Calendar   cal   =   Calendar.getInstance();
 					cal.add(Calendar.DATE,   -7);
@@ -129,8 +132,8 @@ public class SaleService implements BaseService<Sale, Integer>{
 					salesTranfer.setYestodaySales(sales);
 				}
 			}
-		} catch (Exception e) {
-			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
 		}
 		return salesTranfer;
 	}
