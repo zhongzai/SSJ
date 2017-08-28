@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,8 @@ public class GoodsDao extends BaseDaoImpl<Goods, Integer> {
 		return selectOne(getNameSpace()+".findLatestGoods",map);
 	} 
 	
+	public List<Goods> findSoldOutList(Map<String,Object> map) throws SQLException{
+		
+		return selectList(getNameSpace()+".findSoldOutList",map);
+	} 
 }

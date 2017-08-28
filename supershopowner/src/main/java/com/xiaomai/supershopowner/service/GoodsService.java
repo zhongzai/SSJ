@@ -33,6 +33,17 @@ public class GoodsService implements BaseService<Goods, Integer>{
 		return list;
 	}
 	
+public List<Goods> findSoldOutList(HashMap<String, Object> map){
+		
+		List<Goods> list = null;
+		try {
+			 list= goodsDao.findSoldOutList(map);
+		} catch (Exception e) {
+			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
+		}
+		return list;
+	}
+	
 	public Goods findLatestGoods(Map<String, Object> map){
 		Goods gs =null;
 		try{
