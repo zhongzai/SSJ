@@ -42,16 +42,12 @@ import com.xiaomai.supershopowner.entity.ReceiveGoods;
 import com.xiaomai.supershopowner.entity.SuperPurchaseOrderItemsRspTransfer;
 import com.xiaomai.supershopowner.entity.WeekSales;
 import com.xiaomai.supershopowner.service.GoodsService;
-import com.xiaomai.supershopowner.service.OrderService;
 import com.xiaomai.supershopowner.service.WeekSalesService;
 
 @RestController
 @RequestMapping(value = "order")
 public class OrderRS extends BaseRS {
 	private org.slf4j.Logger log = LoggerFactory.getLogger(OrderRS.class);
-
-	@Autowired
-	OrderService orderService;
 
 	@Autowired
 	protected CheckToken checkToken;

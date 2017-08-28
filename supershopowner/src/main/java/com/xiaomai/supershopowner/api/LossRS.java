@@ -1,9 +1,7 @@
 package com.xiaomai.supershopowner.api;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.sf.json.JSONObject;
 
@@ -22,10 +20,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Loss;
-import com.xiaomai.supershopowner.entity.Loss2good;
 import com.xiaomai.supershopowner.entity.LossTransfer;
-import com.xiaomai.supershopowner.service.LossService;
 
 
 @RestController
@@ -33,9 +28,6 @@ import com.xiaomai.supershopowner.service.LossService;
 public class LossRS extends BaseRS {
 	
 	private org.slf4j.Logger log = LoggerFactory.getLogger(OrderRS.class);
-	
-	@Autowired
-	LossService lossService;
 	
 	@Autowired
 	protected CheckToken checkToken;
@@ -127,39 +119,5 @@ public class LossRS extends BaseRS {
 		}
 		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance()).toString();
 	}
-	
-	
-	//单个商品的损耗详情
-	@RequestMapping(value="findLossByOneGood",method=RequestMethod.POST)
-	public String findLossByOneGood(@RequestParam(value="storeCode",required=false) String storeCode,
-			@RequestParam(value="goodsCode",required=false) String goodsCode){
-		RSResult rr = new RSResult();
-		List<Loss2good> lgs = new ArrayList<Loss2good>();
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("storeCode", storeCode);
-		map.put("goodsCode", goodsCode);
-		Boolean res;
-		try{
-			res = checkToken.check(request.getHeader("token"));
-			if(res==true){
-				log.debug("called findLossByOneGood starting...");
-				lgs = lossService.findLossByOneGood(map);
-				rr.setCode("200");
-				rr.setMsg("查询单个商品的损耗成功");
-				rr.setResult(lgs);
-			}else{
-				rr.setCode("201");
-				rr.setMsg("token失效！");
-				rr.setResult(null);
-			}
-		}catch(Exception e){
-			log.error("called findLossByOneGood failure", e);
-			rr.setCode("400");
-			rr.setMsg("查询单个商品的损耗失败");
-			rr.setResult(null);
-		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance()).toString();
-	}
-	
 	
 }
