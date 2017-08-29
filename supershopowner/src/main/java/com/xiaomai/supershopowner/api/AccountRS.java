@@ -52,8 +52,9 @@ public class AccountRS extends BaseRS{
 			if(res==true){
 			
 			Member member = memberService.getMemberInfo(account.getPhone(), null);
-			
-			account.setBalance(member.getBalance());
+			if(member!=null){
+				account.setBalance(member.getBalance());
+			}
 				result.setCode("200");
 				result.setMsg("success");
 				result.setResult(account);
@@ -63,6 +64,7 @@ public class AccountRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
+			ex.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
@@ -112,6 +114,7 @@ public class AccountRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
+			ex.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
