@@ -52,8 +52,9 @@ public class AccountRS extends BaseRS{
 			if(res==true){
 			
 			Member member = memberService.getMemberInfo(account.getPhone(), null);
-			
-			account.setBalance(member.getBalance());
+			if(member!=null){
+				account.setBalance(member.getBalance());
+			}
 				result.setCode("200");
 				result.setMsg("success");
 				result.setResult(account);

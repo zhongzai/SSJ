@@ -196,10 +196,7 @@ public class OrderRS extends BaseRS {
 						spf.setWeekSales(String.valueOf(g.getWeekSales()));
 						spf.setMonthSales(String.valueOf(g.getMonthSales()));
 						spf.setInventory(String.valueOf(g.getInventory()));
-					}else{
-						spf.setWeekSales(null);
-						spf.setMonthSales(null);
-						spf.setInventory(null);
+						spf.setImageUrl(g.getImagesUrl());
 					}
 					sL.add(spf);
 				}

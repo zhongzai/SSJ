@@ -11,6 +11,8 @@ public class SuperPurchaseOrderItemsRspTransfer extends SuperPurchaseOrderItemsR
 	private String monthSales;
 	
 	private String inventory;
+	
+	private String imageUrl;
 
 	public String getWeekSales() {
 		return weekSales;
@@ -35,6 +37,16 @@ public class SuperPurchaseOrderItemsRspTransfer extends SuperPurchaseOrderItemsR
 	public void setInventory(String inventory) {
 		this.inventory = inventory;
 	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	
 	
 	
 	
