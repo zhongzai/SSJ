@@ -146,7 +146,7 @@ public class OrderRS extends BaseRS {
 			rr.setMsg("查询订单失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+		return JSONObject.fromObject(rr, JSONObjectConfig.getTime())
 				.toString();
 	}
 
