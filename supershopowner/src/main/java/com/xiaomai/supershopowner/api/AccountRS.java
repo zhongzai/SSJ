@@ -64,6 +64,7 @@ public class AccountRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
+			ex.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
@@ -113,6 +114,7 @@ public class AccountRS extends BaseRS{
 				result.setResult(null);
 			}
 		}catch(Exception ex){
+			ex.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
