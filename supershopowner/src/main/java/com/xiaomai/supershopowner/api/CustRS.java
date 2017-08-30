@@ -81,11 +81,10 @@ public class CustRS extends BaseRS{
 	@RequestMapping(value="/findMemberDto" , method = RequestMethod.POST)	
 	public @ResponseBody String getfindCustList(HttpServletRequest request,@RequestBody Cust cust){
 		RSResult result = new RSResult();
-	
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			Pager<MemberDto> pager = superStoreService.getMembersByStoreCode(cust.getStoreCode(), Integer.valueOf(request.getHeader("pageNum")), Integer.valueOf(request.getHeader("pageSize")));
+			Pager<MemberDto> pager = superStoreService.getMembersByStoreCode(cust.getStoreCode(), 1, 10);
 			result.setCode("200");
 			result.setMsg("Suscces");
 			result.setResult(pager.getResult());

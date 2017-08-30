@@ -78,7 +78,7 @@ public class SaleAnalyseRS extends BaseRS{
 	 * @return
 	 */
 	@RequestMapping(value="/getSaleAnalyseByProportion",method = RequestMethod.POST)
-	public @ResponseBody String getSaleAnalyseByProportion( @RequestBody SaleAnalyse saleAnalyse){
+	public @ResponseBody String getSaleAnalyseByProportion( HttpServletRequest request,@RequestBody SaleAnalyse saleAnalyse){
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		
