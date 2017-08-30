@@ -67,7 +67,7 @@ public class LossRS extends BaseRS {
 			rr.setMsg("查询损耗单列表失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+		return JSONObject.fromObject(rr, JSONObjectConfig.getTime())
 				.toString();
 	}
 
@@ -113,7 +113,7 @@ public class LossRS extends BaseRS {
 			rr.setMsg("查询损耗详情失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+		return JSONObject.fromObject(rr, JSONObjectConfig.getTime())
 				.toString();
 	}
 
