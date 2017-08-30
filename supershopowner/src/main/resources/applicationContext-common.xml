@@ -21,7 +21,12 @@
 	<!-- 属性文件读入 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:config.properties"></property>
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+				<value>classpath:redis.properties</value>
+			</list>
+		</property>
 	</bean>
 
 
@@ -94,6 +99,7 @@
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config>
 
+    <import resource="classpath:spring-redis.xml" />
 	
 	
 </beans>
