@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 	   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -11,31 +10,63 @@ xmlns:p="http://www.springframework.org/schema/p"
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd ">
-	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
-        <property name="maxIdle" value="${redis.maxIdle}"></property>  
-        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"></property>  
-        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"></property>  
-        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"></property>
-    </bean>  
-    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster"> 
-	    
-	    <constructor-arg index="0">
-            <set>
-                <bean class="redis.clients.jedis.HostAndPort">
-                    <constructor-arg type="String" value="${redis.hostName1}"/>
-                    <constructor-arg type="int" value="${redis.port}"/>
-                </bean>
-                <bean class="redis.clients.jedis.HostAndPort">
-                    <constructor-arg type="String" value="${redis.hostName2}"/>
-                    <constructor-arg type="int" value="${redis.port}"/>
-                </bean>
-                <bean class="redis.clients.jedis.HostAndPort">
-                    <constructor-arg type="String" value="${redis.hostName3}"/>
-                    <constructor-arg type="int" value="${redis.port}"/>
-                </bean>
-            </set>
-        </constructor-arg>
-        <constructor-arg index="1" ref="jedisPoolConfig" />
-    </bean>  
+	<bean id="redisClusterConfiguration"
+		class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+		<property name="maxRedirects" value="${redis.maxRedirects}"></property>
+		<property name="clusterNodes">
+			<set>
+				<bean class="org.springframework.data.redis.connection.RedisClusterNode">
+					<constructor-arg name="host" value="${redis.hostName1}"></constructor-arg>
+					<constructor-arg name="port" value="${redis.port}"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisClusterNode">
+					<constructor-arg name="host" value="${redis.hostName2}"></constructor-arg>
+					<constructor-arg name="port" value="${redis.port}"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisClusterNode">
+					<constructor-arg name="host" value="${redis.hostName3}"></constructor-arg>
+					<constructor-arg name="port" value="${redis.port}"></constructor-arg>
+				</bean>
+			</set>
+		</property>
+	</bean>
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="${redis.maxIdle}" />
+	</bean>
+	<bean id="jeidsConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<constructor-arg ref="redisClusterConfiguration" />
+		<constructor-arg ref="jedisPoolConfig" />
+	</bean>
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jeidsConnectionFactory" />
+		<property name="defaultSerializer">  
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
+        </property>
+	</bean>
     
+    
+     <bean id="topicMessageListener" class="com.xiaomai.supershopowner.common.TopicMessageListener">  
+        <property name="redisTemplate" ref="redisTemplate"></property>  
+    </bean>  
+    <bean id="topicContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer" destroy-method="destroy">  
+        <property name="connectionFactory" ref="jeidsConnectionFactory"/>  
+        <property name="taskExecutor"><!-- 此处有个奇怪的问题，无法正确使用其他类型的Executor -->  
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">  
+                <property name="poolSize" value="3"></property>  
+            </bean>  
+        </property>  
+        <property name="messageListeners">  
+            <map>  
+                <entry key-ref="topicMessageListener">  
+                    <bean class="org.springframework.data.redis.listener.ChannelTopic">  
+                        <constructor-arg value="user:topic"/>  
+                    </bean>  
+                </entry>  
+            </map>  
+        </property>  
+    </bean>  
+
+
 </beans>
