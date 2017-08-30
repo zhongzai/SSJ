@@ -1,5 +1,7 @@
 package com.xiaomai.supershopowner.api;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,102 +24,127 @@ import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.LossTransfer;
 
-
 @RestController
-@RequestMapping(value="loss")
+@RequestMapping(value = "loss")
 public class LossRS extends BaseRS {
-	
+
 	private org.slf4j.Logger log = LoggerFactory.getLogger(OrderRS.class);
-	
+
 	@Autowired
 	protected CheckToken checkToken;
-	
+
 	@Autowired
 	SuperStoreService superStoreService;
-	
-	//损耗单列表
-	@RequestMapping(value="getLossByStoreCode",method=RequestMethod.POST)
-	public String getLossByStoreCode(@RequestParam(value="storeCode",required=false) String storeCode){
+
+	// 损耗单列表
+	@RequestMapping(value = "getLossByStoreCode", method = RequestMethod.POST)
+	public String getLossByStoreCode(
+			@RequestParam(value = "storeCode", required = false) String storeCode) {
 		RSResult rr = new RSResult();
-		Pager<LossReportDto> ld= null;
+		Pager<LossReportDto> ld = null;
 		Boolean res;
-		try{
+		try {
 			res = checkToken.check(request.getHeader("token"));
-			if(res==true){
+			if (res == true) {
 				log.debug("called getLossByStoreCode starting...");
-				ld = superStoreService.getLossRepootListByShopcode(storeCode, null==request.getHeader("pageNum")?1:Integer.valueOf(request.getHeader("pageNum")), null==request.getHeader("pageSize")?10:Integer.valueOf(request.getHeader("pageSize")));
+				ld = superStoreService.getLossRepootListByShopcode(
+						storeCode,
+						null == request.getHeader("pageNum") ? 1 : Integer
+								.valueOf(request.getHeader("pageNum")),
+						null == request.getHeader("pageSize") ? 10 : Integer
+								.valueOf(request.getHeader("pageSize")));
 				rr.setCode("200");
 				rr.setMsg("查询损耗单列表成功");
 				rr.setResult(ld);
-			}else{
+			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
 				rr.setResult(null);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.error("called getLossByStoreCode failure", e);
 			rr.setCode("400");
 			rr.setMsg("查询损耗单列表失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance()).toString();
+		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+				.toString();
 	}
-	
-	//损耗单详情
-	@RequestMapping(value="getLossGoods",method=RequestMethod.POST)
-	public String getLossGoods(@RequestParam(value="lossCode",required=false) String lossCode){
+
+	// 损耗单详情
+	@RequestMapping(value = "getLossGoods", method = RequestMethod.POST)
+	public String getLossGoods(
+			@RequestParam(value = "lossCode", required = false) String lossCode) {
 		RSResult rr = new RSResult();
-		List<LossReportDto> ld= new ArrayList<LossReportDto>(); 
+		DecimalFormat df = new DecimalFormat("0.00");
+		LossTransfer ltf = new LossTransfer();
+		List<LossReportDto> ld = new ArrayList<LossReportDto>();
+		Double lossTotalAmount = 0.0;
 		Boolean res;
-		try{
+		try {
 			res = checkToken.check(request.getHeader("token"));
-			if(res == true){
+			if (res == true) {
 				log.debug("called getLossGoods starting...");
 				ld = superStoreService.getLossRepootDtoByLossReportNo(lossCode);
+				for (LossReportDto lrd : ld) {
+					lossTotalAmount += lrd
+							.getSalesPrice()
+							.multiply(
+									new BigDecimal(
+											Double.toString(Double.parseDouble(String.valueOf((null == lrd
+													.getLossNumber() ? 0 : lrd
+													.getLossNumber()))))))
+							.doubleValue();
+				}
+				ltf.setLossReportDto(ld);
+				ltf.setLossTotalAmount(String.valueOf(df.format(lossTotalAmount)));
+				log.debug("called getLossGoods end");
 				rr.setCode("200");
 				rr.setMsg("查询损耗详情成功");
-				rr.setResult(ld);
-			}else{
+				rr.setResult(ltf);
+			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
 				rr.setResult(null);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.error("called getLossGoods failure", e);
 			rr.setCode("400");
 			rr.setMsg("查询损耗详情失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance()).toString();
+		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+				.toString();
 	}
-	
-	
-	//新建损耗单
-	@RequestMapping(value="addloss",method=RequestMethod.POST)
-	public String inserLoss(@RequestBody LossTransfer lossTransfer){
+
+	// 新建损耗单
+	@RequestMapping(value = "addloss", method = RequestMethod.POST)
+	public String inserLoss(@RequestBody LossTransfer lossTransfer) {
 		RSResult rr = new RSResult();
-		BaseDto baseDto=null;
+		BaseDto baseDto = null;
 		Boolean res;
-		try{
+		try {
 			res = checkToken.check(request.getHeader("token"));
-			if(res == true){
+			if (res == true) {
 				log.debug("called inser loss starting...");
-				baseDto = superStoreService.addLossReport(lossTransfer.getLossReportDetailDto());
+				baseDto = superStoreService.addLossReport(lossTransfer
+						.getLossReportDetailDto());
 				rr.setCode("200");
 				rr.setMsg("插入损耗单成功");
 				rr.setResult(baseDto);
-			}else{
+			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
 				rr.setResult(null);
 			}
-		}catch(Exception e){
-			log.error("called inser loss failure",e);
+		} catch (Exception e) {
+			log.error("called inser loss failure", e);
 			rr.setCode("400");
 			rr.setMsg("增加损耗单失败");
 			rr.setResult(null);
 		}
-		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance()).toString();
+		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+				.toString();
 	}
-	
+
 }
