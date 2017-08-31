@@ -22,6 +22,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
+import com.xiaomai.supershopowner.entity.LossReportDtoTransfer;
 import com.xiaomai.supershopowner.entity.LossTransfer;
 
 @RestController
@@ -41,21 +42,43 @@ public class LossRS extends BaseRS {
 	public String getLossByStoreCode(
 			@RequestParam(value = "storeCode", required = false) String storeCode) {
 		RSResult rr = new RSResult();
-		Pager<LossReportDto> ld = null;
+		List<LossReportDtoTransfer> ldt = new ArrayList<LossReportDtoTransfer>();
+		Pager<LossReportDtoTransfer> plrdt =new Pager<LossReportDtoTransfer>();
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("called getLossByStoreCode starting...");
-				ld = superStoreService.getLossRepootListByShopcode(
+				Pager<LossReportDto> ld = superStoreService.getLossRepootListByShopcode(
 						storeCode,
 						null == request.getHeader("pageNum") ? 1 : Integer
 								.valueOf(request.getHeader("pageNum")),
 						null == request.getHeader("pageSize") ? 10 : Integer
 								.valueOf(request.getHeader("pageSize")));
+				for(LossReportDto lrd : ld.getResult()){
+					LossReportDtoTransfer lrdt = new LossReportDtoTransfer();
+					
+					lrdt.setLossCode(lrd.getLossCode());
+					lrdt.setLossTime(lrd.getLossTime());
+					Double lossTotalAmount = 0.0;
+					Integer lossToatalNumber=0;
+					List<LossReportDto> oneLossReport = superStoreService.getLossRepootDtoByLossReportNo(lrd.getLossCode());//得到一个订单下所有商品
+					for(LossReportDto olr:oneLossReport){
+						lossTotalAmount+=olr.getLossAmount().doubleValue();
+						lossToatalNumber+=olr.getLossNumber();
+					}
+					lrdt.setLossToatalNuber(lossToatalNumber);
+					lrdt.setLossTotalAmount(lossTotalAmount);
+					ldt.add(lrdt);
+				}
+				plrdt.setCurrentPage(ld.getCurrentPage());
+				plrdt.setPageSize(ld.getPageSize());
+				plrdt.setTotalRow(ld.getTotalRow());
+				plrdt.setResult(ldt);
+				
 				rr.setCode("200");
 				rr.setMsg("查询损耗单列表成功");
-				rr.setResult(ld);
+				rr.setResult(plrdt);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
