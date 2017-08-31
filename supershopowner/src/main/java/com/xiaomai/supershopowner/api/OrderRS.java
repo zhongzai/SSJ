@@ -305,6 +305,7 @@ public class OrderRS extends BaseRS {
 					gor.setShelfLife(gs.getShelfLife());
 					gor.setWeekSales(gs.getWeekSales());
 					gor.setInventory(gs.getInventory());
+					gor.setGoodsCode(gs.getGoodsCode());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);
@@ -312,7 +313,7 @@ public class OrderRS extends BaseRS {
 				}else{
 					map.put("goodsCode", goodsCode);
 					Goods gs = goodsService.findGoodLast(map);
-					
+					gor.setGoodsCode(gs.getGoodsCode());
 					gor.setGoodsName(gs.getGoodsName());
 					gor.setImagesUrl(gs.getImagesUrl());
 					gor.setShelfLife(gs.getShelfLife());
