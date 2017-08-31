@@ -300,12 +300,11 @@ public class OrderRS extends BaseRS {
 					
 					gor.setCoefficien(gid.getCoefficien());
 					gor.setGoodsName(gid.getGoodsName());
-					gor.setImagesUrl(gs.getImagesUrl());
+					gor.setImagesUrl(null==gs?null:gs.getImagesUrl());
 					gor.setPrice(gid.getPrice());
-					gor.setShelfLife(gs.getShelfLife());
-					gor.setWeekSales(gs.getWeekSales());
-					gor.setInventory(gs.getInventory());
-					gor.setGoodsCode(gs.getGoodsCode());
+					gor.setShelfLife(null==gs?null:gs.getShelfLife());
+					gor.setWeekSales(null==gs?null:gs.getWeekSales());
+					gor.setInventory(null==gs?null:gs.getInventory());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);
@@ -313,12 +312,12 @@ public class OrderRS extends BaseRS {
 				}else{
 					map.put("goodsCode", goodsCode);
 					Goods gs = goodsService.findGoodLast(map);
-					gor.setGoodsCode(gs.getGoodsCode());
-					gor.setGoodsName(gs.getGoodsName());
-					gor.setImagesUrl(gs.getImagesUrl());
-					gor.setShelfLife(gs.getShelfLife());
-					gor.setWeekSales(gs.getWeekSales());
-					gor.setInventory(gs.getInventory());
+					
+					gor.setGoodsName(null==gs?null:gs.getGoodsName());
+					gor.setImagesUrl(null==gs?null:gs.getImagesUrl());
+					gor.setShelfLife(null==gs?null:gs.getShelfLife());
+					gor.setWeekSales(null==gs?null:gs.getWeekSales());
+					gor.setInventory(null==gs?null:gs.getInventory());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);

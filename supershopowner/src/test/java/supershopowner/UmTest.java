@@ -9,7 +9,7 @@ import com.xiaomai.supershopowner.common.PushClient;
 public class UmTest {
 	private String appkey = "599bc9663eae257b24000634";
 	private String appMasterSecret = "ma1zrw7mxu2f9z7ageh7lugfsqanp84n";
-	private String timestamp = "3746474";
+	private String timestamp = null;
 	private PushClient client = new PushClient();
 	
 	public UmTest(String key, String secret) {
