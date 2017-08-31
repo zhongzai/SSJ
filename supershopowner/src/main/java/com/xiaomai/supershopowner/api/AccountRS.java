@@ -82,6 +82,7 @@ public class AccountRS extends BaseRS{
 		RSResult result = new RSResult();
 		try{ 
             Boolean res=checkToken.check(request.getHeader("token"));
+           String pages = request.getHeader("pageNum");
 			
 			if(res==true){
 				

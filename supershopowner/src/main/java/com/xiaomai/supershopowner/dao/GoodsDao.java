@@ -24,4 +24,8 @@ public class GoodsDao extends BaseDaoImpl<Goods, Integer> {
 		
 		return selectList(getNameSpace()+".findSoldOutList",map);
 	} 
+	public Goods findGoodLast(Map<String,Object> map) throws SQLException{
+			
+			return selectOne(getNameSpace()+".findGoodLast",map);
+		} 
 }

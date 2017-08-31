@@ -296,17 +296,28 @@ public class OrderRS extends BaseRS {
 				if(null!=sku){
 					GoodsInfoDto gid = superStoreService.getGoodsInfoByCgbk(sku);
 					map.put("goodsCode", gid.getGoodsCode());
-					gor.setGoodsInforDto(gid);
-					List<Goods> gs = goodsService.findGoods(map);
-					gor.setGs(gs);
+					Goods gs = goodsService.findGoodLast(map);
+					
+					gor.setCoefficien(gid.getCoefficien());
+					gor.setGoodsName(gid.getGoodsName());
+					gor.setImagesUrl(gs.getImagesUrl());
+					gor.setPrice(gid.getPrice());
+					gor.setShelfLife(gs.getShelfLife());
+					gor.setWeekSales(gs.getWeekSales());
+					gor.setInventory(gs.getInventory());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);
 					gor.setWs(ws);
 				}else{
 					map.put("goodsCode", goodsCode);
-					List<Goods> gs = goodsService.findGoods(map);
-					gor.setGs(gs);
+					Goods gs = goodsService.findGoodLast(map);
+					
+					gor.setGoodsName(gs.getGoodsName());
+					gor.setImagesUrl(gs.getImagesUrl());
+					gor.setShelfLife(gs.getShelfLife());
+					gor.setWeekSales(gs.getWeekSales());
+					gor.setInventory(gs.getInventory());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);

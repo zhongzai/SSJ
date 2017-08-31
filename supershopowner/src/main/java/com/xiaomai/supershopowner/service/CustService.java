@@ -36,6 +36,7 @@ public class CustService  implements BaseService<Cust, Integer>{
 					cust.setCustSex(memberDto.getCustSex());
 					cust.setCustPhone(memberDto.getCustPhone());
 					cust.setCustName(memberDto.getCustName());
+					cust.setStoredValue(memberDto.isStoredValue());
 					newList.add(cust);
 				}
 			}

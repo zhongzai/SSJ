@@ -33,6 +33,10 @@ public class Cust {
 	
 	private String custPhone;
 	
+    private boolean storedValue;
+	
+	private String custName; 
+	
 	public String getCustSex() {
 		return custSex;
 	}
@@ -65,9 +69,7 @@ public class Cust {
 		this.custName = custName;
 	}
 
-	private boolean storedValue;
 	
-	private String custName; 
     
 	public Integer getType() {
 		return type;
