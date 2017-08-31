@@ -22,6 +22,9 @@ public class UserTransfer {
     
     private String headUrl;
     
+    private Double longitude; //经度
+	private Double dimension; //纬度
+    
 
 	public String getAddress() {
 		return address;
@@ -101,6 +104,22 @@ public class UserTransfer {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(Double dimension) {
+		this.dimension = dimension;
 	}
 
 }
