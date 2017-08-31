@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.StoreDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.UserDto;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.UserTransfer;
@@ -36,6 +37,8 @@ public class UserRS extends BaseRS{
 		try{ 
 			UserDto userDto = superStoreService.login(user.getUserAccount(), user.getPassword());
 			
+			StoreDto  storeDto = superStoreService.getStoreInfo(userDto.getStoreCode());
+			
 			if(userDto.getCode().equals("1")){
 				UserTransfer userTransfer = userService.login(user);
 				userTransfer.setAddress(userDto.getAddress());
@@ -44,6 +47,8 @@ public class UserRS extends BaseRS{
 				userTransfer.setSex(userDto.getSex());
 				userTransfer.setStoreCode(userDto.getStoreCode());
 				userTransfer.setStoreName(userDto.getStoreName());
+				userTransfer.setLongitude(storeDto==null?null:storeDto.getX());
+				userTransfer.setDimension(storeDto==null?null:storeDto.getY());
 				result.setCode("200");
 				result.setMsg("Success");
 				result.setResult(userTransfer);
