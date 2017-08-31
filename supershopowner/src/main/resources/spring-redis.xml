@@ -33,35 +33,41 @@
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxIdle" value="${redis.maxIdle}" />
 	</bean>
-	<bean id="jeidsConnectionFactory"
+	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
 		<constructor-arg ref="redisClusterConfiguration" />
 		<constructor-arg ref="jedisPoolConfig" />
 	</bean>
 
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-		<property name="connectionFactory" ref="jeidsConnectionFactory" />
+		<property name="connectionFactory" ref="jedisConnectionFactory" />
 		<property name="defaultSerializer">  
             <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>  
         </property>
 	</bean>
     
     
-     <bean id="topicMessageListener" class="com.xiaomai.supershopowner.common.TopicMessageListener">  
-        <property name="redisTemplate" ref="redisTemplate"></property>  
+     <bean id="redisDAO" class="com.xiaomai.supershopowner.dao.RedisDAOImpl">  
+        <property name="redisTemplate" ref="redisTemplate" />  
     </bean>  
-    <bean id="topicContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer" destroy-method="destroy">  
-        <property name="connectionFactory" ref="jeidsConnectionFactory"/>  
-        <property name="taskExecutor"><!-- 此处有个奇怪的问题，无法正确使用其他类型的Executor -->  
-            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">  
-                <property name="poolSize" value="3"></property>  
-            </bean>  
-        </property>  
+    
+    <bean id="serialization" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+  
+    <bean id="messageDelegateListener" class="com.xiaomai.supershopowner.common.MessageDelegateListenerImpl" />  
+  
+    <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">  
+        <property name="delegate" ref="messageDelegateListener" />  
+        <property name="serializer" ref="serialization" />  
+    </bean>  
+  
+    <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">  
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>  
         <property name="messageListeners">  
+            <!-- map of listeners and their associated topics (channels or/and patterns) -->  
             <map>  
-                <entry key-ref="topicMessageListener">  
+                <entry key-ref="messageListener">  
                     <bean class="org.springframework.data.redis.listener.ChannelTopic">  
-                        <constructor-arg value="user:topic"/>  
+                        <constructor-arg value="GO:ORDERED" />   <!-- 这里配置消费端需要订阅的频道，可以是多个。该一例子订阅JAVA这个频道  -->  
                     </bean>  
                 </entry>  
             </map>  

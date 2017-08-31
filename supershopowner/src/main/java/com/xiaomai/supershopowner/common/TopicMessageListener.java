@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.common;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TopicMessageListener implements  MessageListener {  
+	@Autowired
 	private RedisTemplate redisTemplate;  
     
     public void setRedisTemplate(RedisTemplate redisTemplate) {  
