@@ -412,20 +412,26 @@ public class OrderRS extends BaseRS {
 	}
 	//根据类目查询所有的商品
 	@RequestMapping(value="findAllGoods")
-	public String findAllGoods(@RequestParam(value="shopCode",required=false) String shopCode,@RequestParam(value="typeCode",required=false) String typeCode){
+	public String findAllGoods(@RequestParam(value="shopCode",required=false) String shopCode,
+			@RequestParam(value="typeCode",required=false) String typeCode){
 		RSResult rr = new RSResult();
 		HashMap<String, Object> map = new HashMap<String,Object>();
+		Integer pageNum = null==request.getHeader("pageNum")?0:Integer.valueOf(request.getHeader("pageNum"));
+		Integer pageSize = null==request.getHeader("pageSize")?0:Integer.valueOf(request.getHeader("pageSize"));
+		Pager<GoodsInfoDtoTransfer> gidP = new Pager<GoodsInfoDtoTransfer>();
 		map.put("storeCode", shopCode);
-		/*List<GoodsInfoDtoTransfer> gidts= new ArrayList<GoodsInfoDtoTransfer>();*/
+		List<GoodsInfoDtoTransfer> gidts= new ArrayList<GoodsInfoDtoTransfer>();//存储回传数据
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findAllGoods starting...");
 				List<GoodsInfoDto> gids = superStoreService.getGoodsInfoByType(shopCode, typeCode);
+				int currIdx = (pageNum > 1 ? (pageNum -1) * pageSize : 0);
 				
-				/*for(GoodsInfoDto gid:gids){
-					map.put("goodsCode", gid.getGoodsCode());
+				for (int i = 0; i < pageSize && i < gids.size() - currIdx; i++) {
+					GoodsInfoDto goodInfo = gids.get(currIdx + i);
+					map.put("goodsCode", goodInfo.getGoodsCode());
 					Goods gs = goodsService.findLatestGoods(map);//查询本地数据库中最新的统计数据获取周销，月销等
 					
 					GoodsInfoDtoTransfer gidt = new GoodsInfoDtoTransfer();
@@ -434,17 +440,21 @@ public class OrderRS extends BaseRS {
 						gidt.setMonthProvide(String.valueOf(gs.getMonthProvide()));
 						gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
 					}
-					gidt.setShelfLife(gid.getShelfLife());
-					gidt.setCoefficien(gid.getCoefficien());
-					gidt.setGoodsCode(gid.getGoodsCode());
-					gidt.setGoodsName(gid.getGoodsName());
-					gidt.setPrice(gid.getPrice());
+					gidt.setShelfLife(goodInfo.getShelfLife());
+					gidt.setCoefficien(goodInfo.getCoefficien());
+					gidt.setGoodsCode(goodInfo.getGoodsCode());
+					gidt.setGoodsName(goodInfo.getGoodsName());
+					gidt.setPrice(goodInfo.getPrice());
 					
 					gidts.add(gidt);
-				}*/
+		            
+		        }
+				gidP.setCurrentPage(pageNum);
+				gidP.setPageSize(pageSize);
+				gidP.setResult(gidts);
 				rr.setCode("200");
 				rr.setMsg("获取类目下所有的商品成功");
-				rr.setResult(gids);
+				rr.setResult(gidP);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
