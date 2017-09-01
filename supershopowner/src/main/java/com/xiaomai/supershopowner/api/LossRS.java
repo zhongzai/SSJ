@@ -22,7 +22,6 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.LossReportDtoTransfer;
 import com.xiaomai.supershopowner.entity.LossTransfer;
 
 @RestController
