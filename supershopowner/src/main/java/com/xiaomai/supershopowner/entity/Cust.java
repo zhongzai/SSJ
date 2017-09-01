@@ -4,10 +4,12 @@ import java.util.Date;
 
 public class Cust {
     private Integer id;
-
+    
+    private Integer count;
+   
     private String storeCode;
 
-    private String custId;
+	private String custId;
 
     private String custAccount;
 
@@ -44,7 +46,13 @@ public class Cust {
 	public void setCustSex(String custSex) {
 		this.custSex = custSex;
 	}
+    public Integer getCount() {
+		return count;
+	}
 
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	public String getCustPhone() {
 		return custPhone;
 	}

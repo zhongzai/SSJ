@@ -14,6 +14,7 @@
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
     <result column="consumption_amount" jdbcType="DECIMAL" property="consumptionAmount" />
     <result column="category_code" jdbcType="VARCHAR" property="categoryCode" />
+    <result column="count" jdbcType="INTEGER" property="count" />
   </resultMap>
   <sql id="Base_Column_List">
     id, store_code, cust_id, cust_account, repeat_buy, is_new, coming_time, is_buy, status, 
@@ -33,7 +34,7 @@
    </sql> 
     <!-- 日来客分析  按照消费金额从到小排序 -->
    <select id="findList" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> order by consumption_amount desc
+	  	select  COUNT(id)as count ,<include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> order by consumption_amount desc
 	  		limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
    </select>
 </mapper>
