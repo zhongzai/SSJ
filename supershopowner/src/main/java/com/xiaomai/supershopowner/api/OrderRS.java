@@ -305,6 +305,7 @@ public class OrderRS extends BaseRS {
 					gor.setShelfLife(null==gs?null:gs.getShelfLife());
 					gor.setWeekSales(null==gs?null:gs.getWeekSales());
 					gor.setInventory(null==gs?null:gs.getInventory());
+					gor.setGoodsCode(gid.getGoodsCode());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);
@@ -313,6 +314,7 @@ public class OrderRS extends BaseRS {
 					map.put("goodsCode", goodsCode);
 					Goods gs = goodsService.findGoodLast(map);
 					
+					gor.setGoodsCode(goodsCode);
 					gor.setGoodsName(null==gs?null:gs.getGoodsName());
 					gor.setImagesUrl(null==gs?null:gs.getImagesUrl());
 					gor.setShelfLife(null==gs?null:gs.getShelfLife());
@@ -414,7 +416,7 @@ public class OrderRS extends BaseRS {
 		RSResult rr = new RSResult();
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		map.put("storeCode", shopCode);
-		List<GoodsInfoDtoTransfer> gidts= new ArrayList<GoodsInfoDtoTransfer>();
+		/*List<GoodsInfoDtoTransfer> gidts= new ArrayList<GoodsInfoDtoTransfer>();*/
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
@@ -422,7 +424,7 @@ public class OrderRS extends BaseRS {
 				log.debug("call the findAllGoods starting...");
 				List<GoodsInfoDto> gids = superStoreService.getGoodsInfoByType(shopCode, typeCode);
 				
-				for(GoodsInfoDto gid:gids){
+				/*for(GoodsInfoDto gid:gids){
 					map.put("goodsCode", gid.getGoodsCode());
 					Goods gs = goodsService.findLatestGoods(map);//查询本地数据库中最新的统计数据获取周销，月销等
 					
@@ -439,10 +441,10 @@ public class OrderRS extends BaseRS {
 					gidt.setPrice(gid.getPrice());
 					
 					gidts.add(gidt);
-				}
+				}*/
 				rr.setCode("200");
 				rr.setMsg("获取类目下所有的商品成功");
-				rr.setResult(gidts);
+				rr.setResult(gids);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");

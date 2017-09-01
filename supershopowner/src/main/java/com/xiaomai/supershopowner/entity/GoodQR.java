@@ -5,6 +5,7 @@ import java.util.List;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
 
 public class GoodQR{
+	private String goodsCode;  //商品图片
 	private String goodsName;    //商品名称
 	private String price;    //零售价
 	private String coefficien;    //请配系数
@@ -77,6 +78,14 @@ public class GoodQR{
 
 	public void setShelfLife(String shelfLife) {
 		this.shelfLife = shelfLife;
+	}
+
+	public String getGoodsCode() {
+		return goodsCode;
+	}
+
+	public void setGoodsCode(String goodsCode) {
+		this.goodsCode = goodsCode;
 	}
 
 }

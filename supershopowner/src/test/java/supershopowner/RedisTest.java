@@ -11,7 +11,11 @@ public class RedisTest {
 	    private String key2 = "key2";    
 	    
 	    public RedisTest() {    
-	        jedis = new Jedis("123.56.70.138",6363); 
+	        jedis = new Jedis("123.56.70.138",6363 ); 
+	        
+	        jedis = new Jedis("101.200.143.74",6363 ); 
+	        
+	        jedis = new Jedis("182.92.150.126",6363 ); 
 	    }    
 	    
 	    public static void main(String[] args) {    
