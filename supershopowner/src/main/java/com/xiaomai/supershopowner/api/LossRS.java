@@ -42,43 +42,21 @@ public class LossRS extends BaseRS {
 	public String getLossByStoreCode(
 			@RequestParam(value = "storeCode", required = false) String storeCode) {
 		RSResult rr = new RSResult();
-		List<LossReportDtoTransfer> ldt = new ArrayList<LossReportDtoTransfer>();
-		Pager<LossReportDtoTransfer> plrdt =new Pager<LossReportDtoTransfer>();
+		Pager<LossReportDto> ld =null;
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("called getLossByStoreCode starting...");
-				Pager<LossReportDto> ld = superStoreService.getLossRepootListByShopcode(
+				ld = superStoreService.getLossRepootListByShopcode(
 						storeCode,
 						null == request.getHeader("pageNum") ? 1 : Integer
 								.valueOf(request.getHeader("pageNum")),
 						null == request.getHeader("pageSize") ? 10 : Integer
 								.valueOf(request.getHeader("pageSize")));
-				for(LossReportDto lrd : ld.getResult()){
-					LossReportDtoTransfer lrdt = new LossReportDtoTransfer();
-					
-					lrdt.setLossCode(lrd.getLossCode());
-					lrdt.setLossTime(lrd.getLossTime());
-					Double lossTotalAmount = 0.0;
-					Integer lossToatalNumber=0;
-					List<LossReportDto> oneLossReport = superStoreService.getLossRepootDtoByLossReportNo(lrd.getLossCode());//得到一个订单下所有商品
-					for(LossReportDto olr:oneLossReport){
-						lossTotalAmount+=olr.getLossAmount().doubleValue();
-						lossToatalNumber+=olr.getLossNumber();
-					}
-					lrdt.setLossToatalNuber(lossToatalNumber);
-					lrdt.setLossTotalAmount(lossTotalAmount);
-					ldt.add(lrdt);
-				}
-				plrdt.setCurrentPage(ld.getCurrentPage());
-				plrdt.setPageSize(ld.getPageSize());
-				plrdt.setTotalRow(ld.getTotalRow());
-				plrdt.setResult(ldt);
-				
 				rr.setCode("200");
 				rr.setMsg("查询损耗单列表成功");
-				rr.setResult(plrdt);
+				rr.setResult(ld);
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
@@ -110,14 +88,7 @@ public class LossRS extends BaseRS {
 				log.debug("called getLossGoods starting...");
 				ld = superStoreService.getLossRepootDtoByLossReportNo(lossCode);
 				for (LossReportDto lrd : ld) {
-					lossTotalAmount += lrd
-							.getSalesPrice()
-							.multiply(
-									new BigDecimal(
-											Double.toString(Double.parseDouble(String.valueOf((null == lrd
-													.getLossNumber() ? 0 : lrd
-													.getLossNumber()))))))
-							.doubleValue();
+					lossTotalAmount+=lrd.getLossAmount().doubleValue();
 				}
 				ltf.setLossReportDto(ld);
 				ltf.setLossTotalAmount(String.valueOf(df.format(lossTotalAmount)));

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.imxiaomai.shop.web.superStoreDubbo.domain.LossReportDto;
 
-public class LossReportDtoTransfer{
+public class LossReportDtoTransfer extends LossReportDto{
 	
 	private String lossCode;
 	private Date lossTime;
