@@ -2,11 +2,8 @@ package com.xiaomai.supershopowner.api;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
-import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,10 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Cust;
+import com.xiaomai.supershopowner.entity.CustTransfer;
 import com.xiaomai.supershopowner.service.CustService;
+
+import net.sf.json.JSONObject;
 /**
  * 
  * @author 叩学聪
@@ -51,13 +51,14 @@ public class CustRS extends BaseRS{
 		map.put("storeCode",cust.getStoreCode());
 		map.put("comingTime", formatter.format(cust.getComingTime()));
 		map.put("type", cust.getType());
+		CustTransfer custTransfer = new CustTransfer();
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			List<Cust> custList = custService.getfindComingTime(map);
+			custTransfer = custService.getfindComingTime(map);
 			result.setCode("200");
 			result.setMsg("Suscces");
-			result.setResult(custList);
+			result.setResult(custTransfer);
 			}else{
 				result.setCode("201");
 				result.setMsg("token失效！");
@@ -85,7 +86,7 @@ public class CustRS extends BaseRS{
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			Pager<MemberDto> pager = superStoreService.getMembersByStoreCode(cust.getStoreCode(), 1, 10);
+			Pager<MemberDto> pager = superStoreService.getMembersByStoreCode(cust.getStoreCode(), Integer.valueOf(request.getHeader("pageNum")), Integer.valueOf(request.getHeader("pageSize")));
 			result.setCode("200");
 			result.setMsg("Suscces");
 			result.setResult(pager.getResult());

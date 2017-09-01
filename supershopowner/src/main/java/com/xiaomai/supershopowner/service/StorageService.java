@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.xiaomai.supershopowner.dao.StorageDao;
 import com.xiaomai.supershopowner.entity.Storage;
+import com.xiaomai.supershopowner.entity.StorageTransfer;
 
 
 @Service
@@ -18,17 +19,24 @@ public class StorageService {
 	@Autowired
 	StorageDao storageDao;
 	
-	public Storage findStorageByCode(String storeCode){
+	public StorageTransfer findStorageByCode(String storeCode){
 		log.debug("find storage by code starting...");
-		Storage storage=null;
+		StorageTransfer storageTransfer= new StorageTransfer();
 		try {
-			storage = storageDao.getStorageByCode(storeCode);
+			Storage storage = storageDao.getStorageByCode(storeCode);
+			
+			storageTransfer.setCategoryNumber(storage==null?null:storage.getCategoryNumber());
+			storageTransfer.setGoodsNumber(storage==null?null:storage.getGoodsNumber());
+			storageTransfer.setTotalLoss(storage==null?null:storage.getTotalLoss());
+			storageTransfer.setTotalValue(storage==null?null:storage.getTotalValue());
+			storageTransfer.setStoreCode(storeCode);
+			
 		} catch (SQLException ex) {
 			log.error("exception:", ex);
 			throw new RuntimeException(ex); 
 		}
 		log.debug("find storage by code end...");
-		return storage;
+		return storageTransfer;
 	}
 	
 	

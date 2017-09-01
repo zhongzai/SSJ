@@ -2,8 +2,6 @@ package com.xiaomai.supershopowner.api;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.RSResult;
-import com.xiaomai.supershopowner.entity.Storage;
+import com.xiaomai.supershopowner.entity.StorageTransfer;
 import com.xiaomai.supershopowner.service.StorageService;
+
+import net.sf.json.JSONObject;
 
 
 @RestController
@@ -33,15 +33,15 @@ public class StorageRS  extends BaseRS {
 	@RequestMapping(value="findStorageByCode", method = RequestMethod.POST)
 	public String findStorageByCode(HttpServletRequest request,@RequestParam(value="storeCode",required=false) String storeCode){
 		RSResult rr = new RSResult();
-		Storage storage=null;
+		StorageTransfer storageTransfer=null;
 		try{
 			Boolean res = checkToken.check(request.getHeader("token"));
 			if(res == true){
 				log.debug("call the findStorageByCodeRS...");
-				storage = storageService.findStorageByCode(storeCode);
+				storageTransfer = storageService.findStorageByCode(storeCode);
 				rr.setCode("200");
 				rr.setMsg("查询库存成功");
-				rr.setResult(storage);
+				rr.setResult(storageTransfer);
 			}else{
 				rr.setCode("201");
 				rr.setMsg("token失效！");

@@ -1,5 +1,6 @@
 package com.xiaomai.supershopowner.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,43 +8,45 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
-import com.sun.webkit.WebPage;
-import com.xiaomai.supershopowner.common.BizErr;
-import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.dao.CustDao;
 import com.xiaomai.supershopowner.entity.Cust;
+import com.xiaomai.supershopowner.entity.CustTransfer;
 
 @Service
 public class CustService  implements BaseService<Cust, Integer>{
 	@Resource
 	public CustDao custDao;
-	
+	@Resource
 	public SuperStoreService superStoreService;
-	private org.slf4j.Logger log = LoggerFactory.getLogger(Cust.class);
-	public List<Cust> getfindComingTime(HashMap<String,Object> map){
-		List<Cust> newList = new ArrayList<>();
+	public CustTransfer getfindComingTime(HashMap<String,Object> map){
+		CustTransfer custTransfer = new CustTransfer();
 		try {
-			List<Cust> list = custDao.findList(map);
+			List<Cust>  list = custDao.findList(map);
+			Integer custNumber = custDao.findListCount(map);
+			List<Cust> listNew = new ArrayList<Cust>();
+			custTransfer.setCustList(list);
+			custTransfer.setCustNumber(custNumber);
+			MemberDto memberDto = new MemberDto();
+
 			if(list.size()!=0){
 				for(Cust cust : list){
-					
-					MemberDto  memberDto  =	superStoreService.getMemberById(123);
+					memberDto  =	superStoreService.getMemberById(1159);
 					cust.setCustSex(memberDto==null?null:memberDto.getCustSex());
 					cust.setCustPhone(memberDto==null?null:memberDto.getCustPhone());
 					cust.setCustName(memberDto==null?null:memberDto.getCustName());
-					cust.setStoredValue(memberDto==null?null:memberDto.isStoredValue());
-					newList.add(cust);
+					cust.setStoredValue(memberDto==null?false:memberDto.isStoredValue());
+					listNew.add(cust);
+					custTransfer.setCustList(listNew);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return newList;
+		return custTransfer;
 	}
 	@Override
 	public Integer insert(Cust t) {

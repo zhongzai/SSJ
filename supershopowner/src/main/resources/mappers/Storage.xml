@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.StorageMapper">
   <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Storage">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="category_number" jdbcType="INTEGER" property="categoryNumber" />
     <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
@@ -9,7 +10,7 @@
     <result column="total_loss" jdbcType="DECIMAL" property="totalLoss" />
   </resultMap>
   <sql id="Base_Column_List">
-     store_code, category_number, goods_number, total_value,total_loss
+     id,store_code, category_number, goods_number, total_value,total_loss
   </sql>
   <select id="findByStoreCode" resultMap="BaseResultMap">
     select 

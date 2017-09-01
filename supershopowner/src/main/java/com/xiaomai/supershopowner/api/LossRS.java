@@ -114,14 +114,13 @@ public class LossRS extends BaseRS {
 	@RequestMapping(value = "addloss", method = RequestMethod.POST)
 	public String inserLoss(@RequestBody LossTransfer lossTransfer) {
 		RSResult rr = new RSResult();
-		BaseDto baseDto = null;
+		BaseDto baseDto = new BaseDto();
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("called inser loss starting...");
-				baseDto = superStoreService.addLossReport(lossTransfer
-						.getLossReportDetailDto());
+				baseDto = superStoreService.addLossReport(lossTransfer.getLossReportDetailDto());
 				rr.setCode("200");
 				rr.setMsg("插入损耗单成功");
 				rr.setResult(baseDto);
@@ -131,6 +130,7 @@ public class LossRS extends BaseRS {
 				rr.setResult(null);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			log.error("called inser loss failure", e);
 			rr.setCode("400");
 			rr.setMsg("增加损耗单失败");
