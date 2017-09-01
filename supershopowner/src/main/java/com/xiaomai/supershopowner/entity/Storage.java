@@ -7,7 +7,9 @@ public class Storage {
 
     private Integer goodsNumber;
 
-    private Long totalValue;
+    private Double totalValue;
+    
+    private Double  totalLoss;
 
     public String getStoreCode() {
         return storeCode;
@@ -33,12 +35,21 @@ public class Storage {
         this.goodsNumber = goodsNumber;
     }
 
-    public Long getTotalValue() {
-        return totalValue;
-    }
+	public Double getTotalValue() {
+		return totalValue;
+	}
 
-    public void setTotalValue(Long totalValue) {
-        this.totalValue = totalValue;
-    }
+	public void setTotalValue(Double totalValue) {
+		this.totalValue = totalValue;
+	}
+
+	public Double getTotalLoss() {
+		return totalLoss;
+	}
+
+	public void setTotalLoss(Double totalLoss) {
+		this.totalLoss = totalLoss;
+	}
+
 
 }

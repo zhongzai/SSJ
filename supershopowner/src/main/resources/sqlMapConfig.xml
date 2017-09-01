@@ -38,6 +38,8 @@
 			type="com.xiaomai.supershopowner.entity.CustFlow" />
 		<typeAlias alias="weeksales"
 			type="com.xiaomai.supershopowner.entity.WeekSales" />
+		<typeAlias alias="salesTotal"
+			type="com.xiaomai.supershopowner.entity.SalesTotalTranfer" />
 
 	</typeAliases>
 
@@ -56,5 +58,6 @@
 		<mapper resource="mappers/UserLogin.xml" />
 		<mapper resource="mappers/CustFlow.xml" />
 		<mapper resource="mappers/WeekSales.xml" />
+		<mapper resource="mappers/SaleTotal.xml" />
 	</mappers>
 </configuration>

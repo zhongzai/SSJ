@@ -13,22 +13,24 @@ import javax.annotation.Resource;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.xiaomai.supershopowner.common.BizErr;
-import com.xiaomai.supershopowner.common.BizException;
 import com.xiaomai.supershopowner.dao.DayCategoryDao;
 import com.xiaomai.supershopowner.dao.OneCategoryAnalyseDao;
 import com.xiaomai.supershopowner.dao.SaleAnalyseDao;
 import com.xiaomai.supershopowner.dao.SalesDao;
+import com.xiaomai.supershopowner.dao.SalesTotalDao;
 import com.xiaomai.supershopowner.entity.DayCategory;
 import com.xiaomai.supershopowner.entity.OneCategoryAnalyse;
 import com.xiaomai.supershopowner.entity.Sale;
 import com.xiaomai.supershopowner.entity.SaleAnalyse;
+import com.xiaomai.supershopowner.entity.SalesTotalTranfer;
 import com.xiaomai.supershopowner.entity.SalesTranfer;
 
 @Service
 public class SaleService implements BaseService<Sale, Integer>{
 	@Resource
 	public SalesDao saleDao;
+	@Resource
+	public SalesTotalDao saleTotalDao;
 	
 	@Resource
 	public DayCategoryDao dayCategoryDao;
@@ -136,6 +138,10 @@ public class SaleService implements BaseService<Sale, Integer>{
 			throw new RuntimeException(ex);
 		}
 		return salesTranfer;
+	}
+	
+	public SalesTotalTranfer findTotalSales(String storeCode) throws SQLException {
+		return saleTotalDao.findSaleTotal(storeCode);
 	}
 	
 	@Override
