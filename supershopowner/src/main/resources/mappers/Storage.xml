@@ -6,9 +6,10 @@
     <result column="category_number" jdbcType="INTEGER" property="categoryNumber" />
     <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
     <result column="total_value" jdbcType="DECIMAL" property="totalValue" />
+    <result column="total_loss" jdbcType="DECIMAL" property="totalLoss" />
   </resultMap>
   <sql id="Base_Column_List">
-     store_code, category_number, goods_number, total_value
+     store_code, category_number, goods_number, total_value,total_loss
   </sql>
   <select id="findByStoreCode" resultMap="BaseResultMap">
     select 

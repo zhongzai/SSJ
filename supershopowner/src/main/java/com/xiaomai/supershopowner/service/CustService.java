@@ -32,16 +32,16 @@ public class CustService  implements BaseService<Cust, Integer>{
 			if(list.size()!=0){
 				for(Cust cust : list){
 					
-					MemberDto  memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
-					cust.setCustSex(memberDto.getCustSex());
-					cust.setCustPhone(memberDto.getCustPhone());
-					cust.setCustName(memberDto.getCustName());
-					cust.setStoredValue(memberDto.isStoredValue());
+					MemberDto  memberDto  =	superStoreService.getMemberById(123);
+					cust.setCustSex(memberDto==null?null:memberDto.getCustSex());
+					cust.setCustPhone(memberDto==null?null:memberDto.getCustPhone());
+					cust.setCustName(memberDto==null?null:memberDto.getCustName());
+					cust.setStoredValue(memberDto==null?null:memberDto.isStoredValue());
 					newList.add(cust);
 				}
 			}
 		} catch (Exception e) {
-			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
+			throw new RuntimeException(e);
 		}
 		return newList;
 	}
