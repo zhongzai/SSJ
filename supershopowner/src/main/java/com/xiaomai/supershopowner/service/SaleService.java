@@ -97,30 +97,31 @@ public class SaleService implements BaseService<Sale, Integer>{
 						}
 					}
 					//升降标识
-					//根据日期查询昨天的销售信息
-					Calendar   cal1   =   Calendar.getInstance();
-					cal1.add(Calendar.DATE,   -1);
-					String yes = new SimpleDateFormat( "yyyy-MM-dd ").format(cal1.getTime());
+					//根据日期查询上周的销售信息
+					
 					Map<String, Object> map4 = new HashMap<String, Object>();
-					map4.put("salesDate", yes);
+					map4.put("salesDate", lastWeek);
 					map4.put("storeCode", sales.getStoreCode());
 					
 					Sale yesSale = saleDao.findSaleWithMap(map4);
+					//根据日期查询损耗信息
 					
+					sales.setLossNumber(35);
+					sales.setLossAmount(3647.89);
 					sales.setTodayCustUpdown((sales.getCustNumber()>(yesSale==null?0:yesSale.getCustNumber())?"up":"down"));//0降，1升
 					sales.setTodaySalesUpdown((sales.getSalesTotal()>(yesSale==null?0:yesSale.getSalesTotal())?"up":"down"));
 					sales.setProfitUpdown((sales.getProfit()>(yesSale==null?0:yesSale.getProfit())?"up":"down"));
-					sales.setLossUpdown((sales.getLoss()>(yesSale==null?0:yesSale.getLoss())?"up":"down"));
+					sales.setLossUpdown("up");
 					sales.setAveragePriceUpdown((sales.getAveragePrice()>(yesSale==null?0:yesSale.getAveragePrice())?"up":"down"));
 					sales.setCustWeekNow(custNumber);
 					sales.setSalesWeekNow(salesTotal);
-					sales.setCustWeekToday((sale==null)?0:sale.getCustNumber());
-					sales.setSalesWeekToday((sale==null)?0:sale.getSalesTotal());
+					sales.setCustWeekToday(sale==null?0:sale.getCustNumber());
+					sales.setSalesWeekToday(sale==null?0:sale.getSalesTotal());
 					salesTranfer.setTodaySales(sales);
 				}else{
 					//根据日期查询前天销售信息
 					Calendar   cal2   =   Calendar.getInstance();
-					cal2.add(Calendar.DATE,   -2);
+					cal2.add(Calendar.DATE,   -8);
 					String last = new SimpleDateFormat( "yyyy-MM-dd ").format(cal2.getTime());
 					
 					Map<String, Object> map5 = new HashMap<String, Object>();
@@ -135,6 +136,7 @@ public class SaleService implements BaseService<Sale, Integer>{
 				}
 			}
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 		return salesTranfer;

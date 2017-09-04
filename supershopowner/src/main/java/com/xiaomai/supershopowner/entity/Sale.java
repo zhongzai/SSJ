@@ -24,7 +24,9 @@ public class Sale {
     
     private Integer custWeekNow;
 
-    private Double loss;
+    private Double lossAmount;
+    
+    private Integer lossNumber;
 
     private Double averagePrice;
 
@@ -218,12 +220,21 @@ public class Sale {
 		this.profit = profit;
 	}
 
-	public Double getLoss() {
-		return loss;
+
+	public Double getLossAmount() {
+		return lossAmount;
 	}
 
-	public void setLoss(Double loss) {
-		this.loss = loss;
+	public void setLossAmount(Double lossAmount) {
+		this.lossAmount = lossAmount;
+	}
+
+	public Integer getLossNumber() {
+		return lossNumber;
+	}
+
+	public void setLossNumber(Integer lossNumber) {
+		this.lossNumber = lossNumber;
 	}
 
 	public Double getAveragePrice() {

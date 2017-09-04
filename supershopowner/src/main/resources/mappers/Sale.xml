@@ -7,7 +7,6 @@
     <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
     <result column="cust_number" jdbcType="INTEGER" property="custNumber" />
     <result column="profit" jdbcType="DECIMAL" property="profit" />
-    <result column="loss" jdbcType="DECIMAL" property="loss" />
     <result column="average_price" jdbcType="DECIMAL" property="averagePrice" />
     <result column="consumption_number" jdbcType="INTEGER" property="consumptionNumber" />
     <result column="new_cust" jdbcType="INTEGER" property="newCust" />
@@ -16,7 +15,7 @@
     <result column="sales_total" jdbcType="DECIMAL" property="salesTotal" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_account, store_code, cust_number, profit, loss, average_price,consumption_number, new_cust, 
+    id, user_account, store_code, cust_number, profit,average_price,consumption_number, new_cust, 
     after_buying_rate, sales_date, sales_total
   </sql>
   <sql id="queryMap">
