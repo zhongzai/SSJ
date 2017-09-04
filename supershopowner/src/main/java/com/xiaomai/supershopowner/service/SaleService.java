@@ -106,12 +106,10 @@ public class SaleService implements BaseService<Sale, Integer>{
 					Sale yesSale = saleDao.findSaleWithMap(map4);
 					//根据日期查询损耗信息
 					
-					sales.setLossNumber(35);
-					sales.setLossAmount(3647.89);
 					sales.setTodayCustUpdown((sales.getCustNumber()>(yesSale==null?0:yesSale.getCustNumber())?"up":"down"));//0降，1升
 					sales.setTodaySalesUpdown((sales.getSalesTotal()>(yesSale==null?0:yesSale.getSalesTotal())?"up":"down"));
 					sales.setProfitUpdown((sales.getProfit()>(yesSale==null?0:yesSale.getProfit())?"up":"down"));
-					sales.setLossUpdown("up");
+					sales.setLossUpdown((sales.getLossAmount()==null?0:sales.getLossAmount())>(yesSale==null?0:(yesSale.getLossAmount()==null?0:yesSale.getLossAmount()))?"up":"down");
 					sales.setAveragePriceUpdown((sales.getAveragePrice()>(yesSale==null?0:yesSale.getAveragePrice())?"up":"down"));
 					sales.setCustWeekNow(custNumber);
 					sales.setSalesWeekNow(salesTotal);
