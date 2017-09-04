@@ -49,6 +49,7 @@ public class UserRS extends BaseRS{
 				userTransfer.setStoreName(userDto.getStoreName());
 				userTransfer.setLongitude(storeDto==null?null:storeDto.getX());
 				userTransfer.setDimension(storeDto==null?null:storeDto.getY());
+				userTransfer.setUserAccount(user.getUserAccount());
 				result.setCode("200");
 				result.setMsg("Success");
 				result.setResult(userTransfer);

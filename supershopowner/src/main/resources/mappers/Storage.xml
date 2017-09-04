@@ -15,7 +15,7 @@
   <select id="findByStoreCode" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from storage
+    from storage1
     where store_code = #{storeCode,jdbcType=VARCHAR}
   </select>
 </mapper>

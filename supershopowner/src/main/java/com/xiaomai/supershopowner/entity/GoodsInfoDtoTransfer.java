@@ -7,6 +7,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
 public class GoodsInfoDtoTransfer extends GoodsInfoDto implements Serializable{
 	
 	private static final long serialVersionUID = 2L;
+	private String imageUrl;
 	private String weekSales;
 	private String monthSales;
 	private String monthProvide;
@@ -27,6 +28,12 @@ public class GoodsInfoDtoTransfer extends GoodsInfoDto implements Serializable{
 	}
 	public void setMonthProvide(String monthProvide) {
 		this.monthProvide = monthProvide;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 }

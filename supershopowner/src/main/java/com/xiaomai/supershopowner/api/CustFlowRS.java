@@ -36,7 +36,7 @@ public class CustFlowRS extends BaseRS{
 	@RequestMapping(value="/getCustFlow",method = RequestMethod.POST)
 	public @ResponseBody String getCustFlow(HttpServletRequest request,@RequestBody CustFlow custFlow){
 		RSResult result = new RSResult();
-		SimpleDateFormat formatt = new SimpleDateFormat();
+		SimpleDateFormat formatt = new SimpleDateFormat("yyyy-MM-dd ");
 		HashMap<String,Object> map = super.getQueryMap();
 		map.put("storeCode", custFlow.getStoreCode());
 		map.put("flowTime",formatt.format(custFlow.getFlowTime()));

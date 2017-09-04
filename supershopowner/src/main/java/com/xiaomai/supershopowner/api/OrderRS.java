@@ -295,21 +295,32 @@ public class OrderRS extends BaseRS {
 				log.debug("call the findGoodByQR starting...");
 				if(null!=sku){
 					GoodsInfoDto gid = superStoreService.getGoodsInfoByCgbk(sku);
-					map.put("goodsCode", gid.getGoodsCode());
-					Goods gs = goodsService.findGoodLast(map);
 					
-					gor.setCoefficien(gid.getCoefficien());
-					gor.setGoodsName(gid.getGoodsName());
-					gor.setImagesUrl(null==gs?null:gs.getImagesUrl());
-					gor.setPrice(gid.getPrice());
-					gor.setShelfLife(null==gs?null:gs.getShelfLife());
-					gor.setWeekSales(null==gs?null:gs.getWeekSales());
-					gor.setInventory(null==gs?null:gs.getInventory());
-					gor.setGoodsCode(gid.getGoodsCode());
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					map.put("nowDate", sdf.format(new Date()));
-					List<WeekSales> ws = weekSalesService.findWeekSales(map);
-					gor.setWs(ws);
+					map.put("goodsCode", gid==null?null:gid.getGoodsCode());
+					if(gid.getGoodsCode()!=null){
+						Goods gs = goodsService.findGoodLast(map);
+						gor.setImagesUrl(null==gs?null:gs.getImagesUrl());
+						gor.setShelfLife(null==gs?null:gs.getShelfLife());
+						gor.setWeekSales(null==gs?null:gs.getWeekSales());
+						gor.setInventory(null==gs?null:gs.getInventory());
+						
+						gor.setCoefficien(gid==null?null:gid.getCoefficien());
+						gor.setGoodsName(gid==null?null:gid.getGoodsName());
+						gor.setPrice(gid==null?null:gid.getPrice());
+						gor.setGoodsCode(gid==null?null:gid.getGoodsCode());
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						map.put("nowDate", sdf.format(new Date()));
+						List<WeekSales> ws = weekSalesService.findWeekSales(map);
+						gor.setWs(ws);
+						
+						rr.setCode("200");
+						rr.setMsg("扫描二维码获取商品信息成功");
+						rr.setResult(gor);
+					}else{
+						rr.setCode("200");
+						rr.setMsg("无该商品信息");
+						rr.setResult(null);
+					}
 				}else{
 					map.put("goodsCode", goodsCode);
 					Goods gs = goodsService.findGoodLast(map);
@@ -324,10 +335,12 @@ public class OrderRS extends BaseRS {
 					map.put("nowDate", sdf.format(new Date()));
 					List<WeekSales> ws = weekSalesService.findWeekSales(map);
 					gor.setWs(ws);
+					
+					rr.setCode("200");
+					rr.setMsg("查询商品信息成功");
+					rr.setResult(gor);
 				}
-				rr.setCode("200");
-				rr.setMsg("扫描二维码获取商品信息成功");
-				rr.setResult(gor);
+				
 			} else {
 				rr.setCode("201");
 				rr.setMsg("token失效！");
@@ -428,27 +441,29 @@ public class OrderRS extends BaseRS {
 				log.debug("call the findAllGoods starting...");
 				List<GoodsInfoDto> gids = superStoreService.getGoodsInfoByType(shopCode, typeCode);
 				int currIdx = (pageNum > 1 ? (pageNum -1) * pageSize : 0);
-				
-				for (int i = 0; i < pageSize && i < gids.size() - currIdx; i++) {
-					GoodsInfoDto goodInfo = gids.get(currIdx + i);
-					map.put("goodsCode", goodInfo.getGoodsCode());
-					Goods gs = goodsService.findLatestGoods(map);//查询本地数据库中最新的统计数据获取周销，月销等
-					
-					GoodsInfoDtoTransfer gidt = new GoodsInfoDtoTransfer();
-					if(null!=gs){
-						gidt.setWeekSales(String.valueOf(gs.getWeekSales()));
-						gidt.setMonthProvide(String.valueOf(gs.getMonthProvide()));
-						gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
-					}
-					gidt.setShelfLife(goodInfo.getShelfLife());
-					gidt.setCoefficien(goodInfo.getCoefficien());
-					gidt.setGoodsCode(goodInfo.getGoodsCode());
-					gidt.setGoodsName(goodInfo.getGoodsName());
-					gidt.setPrice(goodInfo.getPrice());
-					
-					gidts.add(gidt);
-		            
-		        }
+				if(gids.size()!=0){
+					for (int i = 0; i < pageSize && i < gids.size() - currIdx; i++) {
+						GoodsInfoDto goodInfo = gids.get(currIdx + i);
+						map.put("goodsCode", goodInfo.getGoodsCode());
+						Goods gs = goodsService.findLatestGoods(map);//查询本地数据库中最新的统计数据获取周销，月销等
+						
+						GoodsInfoDtoTransfer gidt = new GoodsInfoDtoTransfer();
+						if(null!=gs){
+							gidt.setWeekSales(String.valueOf(gs.getWeekSales()));
+							gidt.setMonthProvide(String.valueOf(gs.getMonthProvide()));
+							gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
+							gidt.setImageUrl(gs.getImagesUrl());
+						}
+						gidt.setShelfLife(goodInfo.getShelfLife());
+						gidt.setCoefficien(goodInfo.getCoefficien());
+						gidt.setGoodsCode(goodInfo.getGoodsCode());
+						gidt.setGoodsName(goodInfo.getGoodsName());
+						gidt.setPrice(goodInfo.getPrice());
+						
+						gidts.add(gidt);
+			            
+			        }
+				}
 				gidP.setCurrentPage(pageNum);
 				gidP.setPageSize(pageSize);
 				gidP.setResult(gidts);
