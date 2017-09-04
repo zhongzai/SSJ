@@ -308,6 +308,8 @@ public class OrderRS extends BaseRS {
 						gor.setGoodsName(gid==null?null:gid.getGoodsName());
 						gor.setPrice(gid==null?null:gid.getPrice());
 						gor.setGoodsCode(gid==null?null:gid.getGoodsCode());
+						gor.setDayDistribution(gid.getDayDistribution());
+						gor.setLogisticsType(gid.getLogisticsType());
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 						map.put("nowDate", sdf.format(new Date()));
 						List<WeekSales> ws = weekSalesService.findWeekSales(map);

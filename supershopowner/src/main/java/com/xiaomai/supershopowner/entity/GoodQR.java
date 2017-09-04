@@ -2,8 +2,6 @@ package com.xiaomai.supershopowner.entity;
 
 import java.util.List;
 
-import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
-
 public class GoodQR{
 	private String goodsCode;  //商品图片
 	private String goodsName;    //商品名称
@@ -13,6 +11,8 @@ public class GoodQR{
 	private Integer inventory; //库存
 	private String imagesUrl;  //商品图片
 	private Integer weekSales;   //周销
+	private Integer dayDistribution;//是否日配
+	private Integer logisticsType;//配送类型
 	
 	private List<WeekSales> ws;   //七天实体
 	
@@ -86,6 +86,22 @@ public class GoodQR{
 
 	public void setGoodsCode(String goodsCode) {
 		this.goodsCode = goodsCode;
+	}
+
+	public Integer getDayDistribution() {
+		return dayDistribution;
+	}
+
+	public void setDayDistribution(Integer dayDistribution) {
+		this.dayDistribution = dayDistribution;
+	}
+
+	public Integer getLogisticsType() {
+		return logisticsType;
+	}
+
+	public void setLogisticsType(Integer logisticsType) {
+		this.logisticsType = logisticsType;
 	}
 
 }

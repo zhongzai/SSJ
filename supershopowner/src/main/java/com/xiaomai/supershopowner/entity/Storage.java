@@ -1,7 +1,6 @@
 package com.xiaomai.supershopowner.entity;
 
 public class Storage {
-	private Integer id;
 	
     private String storeCode;
 
@@ -52,14 +51,5 @@ public class Storage {
 	public void setTotalLoss(Double totalLoss) {
 		this.totalLoss = totalLoss;
 	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 
 }
