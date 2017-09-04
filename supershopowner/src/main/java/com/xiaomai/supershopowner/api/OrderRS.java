@@ -428,7 +428,9 @@ public class OrderRS extends BaseRS {
 	//根据类目查询所有的商品
 	@RequestMapping(value="findAllGoods")
 	public String findAllGoods(@RequestParam(value="shopCode",required=false) String shopCode,
-			@RequestParam(value="typeCode",required=false) String typeCode){
+			@RequestParam(value="typeCodeOne",required=false) String typeCodeOne,
+			@RequestParam(value="typeCodeTwo",required=false) String typeCodeTwo
+			){
 		RSResult rr = new RSResult();
 		HashMap<String, Object> map = new HashMap<String,Object>();
 		Integer pageNum = null==request.getHeader("pageNum")?0:Integer.valueOf(request.getHeader("pageNum"));
@@ -441,7 +443,17 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findAllGoods starting...");
-				List<GoodsInfoDto> gids = superStoreService.getGoodsInfoByType(shopCode, typeCode);
+				List<GoodsInfoDto> gids=new ArrayList<GoodsInfoDto>();
+				if(null != typeCodeOne && !("").equals(typeCodeOne)){
+					gids = superStoreService.getGoodsInfoByType(shopCode, typeCodeOne,null);
+				}else if(null != typeCodeTwo && !("").equals(typeCodeTwo)){
+					gids = superStoreService.getGoodsInfoByType(shopCode, null,typeCodeTwo);
+				}else{
+					rr.setMsg("必须传入类目编号");
+					rr.setResult(null);
+					return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
+							.toString();
+				}
 				int currIdx = (pageNum > 1 ? (pageNum -1) * pageSize : 0);
 				if(gids.size()!=0){
 					for (int i = 0; i < pageSize && i < gids.size() - currIdx; i++) {
