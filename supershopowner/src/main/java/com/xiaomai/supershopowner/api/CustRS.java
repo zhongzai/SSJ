@@ -16,6 +16,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
+import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Cust;
 import com.xiaomai.supershopowner.entity.CustTransfer;
@@ -70,7 +71,7 @@ public class CustRS extends BaseRS{
 				result.setMsg("Fail");
 				result.setResult(null);	
 		}
-		return JSONObject.fromObject(result).toString();
+		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
 	/**
 	 * 查询顾客信息

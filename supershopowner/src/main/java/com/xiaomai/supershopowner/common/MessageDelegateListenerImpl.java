@@ -12,12 +12,26 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
  */  
 public class MessageDelegateListenerImpl extends MessageListenerAdapter {  
 	
+	private String appkey = "599bc9663eae257b24000634";
+	private String appMasterSecret = "ma1zrw7mxu2f9z7ageh7lugfsqanp84n";
+	private PushClient client = new PushClient();
+	
 	@Autowired
 	ChannelTopic channelTopic;
   
     public void onMessage(Message message,byte[] pattern) {  
        try{  
-            System.out.println("接受数据"+new String(message.getBody())+channelTopic.getTopic());  
+    	   
+    	   AndroidBroadcast broadcast = new AndroidBroadcast(appkey,appMasterSecret);
+	   		broadcast.setTicker("buy");
+	   		broadcast.setTitle("顾客买单");
+	   		broadcast.setCustomField(new String(message.getBody()));
+	   		broadcast.goAppAfterOpen();
+	   		broadcast.setDisplayType(AndroidNotification.DisplayType.MESSAGE);
+	   		
+	   		broadcast.setProductionMode();
+	   		client.send(broadcast);
+            System.out.println("接受数据"+new String(message.getBody()));  
         }catch(Exception e){
         	
         }  

@@ -34,7 +34,7 @@ public class CustService  implements BaseService<Cust, Integer>{
 
 			if(list.size()!=0){
 				for(Cust cust : list){
-					memberDto  =	superStoreService.getMemberById(1159);
+					memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
 					cust.setCustSex(memberDto==null?null:memberDto.getCustSex());
 					cust.setCustPhone(memberDto==null?null:memberDto.getCustPhone());
 					cust.setCustName(memberDto==null?null:memberDto.getCustName());

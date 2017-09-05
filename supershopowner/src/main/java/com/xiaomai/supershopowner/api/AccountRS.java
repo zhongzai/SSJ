@@ -160,6 +160,6 @@ public class AccountRS extends BaseRS{
 				result.setMsg("Fail");
 				result.setResult(null);	
 		}
-		return JSONObject.fromObject(result).toString();
+		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
 }
