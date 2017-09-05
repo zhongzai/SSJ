@@ -11,6 +11,14 @@ public class GoodsInfoDtoTransfer extends GoodsInfoDto implements Serializable{
 	private String weekSales;
 	private String monthSales;
 	private String monthProvide;
+	private Integer inventory;
+	
+	public Integer getInventory() {
+		return inventory;
+	}
+	public void setInventory(Integer inventory) {
+		this.inventory = inventory;
+	}
 	public String getWeekSales() {
 		return weekSales;
 	}

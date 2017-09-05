@@ -11,25 +11,16 @@ public class UmTest {
 	private String appMasterSecret = "ma1zrw7mxu2f9z7ageh7lugfsqanp84n";
 	private String timestamp = null;
 	private PushClient client = new PushClient();
-	
-	public UmTest(String key, String secret) {
-		try {
-			appkey = key;
-			appMasterSecret = secret;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-	}
+
 	@Test
 	public void sendAndroidBroadcast() throws Exception {
 		
 		AndroidBroadcast broadcast = new AndroidBroadcast(appkey,appMasterSecret);
 		broadcast.setTicker( "Android broadcast ticker");
 		broadcast.setTitle(  "中文的title");
-		broadcast.setText(   "Android broadcast text");
+		broadcast.setCustomField("{\"shopCode\":\"XM0001\",\"orderCode\":\"21XM0001253456576683425\",\"payType\":\"1\",\"payTime\":\"1503999234486\",\"price\":\"101.00\"}");
 		broadcast.goAppAfterOpen();
-		broadcast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION);
+		broadcast.setDisplayType(AndroidNotification.DisplayType.MESSAGE);
 		
 		broadcast.setProductionMode();
 		broadcast.setExtraField("test", "helloworld");
