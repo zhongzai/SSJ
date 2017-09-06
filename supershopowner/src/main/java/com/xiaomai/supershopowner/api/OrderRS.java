@@ -12,8 +12,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +41,8 @@ import com.xiaomai.supershopowner.entity.SuperPurchaseOrderItemsRspTransfer;
 import com.xiaomai.supershopowner.entity.WeekSales;
 import com.xiaomai.supershopowner.service.GoodsService;
 import com.xiaomai.supershopowner.service.WeekSalesService;
+
+import net.sf.json.JSONObject;
 
 @RestController
 @RequestMapping(value = "order")
@@ -467,6 +467,7 @@ public class OrderRS extends BaseRS {
 							gidt.setMonthProvide(String.valueOf(gs.getMonthProvide()));
 							gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
 							gidt.setImageUrl(gs.getImagesUrl());
+							gidt.setInventory(gs.getInventory());
 						}
 						gidt.setShelfLife(goodInfo.getShelfLife());
 						gidt.setCoefficien(goodInfo.getCoefficien());

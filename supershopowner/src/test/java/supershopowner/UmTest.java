@@ -10,7 +10,7 @@ public class UmTest {
 	private String appkey = "599bc9663eae257b24000634";
 	private String appMasterSecret = "ma1zrw7mxu2f9z7ageh7lugfsqanp84n";
 	private PushClient client = new PushClient();
-	
+
 	@Test
 	public void sendAndroidBroadcast() throws Exception {
 		

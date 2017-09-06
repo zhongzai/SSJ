@@ -38,6 +38,7 @@ public class CustService  implements BaseService<Cust, Integer>{
 
 			if(list.size()!=0){
 				for(Cust cust : list){
+
 					memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
 					
 					MemberTag tag = new MemberTag();
@@ -47,6 +48,7 @@ public class CustService  implements BaseService<Cust, Integer>{
 					List<MemberTag> tagList = openService.selectMemberTagListByExample(tag);
 					
 					cust.setTagList(tagList);
+
 					cust.setCustSex(memberDto==null?null:memberDto.getCustSex());
 					cust.setCustPhone(memberDto==null?null:memberDto.getCustPhone());
 					cust.setCustName(memberDto==null?null:memberDto.getCustName());
