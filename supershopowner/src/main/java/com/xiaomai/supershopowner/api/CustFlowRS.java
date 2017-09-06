@@ -1,12 +1,11 @@
 package com.xiaomai.supershopowner.api;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
-import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,8 @@ import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.CustFlow;
 import com.xiaomai.supershopowner.service.CustFlowService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value="/custFlow")
@@ -43,10 +44,21 @@ public class CustFlowRS extends BaseRS{
 		try {
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			List<CustFlow> articleList = custFlowService.getCustFlow(map);
+			List<CustFlow> newList= new ArrayList<>();	
+				
+			List<CustFlow> custList = custFlowService.getCustFlow(map);
+			Double totalAmount=0.00;
+			if(custList.size()!=0){
+				for(CustFlow flow : custList){
+					totalAmount+=(flow.getAmount()==null?0.00:flow.getAmount());
+					
+					flow.setTotalAmount(totalAmount);
+					newList.add(flow);
+				}
+			}
 			result.setCode("200");
 			result.setMsg("Success");
-			result.setResult(articleList);
+			result.setResult(newList);
 			}else{
 				result.setCode("201");
 				result.setMsg("token失效！");

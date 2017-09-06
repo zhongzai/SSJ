@@ -32,11 +32,27 @@
 		</if>
    </sql> 
    <select id="findListCount" parameterType="map" resultType="int">
-	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap"/> 
+	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap"/> and cust_id!=''
    </select>
     <!-- 日来客分析  按照消费金额从到小排序 -->
    <select id="findList" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> order by consumption_amount desc
+	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> and cust_id!='' order by consumption_amount desc
+	  		limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+   </select>
+   
+    <sql id="queryMap1">
+    	<if test="storeCode != null and type==0">
+			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is null
+		</if>
+		<if test="storeCode != null and type==1">
+			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is not null
+		</if>
+   </sql> 
+    <select id="findAllListCount" parameterType="map" resultType="int">
+	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap1"/> and cust_id!=''
+   </select>
+   <select id="findAllList" parameterType="map" resultMap="BaseResultMap">
+	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap1"/> and cust_id!='' order by consumption_amount desc
 	  		limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
    </select>
 </mapper>

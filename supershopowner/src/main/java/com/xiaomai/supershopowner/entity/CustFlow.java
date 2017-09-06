@@ -31,6 +31,14 @@ public class CustFlow {
 	
 	private	Integer custLevel;
 	
+	private Double totalAmount;
+	
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 	public Integer getId() {
 		return id;
 	}

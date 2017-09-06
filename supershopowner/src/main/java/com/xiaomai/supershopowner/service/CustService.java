@@ -62,6 +62,43 @@ public class CustService  implements BaseService<Cust, Integer>{
 		}
 		return custTransfer;
 	}
+	
+	public CustTransfer findAllList(HashMap<String,Object> map){
+		CustTransfer custTransfer = new CustTransfer();
+		try {
+			List<Cust>  list = custDao.findAllList(map);
+			Integer custNumber = custDao.findAllListCount(map);
+			List<Cust> listNew = new ArrayList<Cust>();
+			custTransfer.setCustList(list);
+			custTransfer.setCustNumber(custNumber);
+			MemberDto memberDto = new MemberDto();
+
+			if(list.size()!=0){
+				for(Cust cust : list){
+
+					memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
+					
+					MemberTag tag = new MemberTag();
+					tag.setMemId(Integer.parseInt(cust.getCustId()));
+					tag.setSystemIdentify(1);
+					
+					List<MemberTag> tagList = openService.selectMemberTagListByExample(tag);
+					
+					cust.setTagList(tagList);
+
+					cust.setCustSex(memberDto==null?null:memberDto.getCustSex());
+					cust.setCustPhone(memberDto==null?null:memberDto.getCustPhone());
+					cust.setCustName(memberDto==null?null:memberDto.getCustName());
+					cust.setStoredValue(memberDto==null?false:memberDto.isStoredValue());
+					listNew.add(cust);
+					custTransfer.setCustList(listNew);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return custTransfer;
+	}
 	@Override
 	public Integer insert(Cust t) {
 		// TODO Auto-generated method stub

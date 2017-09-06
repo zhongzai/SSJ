@@ -2,11 +2,10 @@ package com.xiaomai.supershopowner.api;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,8 @@ import com.xiaomai.supershopowner.entity.Cust;
 import com.xiaomai.supershopowner.entity.CustTransfer;
 import com.xiaomai.supershopowner.entity.TagTransfer;
 import com.xiaomai.supershopowner.service.CustService;
+
+import net.sf.json.JSONObject;
 /**
  * 
  * @author 叩学聪
@@ -119,13 +120,20 @@ public class CustRS extends BaseRS{
 	@RequestMapping(value="/findMemberDto" , method = RequestMethod.POST)	
 	public @ResponseBody String getfindCustList(HttpServletRequest request,@RequestBody Cust cust){
 		RSResult result = new RSResult();
+		
+		CustTransfer custTransfer = new CustTransfer();
 		try {
+			
+			HashMap<String, Object> map =super.getQueryMap();
+			
+			map.put("storeCode",cust.getStoreCode());
+			
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){
-			Pager<MemberDto> pager = superStoreService.getMembersByStoreCode(cust.getStoreCode(), Integer.valueOf(request.getHeader("pageNum")), Integer.valueOf(request.getHeader("pageSize")));
+				custTransfer=custService.findAllList(map);
 			result.setCode("200");
 			result.setMsg("Suscces");
-			result.setResult(pager.getResult());
+			result.setResult(custTransfer);
 			}else{
 				result.setCode("201");
 				result.setMsg("token失效！");
@@ -136,7 +144,7 @@ public class CustRS extends BaseRS{
 				result.setMsg("Fail");
 				result.setResult(null);	
 		}
-		return JSONObject.fromObject(result).toString();
+		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
 
 }

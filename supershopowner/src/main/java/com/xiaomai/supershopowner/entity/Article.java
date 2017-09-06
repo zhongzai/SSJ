@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Article {
     private Integer id;
@@ -26,6 +27,16 @@ public class Article {
     private Integer status;
 
     private Date updateTime;
+
+    private String imageUrl;
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 	public Integer getId() {
 		return id;
