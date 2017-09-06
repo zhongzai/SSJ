@@ -12,5 +12,7 @@
     <dubbo:reference interface="com.xiaomai.mall.scan.client.service.RechargeDubboService" version="1.0.0" id="rechargeDubboService" url="dubbo://123.56.141.5:20880" group="TEST" />
     
     <dubbo:reference interface="com.imxiaomai.member.service.MemberService" version="1.0.0" id="memberService" url="dubbo://123.57.73.173:20898" group="TEST" />
+    
+    <dubbo:reference interface="com.imxiaomai.member.service.OpenService" version="1.0.0" id="openService" url="dubbo://123.57.73.173:20898" group="TEST" />
   
 </beans>

@@ -51,6 +51,10 @@ public class Goods {
     
     private String categoryTwoName;
     
+    private String dayDistribution;//是否日配
+    
+    private String logisticsType; //配送类型
+    
 
     public Integer getGoodTotal() {
 		return goodTotal;
@@ -251,4 +255,22 @@ public class Goods {
 	public void setCategoryTwoName(String categoryTwoName) {
 		this.categoryTwoName = categoryTwoName;
 	}
+
+	public String getDayDistribution() {
+		return dayDistribution;
+	}
+
+	public void setDayDistribution(String dayDistribution) {
+		this.dayDistribution = dayDistribution;
+	}
+
+	public String getLogisticsType() {
+		return logisticsType;
+	}
+
+	public void setLogisticsType(String logisticsType) {
+		this.logisticsType = logisticsType;
+	}
+	
+	
 }

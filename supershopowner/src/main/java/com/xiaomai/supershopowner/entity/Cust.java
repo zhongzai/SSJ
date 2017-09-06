@@ -1,6 +1,9 @@
 package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
+import java.util.List;
+
+import com.imxiaomai.member.po.MemberTag;
 
 public class Cust {
     private Integer id;
@@ -37,6 +40,16 @@ public class Cust {
 	
 	private String custName; 
 	
+	private List<MemberTag> tagList;
+	
+	public List<MemberTag> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<MemberTag> tagList) {
+		this.tagList = tagList;
+	}
+
 	public String getCustSex() {
 		return custSex;
 	}

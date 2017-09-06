@@ -10,6 +10,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.imxiaomai.member.po.MemberTag;
+import com.imxiaomai.member.service.OpenService;
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
 import com.xiaomai.supershopowner.dao.CustDao;
@@ -22,6 +24,8 @@ public class CustService  implements BaseService<Cust, Integer>{
 	public CustDao custDao;
 	@Resource
 	public SuperStoreService superStoreService;
+	@Resource
+	public OpenService openService;
 	public CustTransfer getfindComingTime(HashMap<String,Object> map){
 		CustTransfer custTransfer = new CustTransfer();
 		try {
@@ -35,6 +39,14 @@ public class CustService  implements BaseService<Cust, Integer>{
 			if(list.size()!=0){
 				for(Cust cust : list){
 					memberDto  =	superStoreService.getMemberById(Integer.parseInt(cust.getCustId()));
+					
+					MemberTag tag = new MemberTag();
+					tag.setMemId(Integer.parseInt(cust.getCustId()));
+					tag.setSystemIdentify(1);
+					
+					List<MemberTag> tagList = openService.selectMemberTagListByExample(tag);
+					
+					cust.setTagList(tagList);
 					cust.setCustSex(memberDto==null?null:memberDto.getCustSex());
 					cust.setCustPhone(memberDto==null?null:memberDto.getCustPhone());
 					cust.setCustName(memberDto==null?null:memberDto.getCustName());

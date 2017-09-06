@@ -3,7 +3,10 @@ package com.xiaomai.supershopowner.api;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.imxiaomai.member.service.OpenService;
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
@@ -20,9 +24,8 @@ import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.Cust;
 import com.xiaomai.supershopowner.entity.CustTransfer;
+import com.xiaomai.supershopowner.entity.TagTransfer;
 import com.xiaomai.supershopowner.service.CustService;
-
-import net.sf.json.JSONObject;
 /**
  * 
  * @author 叩学聪
@@ -40,6 +43,8 @@ public class CustRS extends BaseRS{
 	protected CheckToken checkToken;
 	@Autowired
 	public SuperStoreService superStoreService;
+	@Resource
+	public OpenService openService;
 	
 	@RequestMapping(value="/findCust" , method = RequestMethod.POST)	
 	public @ResponseBody String getfindCustComingTime(HttpServletRequest request,@RequestBody Cust cust){
@@ -73,6 +78,36 @@ public class CustRS extends BaseRS{
 		}
 		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
 	}
+	/**
+	 * 编辑顾客标签信息
+	 * @return 
+	 */
+	@RequestMapping(value="/addOrUpdate" , method = RequestMethod.POST)	
+	public @ResponseBody String addOrUpdate(HttpServletRequest request,@RequestBody TagTransfer tagTransfer){
+		
+		RSResult result = new RSResult();
+		
+		try {
+			Boolean res=checkToken.check(request.getHeader("token"));
+			if(res==true){
+				boolean tag= openService.saveOrUpdateMemberTag(tagTransfer.getTagList(), tagTransfer.getCustId());
+			result.setCode("200");
+			result.setMsg("Suscces");
+			result.setResult(tag);
+			}else{
+				result.setCode("201");
+				result.setMsg("token失效！");
+				result.setResult(null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+				result.setCode("400");
+				result.setMsg("Fail");
+				result.setResult(null);	
+		}
+		return JSONObject.fromObject(result).toString();
+	}
+	
 	/**
 	 * 查询顾客信息
 	 * @param request 客户信息
