@@ -468,9 +468,11 @@ public class OrderRS extends BaseRS {
 							gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
 							gidt.setImageUrl(gs.getImagesUrl());
 							gidt.setInventory(gs.getInventory());
+							gidt.setShelfLife(gs.getShelfLife());
+							gidt.setCoefficien(String.valueOf(gs.getCoefficien()));
 						}
-						gidt.setShelfLife(goodInfo.getShelfLife());
-						gidt.setCoefficien(goodInfo.getCoefficien());
+						/*gidt.setShelfLife(goodInfo.getShelfLife());
+						gidt.setCoefficien(goodInfo.getCoefficien());*/
 						gidt.setGoodsCode(goodInfo.getGoodsCode());
 						gidt.setGoodsName(goodInfo.getGoodsName());
 						gidt.setPrice(goodInfo.getPrice());
