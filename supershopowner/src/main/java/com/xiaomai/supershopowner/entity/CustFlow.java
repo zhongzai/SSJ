@@ -1,6 +1,7 @@
 package com.xiaomai.supershopowner.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class CustFlow {
 	private Integer id;
@@ -32,6 +33,8 @@ public class CustFlow {
 	private	Integer custLevel;
 	
 	private Double totalAmount;
+	
+	private List<CustFlowGoods> goodList;
 	
 	public Double getTotalAmount() {
 		return totalAmount;
@@ -123,4 +126,11 @@ public class CustFlow {
 	public void setCustLevel(Integer custLevel) {
 		this.custLevel = custLevel;
 	}
+	public List<CustFlowGoods> getGoodList() {
+		return goodList;
+	}
+	public void setGoodList(List<CustFlowGoods> goodList) {
+		this.goodList = goodList;
+	}
+	
 }
