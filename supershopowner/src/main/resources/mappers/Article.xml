@@ -27,6 +27,6 @@
     
    <select id="findList" parameterType="map" resultMap="BaseResultMap">
    select title, content, create_time,subtitle,operatorId,operator,comment,type,source,status,update_time,url from tb_article as ar left join tb_article_images as ai on ar.id=ai.manage_id left join tb_image_detail as dt on ai.image_id=dt.id
-	where 1=1 <include refid="queryMap"/> limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	where 1=1 <include refid="queryMap"/> order by create_time desc limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
    </select>
 </mapper>

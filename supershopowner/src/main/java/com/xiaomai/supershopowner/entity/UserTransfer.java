@@ -24,7 +24,17 @@ public class UserTransfer {
     
     private Double longitude; //经度
 	private Double dimension; //纬度
+	
+	private Integer doorStatus;
     
+
+	public Integer getDoorStatus() {
+		return doorStatus;
+	}
+
+	public void setDoorStatus(Integer doorStatus) {
+		this.doorStatus = doorStatus;
+	}
 
 	public String getAddress() {
 		return address;

@@ -56,6 +56,6 @@ public class ArticleRS extends BaseRS{
 				result.setMsg("Fail");
 				result.setResult(null);	
 		}
-		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
+		return JSONObject.fromObject(result,JSONObjectConfig.getInstance()).toString();
 	}
 }

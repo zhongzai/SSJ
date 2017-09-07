@@ -12,8 +12,8 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
  */  
 public class MessageDelegateListenerImpl extends MessageListenerAdapter {  
 	
-	private String appkey = "599bc9663eae257b24000634";
-	private String appMasterSecret = "ma1zrw7mxu2f9z7ageh7lugfsqanp84n";
+	private String appkey = "59ae1720310c934edc00020c";
+	private String appMasterSecret = "kz7qxboshsjarffugscczowgetndo4fm";
 	private PushClient client = new PushClient();
 	
 	@Autowired
