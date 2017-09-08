@@ -18,6 +18,7 @@ import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
 import com.xiaomai.supershopowner.entity.CustFlow;
+import com.xiaomai.supershopowner.entity.CustFlowGoods;
 import com.xiaomai.supershopowner.service.CustFlowService;
 
 import net.sf.json.JSONObject;
@@ -50,6 +51,27 @@ public class CustFlowRS extends BaseRS{
 			Double totalAmount=0.00;
 			if(custList.size()!=0){
 				for(CustFlow flow : custList){
+					//根据条件查询购买的商品
+					HashMap<String,Object> map1 = new HashMap<String,Object>();
+					map1.put("flowTime", new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(flow.getFlowTime()));
+					map1.put("storeCode", custFlow.getStoreCode());
+					map1.put("custId", flow.getCustId());
+					List<CustFlow> goodList = custFlowService.getCustGoods(map1);
+					
+					List<CustFlowGoods> flowGoods = new ArrayList<>();
+					if(goodList.size()!=0){
+						for(CustFlow custFlows :goodList){
+							
+							CustFlowGoods custFlowGoods= new CustFlowGoods();
+							
+							custFlowGoods.setGoodsName(custFlows.getGoodName());
+							custFlowGoods.setGoodsNumber(String.valueOf(custFlows.getGoodNumber()));
+							
+							flowGoods.add(custFlowGoods);
+						}
+						
+					}
+					flow.setGoodList(flowGoods);
 					totalAmount+=(flow.getAmount()==null?0.00:flow.getAmount());
 					
 					flow.setTotalAmount(totalAmount);

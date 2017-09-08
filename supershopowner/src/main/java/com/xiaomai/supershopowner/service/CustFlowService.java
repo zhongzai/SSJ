@@ -31,6 +31,17 @@ public class CustFlowService implements BaseService<CustFlow, Integer>{
 		}
 		return list;
 	}
+	
+	public List<CustFlow> getCustGoods(HashMap<String,Object> map){
+		List<CustFlow> list =new ArrayList<>();
+		try {
+				list = custFlowDao.findGoodsList(map);
+			
+		} catch (Exception e) {
+			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
+		}
+		return list;
+	}
 
 	@Override
 	public Integer insert(CustFlow t) {

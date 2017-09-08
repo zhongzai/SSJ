@@ -55,11 +55,12 @@ public class UserRS extends BaseRS{
 				result.setMsg("Success");
 				result.setResult(userTransfer);
 			}else{
-				result.setCode("201");
+				result.setCode("202");
 				result.setMsg("Fail");
 				result.setResult(null);
 			}
 		}catch(Exception ex){
+			ex.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
@@ -76,7 +77,7 @@ public class UserRS extends BaseRS{
 		try{ 
 			Boolean tokens = userService.findUserByToken(token);
 				result.setCode("200");
-				result.setMsg("Fail");
+				result.setMsg("success");
 				result.setResult(tokens);
 		}catch(Exception ex){
 				result.setCode("201");
