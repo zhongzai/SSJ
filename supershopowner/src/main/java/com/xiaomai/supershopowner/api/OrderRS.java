@@ -101,10 +101,7 @@ public class OrderRS extends BaseRS {
 		DecimalFormat df = new DecimalFormat("0.00");
 		Pager<SuperPurchaseOrder> spo = null;
 		List<SuperPurchaseOrder> spsList = new ArrayList<SuperPurchaseOrder>();
-		int totalOrderNumber=0;
-		int totalActualNumber=0;
-		Double totalOrderValue=0.0;
-		Double totalActualVal=0.0;
+		
 		Boolean res;
 		try {
 			res = checkToken.check(request.getHeader("token"));
@@ -114,6 +111,10 @@ public class OrderRS extends BaseRS {
 				spo = superStoreService.selectPurchaseOrder(storeCode, null==request.getHeader("pageNum")?1:Integer.valueOf(request.getHeader("pageNum")), null==request.getHeader("pageSize")?10:Integer.valueOf(request.getHeader("pageSize")));
 				
 				for(SuperPurchaseOrder sp:spo.getResult()){//查询所有的订单
+					int totalOrderNumber=0;
+					int totalActualNumber=0;
+					Double totalOrderValue=0.0;
+					Double totalActualVal=0.0;
 					List<SuperPurchaseOrderItemsRsp> spoirs = superStoreService.getPurchaseOrderItemRspList(sp.getOrderCode());
 					
 					for(SuperPurchaseOrderItemsRsp spoir:spoirs){//查询一个订单中多个商品,为了获取订单中商品的下单数量，实际收货数量
