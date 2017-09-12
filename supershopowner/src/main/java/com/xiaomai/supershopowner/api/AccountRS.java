@@ -157,7 +157,7 @@ public class AccountRS extends BaseRS{
 		}catch(Exception ex){
 			ex.printStackTrace();
 				result.setCode("400");
-				result.setMsg("Fail");
+				result.setMsg("会员不存在，无法充值");
 				result.setResult(null);	
 		}
 		return JSONObject.fromObject(result,JSONObjectConfig.getTime()).toString();
