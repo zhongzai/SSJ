@@ -21,12 +21,24 @@ public class SaleAnalyseService implements BaseService<SaleAnalyse, Integer>{
 	private org.slf4j.Logger log = LoggerFactory.getLogger(SaleAnalyseService.class);
 	public List<SaleAnalyse> findByStoreCode(Map<String, Object> map){
 		List<SaleAnalyse> list =new ArrayList<>();
+		
+		List<SaleAnalyse> newList =new ArrayList<>();
 		try {
 				list= saleAnalyseDao.findByStoreCode(map);
+				//根据条件查询销售总额
+				SaleAnalyse saleAnalyses = saleAnalyseDao.findSumAmount(map);
+				if(list.size()!=0){
+					for(SaleAnalyse saleAnalyse :list){
+						
+						saleAnalyse.setProportion((saleAnalyse.getSalesAmount()/saleAnalyses.getTotalAmount())*100);
+						
+						newList.add(saleAnalyse);
+					}
+				}
 		} catch (Exception e) {
 			throw new BizException(BizErr.EX_TRANSACTION_FAIL);
 		}
-		return list;
+		return newList;
 	}
 	/**
 	 * 查询交易流水的占比 单独实现

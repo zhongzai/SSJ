@@ -41,8 +41,20 @@ public class SaleAnalyse {
     
     private String twentyFour;
     
+    private Double totalAmount;
+    
 
-    public String getTwo() {
+    public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+
+	public String getTwo() {
 		return two;
 	}
 

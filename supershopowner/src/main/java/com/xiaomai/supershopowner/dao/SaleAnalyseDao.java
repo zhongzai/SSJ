@@ -25,4 +25,8 @@ public class SaleAnalyseDao extends BaseDaoImpl<SaleAnalyse, Integer> {
 	public List<SaleAnalyse> findNowSales(Map<String, Object> map)throws SQLException{
 		return selectList(getNameSpace()+".findNowSales",map);
 	}
+	
+	public SaleAnalyse findSumAmount(Map<String, Object> map)throws SQLException{
+		return selectOne(getNameSpace()+".findSumAmount",map);
+	}
 }
