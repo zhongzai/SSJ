@@ -184,6 +184,8 @@ public class OrderRS extends BaseRS {
 						if(null!=g){
 							tpof.setInventory(String.valueOf(g.getInventory()));
 							tpof.setWeekSales(String.valueOf(g.getWeekSales()));
+							tpof.setLogisticsType(g.getLogisticsType());
+							tpof.setDayDistribution(g.getDayDistribution());
 						}
 						tpofs.add(tpof);
 					}
