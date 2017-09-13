@@ -9,6 +9,7 @@
     <result column="sales_amount" jdbcType="DECIMAL" property="salesAmount" />
     <result column="cust_number" jdbcType="INTEGER" property="custNumber" />
     <result column="proportion" jdbcType="DECIMAL" property="proportion" />
+    <result column="totalAmount" jdbcType="DECIMAL" property="totalAmount" />
   </resultMap>
   <resultMap  id="BaseResultMap1" type="com.xiaomai.supershopowner.entity.SaleAnalyse">
   	<result column="two" jdbcType="VARCHAR" property="two" />
@@ -45,6 +46,10 @@
   <!-- 查询今日流水 -->
   <select id="findByStoreCode" parameterType="map" resultMap="BaseResultMap">
   		select <include refid="Base_Column_List"/> from sale_analyse where 1=1 <include refid="queryMap"/> order by id
+  </select>
+  
+  <select id="findSumAmount" parameterType="map" resultMap="BaseResultMap">
+  		select sum(sales_amount)as totalAmount from sale_analyse where 1=1 <include refid="queryMap"/>
   </select>
   
   <select id="findNowSales" parameterType="map" resultMap="BaseResultMap">

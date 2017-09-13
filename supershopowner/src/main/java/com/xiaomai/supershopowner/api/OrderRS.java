@@ -12,6 +12,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.PurchaseOrderInstockPDAReq;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrder;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrderItemsRsp;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.TodayPurchaseOrder;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
@@ -38,11 +41,10 @@ import com.xiaomai.supershopowner.entity.Order;
 import com.xiaomai.supershopowner.entity.OrderTransfer;
 import com.xiaomai.supershopowner.entity.ReceiveGoods;
 import com.xiaomai.supershopowner.entity.SuperPurchaseOrderItemsRspTransfer;
+import com.xiaomai.supershopowner.entity.TodayPurchaseOrderTransfer;
 import com.xiaomai.supershopowner.entity.WeekSales;
 import com.xiaomai.supershopowner.service.GoodsService;
 import com.xiaomai.supershopowner.service.WeekSalesService;
-
-import net.sf.json.JSONObject;
 
 @RestController
 @RequestMapping(value = "order")
@@ -150,6 +152,61 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr, JSONObjectConfig.getTime())
 				.toString();
 	}
+	
+	
+		// 查询今日要货列表
+		@RequestMapping(value = "findTodayEnquirys", method = RequestMethod.POST)
+		public String findTodayEnquirys(
+				@RequestParam(value = "storeCode", required = false) String storeCode) {
+			RSResult rr = new RSResult();
+			List<TodayPurchaseOrderTransfer> tpofs = new ArrayList<TodayPurchaseOrderTransfer>();
+			
+			Boolean res;
+			try {
+				res = checkToken.check(request.getHeader("token"));
+				if (res == true) {
+					log.debug("call the findAllOrdersRS");
+					Map<String,Object> map = new HashMap<String,Object>();
+					map.put("storeCode", storeCode);
+					List<TodayPurchaseOrder> tpos = superStoreService.getTodayPerchase(storeCode, 10, 1);
+					for(TodayPurchaseOrder tpo: tpos){
+						
+						map.put("goodsCode", tpo.getGoodsCode());
+						Goods g = goodsService.findLatestGoods(map);//查询本地数据库中的Good 得到weekSale 等
+						TodayPurchaseOrderTransfer tpof = new TodayPurchaseOrderTransfer();
+						tpof.setCoefficien(tpo.getCoefficien());
+						tpof.setGoodsCode(tpo.getGoodsCode());
+						tpof.setGoodsName(tpo.getGoodsName());
+						tpof.setImageUrl(tpo.getImageUrl());
+						tpof.setOrderNumber(tpo.getOrderNumber());
+						tpof.setPrice(tpo.getPrice());
+						tpof.setShelfLife(tpo.getShelfLife());
+						if(null!=g){
+							tpof.setInventory(String.valueOf(g.getInventory()));
+							tpof.setWeekSales(String.valueOf(g.getWeekSales()));
+						}
+						tpofs.add(tpof);
+					}
+					rr.setCode("200");
+					rr.setMsg("查询订单成功");
+					rr.setResult(tpofs);
+				} else {
+					rr.setCode("201");
+					rr.setMsg("token失效！");
+					rr.setResult(null);
+				}
+			} catch (SQLException e) {
+				log.error("called orderRS failure", e);
+				rr.setCode("400");
+				rr.setMsg("查询订单失败");
+				rr.setResult(null);
+			}
+			return JSONObject.fromObject(rr, JSONObjectConfig.getTime())
+					.toString();
+		}
+	
+	
+	
 
 	// 查询订单详情
 	@RequestMapping(value = "findOrderGoods", method = RequestMethod.POST)
