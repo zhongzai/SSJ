@@ -34,7 +34,7 @@
 		
    </sql>
    <select id="findList" parameterType="map" resultMap="BaseResultMap">
-		select <include refid="Base_Column_List"/> from cust_flow where 1=1 <include refid="queryMap"/> and cust_id is not null group by flow_code order by flow_time desc limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+		select <include refid="Base_Column_List"/> from cust_flow where 1=1 <include refid="queryMap"/> and cust_id!='' group by flow_code order by flow_time desc limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
   
   <select id="findGoodsList" parameterType="map" resultMap="BaseResultMap">
