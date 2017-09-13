@@ -6,7 +6,6 @@ public class TodayPurchaseOrderTransfer extends TodayPurchaseOrder{
 
 	private String inventory;
 	private String weekSales;
-	private String imageUrl;
 	public String getInventory() {
 		return inventory;
 	}
@@ -19,12 +18,4 @@ public class TodayPurchaseOrderTransfer extends TodayPurchaseOrder{
 	public void setWeekSales(String weekSales) {
 		this.weekSales = weekSales;
 	}
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-	
-	
 }
