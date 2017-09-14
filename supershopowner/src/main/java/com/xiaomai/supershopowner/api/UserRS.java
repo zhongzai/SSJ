@@ -50,7 +50,7 @@ public class UserRS extends BaseRS{
 				userTransfer.setLongitude(storeDto==null?null:storeDto.getX());
 				userTransfer.setDimension(storeDto==null?null:storeDto.getY());
 				userTransfer.setUserAccount(user.getUserAccount());
-				userTransfer.setDoorStatus(user.getDoorStatus());
+				userTransfer.setDoorStatus(userDto.getDoorStatus());
 				result.setCode("200");
 				result.setMsg("Success");
 				result.setResult(userTransfer);

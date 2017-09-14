@@ -7,12 +7,12 @@
     <dubbo:application name="hello-consumer"  />
  
     <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
-    <dubbo:reference interface="com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService" version="1.0.0"  id="superStoreService" url="dubbo://10.30.95.137:20881" group="supershop_online" />
+    <dubbo:reference interface="com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService" id="superStoreService" timeout="10000" url="dubbo://123.56.70.138:20886" group="TEST_SUPER" />
     
-    <dubbo:reference interface="com.xiaomai.mall.scan.client.service.RechargeDubboService" version="1.0.0" id="rechargeDubboService" url="dubbo://10.31.144.236:20880" group="ONLINE" />
+    <dubbo:reference interface="com.xiaomai.mall.scan.client.service.RechargeDubboService" version="1.0.0" timeout="10000" id="rechargeDubboService" url="dubbo://123.56.141.5:20880" group="TEST" />
     
-    <dubbo:reference interface="com.imxiaomai.member.service.MemberService" version="1.0.0" id="memberService" url="dubbo://10.44.13.215:20898" group="ONLINE" />
+    <dubbo:reference interface="com.imxiaomai.member.service.MemberService" version="1.0.0" timeout="10000" id="memberService" url="dubbo://123.57.73.173:20898" group="TEST" />
     
-    <dubbo:reference interface="com.imxiaomai.member.service.OpenService" version="1.0.0" id="openService" url="dubbo://10.163.2.232:20898" group="ONLINE" />
+    <dubbo:reference interface="com.imxiaomai.member.service.OpenService" version="1.0.0" timeout="10000" id="openService" url="dubbo://123.57.73.173:20898" group="TEST" />
   
 </beans>
