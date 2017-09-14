@@ -294,16 +294,16 @@
 		    <artifactId>curator-framework</artifactId>
 		    <version>1.1.10</version>
 		</dependency>
-        <dependency>
-		    <groupId>shop-headquarters-1.0-dubbo</groupId>
-		    <artifactId>shopDubbo</artifactId>
-		    <version>1.0.1</version>
-        </dependency>
         
         <dependency>
 		    	<groupId>com.xiaomai.mall</groupId>
 				<artifactId>scan.client</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+		    <groupId>shop-headquarters-1.0-dubbo</groupId>
+		    <artifactId>shopDubbo</artifactId>
+		    <version>1.0.1</version>
         </dependency>
         
         <dependency>
