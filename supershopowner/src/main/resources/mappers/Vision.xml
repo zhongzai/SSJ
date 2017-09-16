@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.VisionMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomai.supershopowner.entity.Vision">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="vision_code" jdbcType="VARCHAR" property="visionCode" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="vision_time" jdbcType="TIMESTAMP" property="visionTime" />
+    <result column="describtion" jdbcType="VARCHAR" property="describtion" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vision_code, url, vision_time,describtion
+  </sql>
+    
+   <select id="findNewVision"  resultMap="BaseResultMap">
+   select <include refid="Base_Column_List" /> from tb_vision where vision_code>#{visionCode,jdbcType=VARCHAR}
+   </select>
+</mapper>
