@@ -25,6 +25,9 @@
 		<if test="flowTime !=null and flowTime != ''">
     		<![CDATA[and DATE_FORMAT(flow_time, '%Y-%m-%d') =  DATE_FORMAT(#{flowTime}, '%Y-%m-%d')]]>
     	</if>
+    	<if test="flowTime1 !=null and flowTime1 != ''">
+    		<![CDATA[and flow_time =  #{flowTime1}]]>
+    	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
 		</if>

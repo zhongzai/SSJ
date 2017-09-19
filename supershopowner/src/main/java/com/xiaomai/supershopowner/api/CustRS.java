@@ -1,8 +1,9 @@
 package com.xiaomai.supershopowner.api;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.imxiaomai.member.service.OpenService;
 import com.imxiaomai.shop.web.superStoreDubbo.SuperStoreService;
-import com.imxiaomai.shop.web.superStoreDubbo.domain.MemberDto;
-import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.xiaomai.supershopowner.common.CheckToken;
 import com.xiaomai.supershopowner.common.JSONObjectConfig;
 import com.xiaomai.supershopowner.common.RSResult;
@@ -118,7 +118,10 @@ public class CustRS extends BaseRS{
 	 * @return 
 	 */
 	@RequestMapping(value="/findMemberDto" , method = RequestMethod.POST)	
-	public @ResponseBody String getfindCustList(HttpServletRequest request,@RequestBody Cust cust){
+	public @ResponseBody String getfindCustList(HttpServletRequest request,
+			@RequestParam(value = "storeCode", required = false) String storeCode,
+			@RequestParam(value = "findType", required = false) String findType,
+			@RequestParam(value = "dayType", required = false) String dayType){
 		RSResult result = new RSResult();
 		
 		CustTransfer custTransfer = new CustTransfer();
@@ -126,7 +129,25 @@ public class CustRS extends BaseRS{
 			
 			HashMap<String, Object> map =super.getQueryMap();
 			
-			map.put("storeCode",cust.getStoreCode());
+			map.put("storeCode",storeCode);
+			map.put("findType",findType);
+			
+	        if("30".equals(dayType)){
+	        	Calendar   cal   =   Calendar.getInstance();
+				cal.add(Calendar.DATE,   -30);
+	        	map.put("startDate",new SimpleDateFormat( "yyyy-MM-dd ").format(cal.getTime()));
+	        	map.put("endDate",new SimpleDateFormat( "yyyy-MM-dd ").format(new Date()));
+	        }
+	        
+	        if("7".equals(dayType)){
+	        	Calendar   cal   =   Calendar.getInstance();
+				cal.add(Calendar.DATE,   -7);
+	        	map.put("startDate",new SimpleDateFormat( "yyyy-MM-dd ").format(cal.getTime()));
+	        	map.put("endDate",new SimpleDateFormat( "yyyy-MM-dd ").format(new Date()));
+	        }
+	        if("1".equals(dayType)){
+	        	map.put("day",new SimpleDateFormat( "yyyy-MM-dd ").format(new Date()));
+	        }
 			
 			Boolean res=checkToken.check(request.getHeader("token"));
 			if(res==true){

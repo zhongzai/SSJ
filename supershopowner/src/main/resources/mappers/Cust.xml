@@ -14,10 +14,12 @@
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
     <result column="consumption_amount" jdbcType="DECIMAL" property="consumptionAmount" />
     <result column="category_code" jdbcType="VARCHAR" property="categoryCode" />
+    <result column="buy_times" jdbcType="INTEGER" property="buyTimes" />
+    
   </resultMap>
   <sql id="Base_Column_List">
     id, store_code, cust_id, cust_account, repeat_buy, is_new, coming_time, is_buy, status, 
-    head_url, consumption_amount, category_code
+    head_url, consumption_amount, category_code,buy_times
   </sql>
   
     <sql id="queryMap">
@@ -25,34 +27,46 @@
     		<![CDATA[and DATE_FORMAT(coming_time, '%Y-%m-%d') =  DATE_FORMAT(#{comingTime}, '%Y-%m-%d')]]>
     	</if>
     	<if test="storeCode != null and type==0">
-			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is null
+			and store_code = #{storeCode,jdbcType=VARCHAR} and cust_id!='' order by consumption_amount desc
 		</if>
 		<if test="storeCode != null and type==1">
-			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is not null
+			and store_code = #{storeCode,jdbcType=VARCHAR} and cust_id!='' order by buy_times desc
 		</if>
    </sql> 
    <select id="findListCount" parameterType="map" resultType="int">
-	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap"/> and cust_id!=''
+	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap"/>
    </select>
     <!-- 日来客分析  按照消费金额从到小排序 -->
    <select id="findList" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> and cust_id!='' order by consumption_amount desc
+	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap"/> 
 	  		limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
    </select>
    
     <sql id="queryMap1">
-    	<if test="storeCode != null and type==0">
-			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is null
+    	<if test="storeCode != null and findType==0">
+			and store_code = #{storeCode,jdbcType=VARCHAR} and cust_id!='' order by consumption_amount desc
 		</if>
-		<if test="storeCode != null and type==1">
-			and store_code = #{storeCode,jdbcType=VARCHAR} and is_buy is not null
+		<if test="storeCode != null and findType==1">
+			and store_code = #{storeCode,jdbcType=VARCHAR} and cust_id!='' order by buy_times desc
 		</if>
    </sql> 
+   
+   <sql id="queryMap2">
+    	<if test="startDate != null">
+			<![CDATA[and DATE_FORMAT(coming_time, '%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="endDate != null">
+			<![CDATA[and DATE_FORMAT(coming_time, '%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR}]]>
+		</if>
+		<if test="day != null">
+			and DATE_FORMAT(coming_time, '%Y-%m-%d') = #{day,jdbcType=VARCHAR}
+		</if>
+   </sql>
     <select id="findAllListCount" parameterType="map" resultType="int">
-	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap1"/> and cust_id!=''
+	  	select  COUNT(DISTINCT(cust_id)) from cust where 1=1 <include refid="queryMap2"/><include refid="queryMap1"/>
    </select>
    <select id="findAllList" parameterType="map" resultMap="BaseResultMap">
-	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap1"/> and cust_id!='' order by consumption_amount desc
+	  	select <include refid="Base_Column_List" /> from cust where 1=1 <include refid="queryMap2"/><include refid="queryMap1"/> 
 	  		limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
    </select>
 </mapper>

@@ -32,6 +32,8 @@ public class Cust {
     
     private Integer type;
     
+    private Integer buyTimes;
+    
 	private String custSex;
 	
 	private String custPhone;
@@ -48,6 +50,14 @@ public class Cust {
 
 	public void setTagList(List<MemberTag> tagList) {
 		this.tagList = tagList;
+	}
+
+	public Integer getBuyTimes() {
+		return buyTimes;
+	}
+
+	public void setBuyTimes(Integer buyTimes) {
+		this.buyTimes = buyTimes;
 	}
 
 	public String getCustSex() {

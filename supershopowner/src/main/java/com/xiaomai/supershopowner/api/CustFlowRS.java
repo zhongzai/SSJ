@@ -53,7 +53,7 @@ public class CustFlowRS extends BaseRS{
 				for(CustFlow flow : custList){
 					//根据条件查询购买的商品
 					HashMap<String,Object> map1 = new HashMap<String,Object>();
-					map1.put("flowTime", new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(flow.getFlowTime()));
+					map1.put("flowTime1", new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss").format(flow.getFlowTime()));
 					map1.put("storeCode", custFlow.getStoreCode());
 					map1.put("custId", flow.getCustId());
 					List<CustFlow> goodList = custFlowService.getCustGoods(map1);
