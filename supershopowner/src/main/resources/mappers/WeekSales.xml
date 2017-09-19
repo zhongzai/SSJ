@@ -8,9 +8,11 @@
     <result column="sales_date" jdbcType="DATE" property="salesDate" />
     <result column="temperature" jdbcType="VARCHAR" property="temperature" />
     <result column="sales_number" jdbcType="INTEGER" property="salesNumber" />
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber" />
+    <result column="loss_number" jdbcType="INTEGER" property="lossNumber" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_code, sales_date, temperature, sales_number,store_code
+    id, goods_code, sales_date, temperature, sales_number,store_code,stock_number,loss_number
   </sql>
   
   <sql id="queryMap">
@@ -39,71 +41,4 @@
     where 1=1
     <include refid="queryMap"/>
   </select>
-  
-  <delete id="delete" parameterType="java.lang.Integer">
-    delete from week_sales
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
-    insert into week_sales (id, goods_code, sales_date, 
-      temperature, sales_number)
-    values (#{id,jdbcType=INTEGER}, #{goodCode,jdbcType=VARCHAR}, #{salesDate,jdbcType=DATE}, 
-      #{temperature,jdbcType=VARCHAR}, #{salesNumber,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
-    insert into week_sales
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="goodsCode != null">
-        goods_code,
-      </if>
-      <if test="salesDate != null">
-        sales_date,
-      </if>
-      <if test="temperature != null">
-        temperature,
-      </if>
-      <if test="salesNumber != null">
-        sales_number,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="goodCode != null">
-        #{goodCode,jdbcType=VARCHAR},
-      </if>
-      <if test="salesDate != null">
-        #{salesDate,jdbcType=DATE},
-      </if>
-      <if test="temperature != null">
-        #{temperature,jdbcType=VARCHAR},
-      </if>
-      <if test="salesNumber != null">
-        #{salesNumber,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="update" parameterType="com.xiaomai.supershopowner.entity.WeekSales">
-    update week_sales
-    <set>
-      <if test="goodsCode != null">
-        goods_code = #{goodsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="salesDate != null">
-        sales_date = #{salesDate,jdbcType=DATE},
-      </if>
-      <if test="temperature != null">
-        temperature = #{temperature,jdbcType=VARCHAR},
-      </if>
-      <if test="salesNumber != null">
-        sales_number = #{salesNumber,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  
 </mapper>

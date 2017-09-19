@@ -15,8 +15,28 @@ public class WeekSales {
     
     private String storeCode;
     
+    private Integer stockNumber;
+    
+    private Integer lossNumber;
+    
 
-    public String getStoreCode() {
+    public Integer getStockNumber() {
+		return stockNumber;
+	}
+
+	public void setStockNumber(Integer stockNumber) {
+		this.stockNumber = stockNumber;
+	}
+
+	public Integer getLossNumber() {
+		return lossNumber;
+	}
+
+	public void setLossNumber(Integer lossNumber) {
+		this.lossNumber = lossNumber;
+	}
+
+	public String getStoreCode() {
 		return storeCode;
 	}
 

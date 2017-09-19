@@ -28,6 +28,7 @@ import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsCategory;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.GoodsInfoDto;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.Pager;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.PurchaseOrderInstockPDAReq;
+import com.imxiaomai.shop.web.superStoreDubbo.domain.StorePurchaseItemsRsp;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrder;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.SuperPurchaseOrderItemsRsp;
 import com.imxiaomai.shop.web.superStoreDubbo.domain.TodayPurchaseOrder;
@@ -503,11 +504,12 @@ public class OrderRS extends BaseRS {
 			res = checkToken.check(request.getHeader("token"));
 			if (res == true) {
 				log.debug("call the findAllGoods starting...");
-				List<GoodsInfoDto> gids=new ArrayList<GoodsInfoDto>();
+				
+				List<StorePurchaseItemsRsp>  gids= new ArrayList<StorePurchaseItemsRsp>();
 				if(null != typeCodeOne && !("").equals(typeCodeOne)){
-					gids = superStoreService.getGoodsInfoByType(shopCode, typeCodeOne,null);
+					gids = superStoreService.getGoodsListByCate(shopCode, typeCodeOne,null,null);
 				}else if(null != typeCodeTwo && !("").equals(typeCodeTwo)){
-					gids = superStoreService.getGoodsInfoByType(shopCode, null,typeCodeTwo);
+					gids = superStoreService.getGoodsListByCate(shopCode, null,typeCodeTwo,null);
 				}else{
 					rr.setMsg("必须传入类目编号");
 					rr.setResult(null);
@@ -517,7 +519,7 @@ public class OrderRS extends BaseRS {
 				int currIdx = (pageNum > 1 ? (pageNum -1) * pageSize : 0);
 				if(gids.size()!=0){
 					for (int i = 0; i < pageSize && i < gids.size() - currIdx; i++) {
-						GoodsInfoDto goodInfo = gids.get(currIdx + i);
+						StorePurchaseItemsRsp goodInfo = gids.get(currIdx + i);
 						map.put("goodsCode", goodInfo.getGoodsCode());
 						Goods gs = goodsService.findLatestGoods(map);//查询本地数据库中最新的统计数据获取周销，月销等
 						
@@ -528,15 +530,14 @@ public class OrderRS extends BaseRS {
 							gidt.setMonthSales(String.valueOf(gs.getMonthSales()));
 							gidt.setImageUrl(gs.getImagesUrl());
 							gidt.setInventory(gs.getInventory());
-							gidt.setShelfLife(gs.getShelfLife());
-							gidt.setCoefficien(String.valueOf(gs.getCoefficien()));
 						}
-						/*gidt.setShelfLife(goodInfo.getShelfLife());
-						gidt.setCoefficien(goodInfo.getCoefficien());*/
+						gidt.setShelfLife(goodInfo.getSelfLife());
+						gidt.setCoefficien(String.valueOf(goodInfo.getPleaseFitAmount()==null?1:goodInfo.getPleaseFitAmount()));
 						gidt.setGoodsCode(goodInfo.getGoodsCode());
 						gidt.setGoodsName(goodInfo.getGoodsName());
-						gidt.setPrice(goodInfo.getPrice());
-						
+						gidt.setPrice(String.valueOf(goodInfo.getTaxSellPrice()==null?0.00:goodInfo.getTaxSellPrice()));
+						gidt.setDayDistribution(goodInfo.getDayDistribution());
+						gidt.setLogisticsType(goodInfo.getLogisticsType());
 						gidts.add(gidt);
 			            
 			        }
