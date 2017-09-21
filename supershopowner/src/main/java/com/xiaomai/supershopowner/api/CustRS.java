@@ -161,6 +161,7 @@ public class CustRS extends BaseRS{
 				result.setResult(null);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 				result.setCode("400");
 				result.setMsg("Fail");
 				result.setResult(null);	
