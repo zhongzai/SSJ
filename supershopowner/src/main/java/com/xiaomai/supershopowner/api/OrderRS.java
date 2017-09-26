@@ -361,7 +361,7 @@ public class OrderRS extends BaseRS {
 					if(gid.getGoodsCode()!=null){
 						Goods gs = goodsService.findGoodLast(map);
 						gor.setImagesUrl(null==gs?null:gs.getImagesUrl());
-						gor.setShelfLife(null==gs?null:gs.getShelfLife());
+						gor.setShelfLife(null==gid?null:gid.getShelfLife());
 						gor.setWeekSales(null==gs?null:gs.getWeekSales());
 						gor.setInventory(null==gs?null:gs.getInventory());
 						
