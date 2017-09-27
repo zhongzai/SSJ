@@ -121,8 +121,12 @@ public class LossRS extends BaseRS {
 			if (res == true) {
 				log.debug("called inser loss starting...");
 				baseDto = superStoreService.addLossReport(lossTransfer.getLossReportDetailDto());
-				rr.setCode(baseDto.getCode());
-				rr.setMsg(baseDto.getMsg());
+				if(baseDto.getCode().equals("true")){
+					rr.setCode("200");
+					rr.setMsg(baseDto.getMsg());
+				}else{
+					rr.setMsg(baseDto.getMsg());
+				}
 				rr.setResult(baseDto);
 			} else {
 				rr.setCode("201");
