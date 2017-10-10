@@ -17,7 +17,7 @@
   
   <sql id="queryMap">
 		<if test="nowDate !=null and nowDate != ''"> 
-    		<![CDATA[ and date_add(date(#{nowDate}),INTERVAL -7 DAY) < sales_date ]]>
+    		<![CDATA[ and date_add(date(#{nowDate}),INTERVAL -8 DAY) < sales_date and sales_date< DATE_FORMAT(NOW(), '%Y-%m-%d')]]>
     	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
