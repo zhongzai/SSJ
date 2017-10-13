@@ -36,7 +36,16 @@ public class SoldRS extends BaseRS{
 		RSResult result = new RSResult();
 		HashMap<String, Object> map =super.getQueryMap();
 		map.put("storeCode", unSoldTranfer.getStoreCode());
-		map.put("days", unSoldTranfer.getDays());
+		if(unSoldTranfer.getDays()==7){
+			map.put("days", 1);
+		}
+		if(unSoldTranfer.getDays()==15){
+			map.put("days", 8);
+		}
+		if(unSoldTranfer.getDays()==30){
+			map.put("days", 23);
+		}
+		
 		
 		
 		try{ 

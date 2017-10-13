@@ -40,7 +40,7 @@
   
   <sql id="queryMap">
 		<if test="days !=null and days != ''">
-    		<![CDATA[and  sales_date<=DATE_FORMAT((SELECT DATE_ADD(NOW(),INTERVAL -#{days} DAY)), '%Y-%m-%d') group by goods_code  ]]> 
+    		<![CDATA[ and inventory>0 and week_sales is null and  sales_date<=DATE_FORMAT(NOW(), '%Y-%m-%d') and sales_date>= DATE_FORMAT((SELECT DATE_ADD(NOW(),INTERVAL -#{days} DAY)), '%Y-%m-%d')]]> 
     	</if>
     	<if test="storeCode != null">
 			and store_code = #{storeCode,jdbcType=VARCHAR}
@@ -70,7 +70,7 @@
     select 
     <include refid="Base_Column_List" />
     from goods
-    where 1=1 <include refid="queryMap"/> limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    where 1=1 <include refid="queryMap"/> group by goods_code  limit   #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
   
   <select id="findSoldOutList" parameterType="map" resultMap="BaseResultMap">
