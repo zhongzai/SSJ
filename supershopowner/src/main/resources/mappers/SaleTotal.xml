@@ -8,6 +8,6 @@
     <result column="totalGoods" jdbcType="INTEGER" property="totalGoods" />
   </resultMap>
   <select id="findSaleTotal"  resultMap="BaseResultMap">
-    select sum(sales_total)as totalSales,sum(cust_number)as totalNum,avg(average_price)as totalAvg,totalGoods from sale as sa left join (select COUNT(DISTINCT goods_code) as totalGoods,store_code from goods where store_code=#{storeCode,jdbcType=VARCHAR}) as gd on sa.store_code=gd.store_code  where sa.store_code=#{storeCode,jdbcType=VARCHAR}
+    select sum(sales_total)as totalSales,sum(cust_number)as totalNum,ROUND(sum(sales_total)/sum(cust_number),2)as totalAvg,totalGoods from sale as sa left join (select COUNT(DISTINCT goods_code) as totalGoods,store_code from goods where store_code=#{storeCode,jdbcType=VARCHAR}) as gd on sa.store_code=gd.store_code  where sa.store_code=#{storeCode,jdbcType=VARCHAR} and sa.sales_date>= DATE_FORMAT((SELECT DATE_ADD(NOW(),INTERVAL -30 DAY)), '%Y-%m-%d')
   </select>
 </mapper>
