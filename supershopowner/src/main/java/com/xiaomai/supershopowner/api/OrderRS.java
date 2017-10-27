@@ -78,7 +78,7 @@ public class OrderRS extends BaseRS {
 				log.debug("call the orderRS");
 				updateBaseDto = superStoreService.saveStorePurchaseInfo(order.getStorePurchaseGoodItems());
 				rr.setCode("200");
-				rr.setMsg("添加订单成功");
+				rr.setMsg(updateBaseDto.getMsg());
 				rr.setResult(updateBaseDto);
 			} else {
 				rr.setCode("201");
@@ -318,7 +318,7 @@ public class OrderRS extends BaseRS {
 				updateBaseDto = superStoreService.saveSuperPurchaseOrder(poipdars);
 				log.debug("call the update orderRs end");
 				rr.setCode("200");
-				rr.setMsg("收货成功");
+				rr.setMsg(updateBaseDto.getMsg());
 				rr.setResult(updateBaseDto);
 			} else {
 				rr.setCode("201");
@@ -327,6 +327,7 @@ public class OrderRS extends BaseRS {
 			}
 		} catch (Exception e) {
 			log.error("call update OrderRS failure", e);
+			e.printStackTrace();
 			rr.setCode("400");
 			rr.setMsg("收货失败");
 			rr.setResult(null);
