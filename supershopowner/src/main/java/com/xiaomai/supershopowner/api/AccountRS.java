@@ -86,7 +86,6 @@ public class AccountRS extends BaseRS{
 			if(res==true){
 				
 			MemberBalanceLog log = new 	MemberBalanceLog();
-			log.setLogType("1302,1303");
 			log.setMobile(flow.getPhone());
 			
 			Pager<MemberBalanceLog> pager = memberService.getMemberBalanceLogPageByExample(log, Integer.valueOf(request.getHeader("pageNum")), Integer.valueOf(request.getHeader("pageSize")));
