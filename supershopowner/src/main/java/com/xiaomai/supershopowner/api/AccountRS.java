@@ -96,8 +96,11 @@ public class AccountRS extends BaseRS{
 			
 			for(MemberBalanceLog logs : balanceLogs){
 				Flow flows = new Flow();
-				
-				flows.setAmount(logs.getPayBalance());
+				if(Integer.valueOf(logs.getLogType())==1302){
+					flows.setAmount(logs.getPayBalance());
+				}else{
+					flows.setAmount(logs.getBalance());
+				}
 				flows.setFlowCode(logs.getPayNo());
 				flows.setFlowTime(logs.getPayTime());
 				flows.setType(Integer.valueOf(logs.getLogType()));
