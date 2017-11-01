@@ -264,8 +264,8 @@ public class OrderRS extends BaseRS {
 				otf.setSpoirt(sL);
 				otf.setActualNumber(String.valueOf(totalActualNumber));
 				otf.setOrderNumber(String.valueOf(totalOrderNumber));
-				otf.setReceiveTotalAmount(String.valueOf(df.format(totalActualNumber)));
-				otf.setOrderTotalAmount(String.valueOf(df.format(totalOrderValue)));
+				otf.setReceiveTotalAmount(String.valueOf(df.format(totalActualVal)));
+				otf.setOrderTotalAmount(String.valueOf(totalOrderValue));
 				rr.setCode("200");
 				rr.setMsg("查询订单成功");
 				rr.setResult(otf);
