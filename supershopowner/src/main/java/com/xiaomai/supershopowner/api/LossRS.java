@@ -1,6 +1,5 @@
 package com.xiaomai.supershopowner.api;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,10 @@ public class LossRS extends BaseRS {
 	@Autowired
 	SuperStoreService superStoreService;
 
-	// 损耗单列表
+	/**
+     * 损耗但列表
+     * 
+     */
 	@RequestMapping(value = "getLossByStoreCode", method = RequestMethod.POST)
 	public String getLossByStoreCode(
 			@RequestParam(value = "storeCode", required = false) String storeCode) {
@@ -71,7 +73,10 @@ public class LossRS extends BaseRS {
 				.toString();
 	}
 
-	// 损耗单详情
+	/**
+     * 损耗但详情
+     * 
+     */
 	@RequestMapping(value = "getLossGoods", method = RequestMethod.POST)
 	public String getLossGoods(
 			@RequestParam(value = "lossCode", required = false) String lossCode) {
@@ -110,7 +115,10 @@ public class LossRS extends BaseRS {
 				.toString();
 	}
 
-	// 新建损耗单
+	/**
+     * 新建损耗单
+     * 
+     */
 	@RequestMapping(value = "addloss", method = RequestMethod.POST)
 	public String inserLoss(@RequestBody LossTransfer lossTransfer) {
 		RSResult rr = new RSResult();

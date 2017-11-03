@@ -64,7 +64,10 @@ public class OrderRS extends BaseRS {
 	@Autowired
 	WeekSalesService weekSalesService;
 
-	// 添加订单
+	/**
+     * 添加订单
+     * 
+     */ 
 	@RequestMapping(value = "addorders", method = RequestMethod.POST)
 	public String inserOrder(HttpServletRequest request,
 			@RequestBody Order order) throws SQLException {
@@ -96,7 +99,10 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr).toString();
 	}
 
-	// 查询所有的订单
+	/**
+     * 查询所有的订单
+     * 
+     */  
 	@RequestMapping(value = "findAllOrders", method = RequestMethod.POST)
 	public String findAllOrders(
 			@RequestParam(value = "storeCode", required = false) String storeCode) {
@@ -155,7 +161,10 @@ public class OrderRS extends BaseRS {
 	}
 	
 	
-		// 查询今日要货列表
+	/**
+     * 查询今日要货列表
+     * 
+     */ 
 		@RequestMapping(value = "findTodayEnquirys", method = RequestMethod.POST)
 		public String findTodayEnquirys(
 				@RequestParam(value = "storeCode", required = false) String storeCode) {
@@ -211,7 +220,10 @@ public class OrderRS extends BaseRS {
 	
 	
 
-	// 查询订单详情
+		/**
+	     * 查询订单详情
+	     * 
+	     */ 
 	@RequestMapping(value = "findOrderGoods", method = RequestMethod.POST)
 	public String findOrderGoods(
 			@RequestParam(value = "orderCode", required = true) String orderCode,
@@ -284,7 +296,10 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 
-	//完成收货
+	/**
+     * 完成收货
+     * 
+     */
 	@RequestMapping(value = "updateOrder", method = RequestMethod.POST)
 	public String updateOrder(@RequestBody  ReceiveGoods rgs) {
 		RSResult rr = new RSResult();
@@ -338,7 +353,10 @@ public class OrderRS extends BaseRS {
 	}
 
 
-	// 扫描二维码获取商品信息
+	/**
+     *  扫描二维码获取商品信息
+     * 
+     */
 
 	@RequestMapping(value = "findGoodByQR", method = RequestMethod.POST)
 	public String findGoodByQR(
@@ -420,7 +438,10 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 	
-	//获取所有的一级类目
+	/**
+     * 获取所有的一级类目
+     * 
+     */
 	@RequestMapping(value="findAllOneItems")
 	public String findAllOneItems(@RequestParam(value="levelNumber",required=false) String levelNumber){
 		RSResult rr = new RSResult();
@@ -455,7 +476,10 @@ public class OrderRS extends BaseRS {
 				.toString();
 	}
 	
-	//获取所有一级类目下的所有的二级类目
+	/**
+     * 获取所有一级类目下的所有的二级类目
+     * 
+     */
 	@RequestMapping(value="findAllTwoItems")
 	public String findAllTwoItems(@RequestParam(value="gcateParentCode",required=false) String gcateParentCode){
 		RSResult rr = new RSResult();
@@ -487,7 +511,10 @@ public class OrderRS extends BaseRS {
 		return JSONObject.fromObject(rr, JSONObjectConfig.getInstance())
 				.toString();
 	}
-	//根据类目查询所有的商品
+	/**
+     * 根据类目查询所有的商品
+     * 
+     */
 	@RequestMapping(value="findAllGoods")
 	public String findAllGoods(@RequestParam(value="shopCode",required=false) String shopCode,
 			@RequestParam(value="typeCodeOne",required=false) String typeCodeOne,

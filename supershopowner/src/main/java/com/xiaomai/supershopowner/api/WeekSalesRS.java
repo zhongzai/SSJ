@@ -30,7 +30,10 @@ public class WeekSalesRS extends BaseRS{
 	@Autowired
 	protected CheckToken checkToken;
 
-	// 查询7天销售
+	/**
+     * 查询7天销售
+     * 
+     */
 	@RequestMapping(value = "findWeekSales", method = RequestMethod.POST)
 	public String findWeekSales(
 			@RequestParam(value = "nowDate", required = false) String nowDate,

@@ -37,7 +37,10 @@ public class OneCategoryAnalyseRS extends BaseRS{
 	public OneCategoryAnalyseService oneCategoryAnalyseService;
 	@Autowired
 	protected CheckToken checkToken;
-	
+	/**
+     * 获取单品分析接口
+     * 
+     */
 	@RequestMapping(value="/getOneCategoryAnalyse" ,method = RequestMethod.POST)
 	public @ResponseBody String getOneCategoryAnalyse(HttpServletRequest request,@RequestBody OneCategoryAnalyse oneCategoryAnalyse){
 		RSResult result = new RSResult();

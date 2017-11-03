@@ -29,7 +29,10 @@ public class StorageRS  extends BaseRS {
 	@Autowired
 	protected CheckToken checkToken;
 	
-	//查询库存
+	/**
+     * 查询库存
+     * 
+     */
 	@RequestMapping(value="findStorageByCode", method = RequestMethod.POST)
 	public String findStorageByCode(HttpServletRequest request,@RequestParam(value="storeCode",required=false) String storeCode){
 		RSResult rr = new RSResult();

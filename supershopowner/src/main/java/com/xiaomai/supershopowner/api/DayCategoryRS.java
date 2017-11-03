@@ -36,7 +36,10 @@ public class DayCategoryRS extends BaseRS{
 	public DayCategoryService dayCategoryService;
 	@Autowired
 	protected CheckToken checkToken;
-	
+	/**
+     * 日销信息查询
+     * 
+     */
 	@RequestMapping(value="/findDayCategory" , method = RequestMethod.POST)
 	public @ResponseBody String getDayCategory(HttpServletRequest request,@RequestBody DayCategory dayCategory){
 		String token = request.getHeader("token");

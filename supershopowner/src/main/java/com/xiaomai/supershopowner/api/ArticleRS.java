@@ -33,7 +33,10 @@ public class ArticleRS extends BaseRS{
 	public ArticleService articleService;
 	@Autowired
 	protected CheckToken checkToken;
-	
+	/**
+     * 文章查询接口
+     * 
+     */
 	@RequestMapping(value="/findArticle" , method = RequestMethod.POST)
 	public @ResponseBody String getArticle(HttpServletRequest request){
 		RSResult result = new RSResult();

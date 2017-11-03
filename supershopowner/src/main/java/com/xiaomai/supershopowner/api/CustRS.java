@@ -46,7 +46,10 @@ public class CustRS extends BaseRS{
 	public SuperStoreService superStoreService;
 	@Resource
 	public OpenService openService;
-	
+	/**
+     * 查询到店顾客信息
+     * 
+     */
 	@RequestMapping(value="/findCust" , method = RequestMethod.POST)	
 	public @ResponseBody String getfindCustComingTime(HttpServletRequest request,@RequestBody Cust cust){
 		
@@ -110,7 +113,7 @@ public class CustRS extends BaseRS{
 	}
 	
 	/**
-	 * 查询顾客信息
+	 * 查询所有顾客信息
 	 * @param request 客户信息
 	 * @param storeCode 门店唯一标识
 	 * @param curentPage 页数
